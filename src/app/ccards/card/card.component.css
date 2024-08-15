@@ -1,0 +1,130 @@
+.card {
+  padding: 1.5rem;
+  width: 32rem;
+  height: 42.4rem;
+  border-radius: 1.2rem;
+  background-color: #fbeae7;
+}
+
+.card_pic {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 1.2rem;
+  background: linear-gradient(180deg, #cf8777, 5%, #ff999c, 50%, #ffc2c4);
+}
+
+.card_labels {
+  padding: 0 0.3rem;
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card_label {
+  padding: 0.4rem 0.85rem;
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 700;
+  background-color: #f0c1b7;
+  color: #b51f00;
+  border-radius: 0.8rem;
+}
+
+.card_label::before {
+  content: url('../../../assets/ccards/img/dot.svg');
+  margin-right: 0.5rem;
+  vertical-align: 10%;
+}
+
+.c_rating {
+  padding: 0.25rem 0.85rem;
+  border-radius: 0.8rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+  text-align: center;
+  background-color: #b51f00;
+  color: #fbeae7;
+}
+
+.c_rating::before {
+  content: url('../../../assets/ccards/img/star.svg');
+  margin-right: 0.5rem;
+  vertical-align: -25%;
+}
+
+.c_highlights {
+  margin-top: 1rem;
+  color: #861400;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+li {
+  list-style-type: none;
+}
+
+li::before {
+  content: url('../../../assets/ccards/img/check.svg');
+  vertical-align: -30%;
+}
+
+.c_more {
+  text-decoration: underline;
+  color: #000080;
+}
+
+.c_tagline {
+  margin-top: 1rem;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #b51f00;
+}
+
+.book_icon img {
+  width: 3.4rem;
+}
+
+.taglines {
+  color: #861400;
+  font-size: 1.5rem;
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 0.2rem;
+}
+
+.taglines div:nth-child(2) {
+  font-size: 1.2rem;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.ccard_footer {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.c_price {
+  font-family: "Cinzel", serif;
+  font-size: 2.3rem;
+  font-weight: 700;
+  color: #861400;
+}
+
+.enroll_btn {
+  padding: 0.75rem 2rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #fbeae7;
+  background-color: #861400;
+  border-radius: 0.8rem;
+}
+
+

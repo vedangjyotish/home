@@ -1,0 +1,16 @@
+<div class="c_cards_container">
+  <div class="c_cards_headings">
+    <h1>Explore our courses</h1>
+    <h2><span>Unlock the secrets of Astrology with us</span></h2>
+  </div>
+  <div class="c_cards">
+    @for (d of data; track d.cid ) {
+      @if (d.featured) {
+        <app-card [cid]="d.cid" [name]="d.name" [alt]="d.alt" [img]="d.img" [rating]="d.rating" [highlights]="d.highlights" [taglines]="d.tagline" [price]="d.price" (select)="onSelectCard($event)"></app-card>
+      }
+    }
+    <!-- <app-card [cid]="data[0].cid" [name]="data[0].name" [alt]="data[0].alt" [img]="data[0].img" (select)="onSelectCard($event)"></app-card> -->
+    <!-- <app-card [cid]="data[1].cid" [name]="data[1].name" [alt]="data[1].alt" [img]="data[1].img" (select)="onSelectCard($event)"></app-card> -->
+    <!-- <app-card [cid]="data[2].cid" [name]="data[2].name" [alt]="data[2].alt" [img]="data[2].img" (select)="onSelectCard($event)"></app-card> -->
+  </div>
+</div>

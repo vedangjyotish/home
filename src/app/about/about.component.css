@@ -1,0 +1,45 @@
+.about {
+  min-height: 52.2rem;
+  background-color: #b51f00;
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 2fr;
+  grid-template-rows: 1fr;
+  gap: 1rem;
+
+}
+
+.img_holder {
+  position: relative;
+}
+
+.img_holder img {
+  height: 47.7rem;
+  position: absolute;
+  bottom: -3px;
+  left: 4rem;
+}
+
+.about_contents {
+  max-width: 63rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.about_contents h1 {
+  flex-grow: 0;
+  align-self: start;
+  padding: 1rem;
+  font-family: "Raleway", sans-serif;
+  font-size: 2.6rem;
+  border-radius: 0.8rem;
+  color: #660d00;
+  background-color: #fbeae7;
+}
+
+.about_contents p {
+  color: #fbeae7;
+  font-size: 1.6rem;
+}

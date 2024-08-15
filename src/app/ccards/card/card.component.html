@@ -1,0 +1,29 @@
+<div class="card" (click)="onSelectCard()">
+  <div class="card_pic">
+    <img [src]="imagePath"
+      [alt]="alt"
+    />
+  </div>
+  <div class="card_labels">
+    <div class="card_label">{{ name }}</div>
+    <div class="c_rating">{{ rating | number: '1.1-1' }}</div>
+  </div>
+  <div class="c_highlights">
+    <ul>
+      <li>{{ highlights[0] }}</li>
+      <li>{{ highlights[1] }}</li>
+      <li>{{ highlights[2] }} ... and many <span><a class="c_more" href="">more &#8594;</a> </span></li>
+    </ul>
+  </div>
+  <div class="c_tagline">
+    <div class="book_icon"><img src="../../../assets/ccards/img/book.svg" alt="book icon"></div>
+    <div class="taglines">
+      <div>{{ taglines[0] }}</div>
+      <div>{{ taglines[1] }}</div>
+    </div>
+  </div>
+  <div class="ccard_footer">
+    <div class="c_price">&#8377; {{ price }}/-</div>
+    <div class="enroll_btn">Enroll Now</div>
+  </div>
+</div>

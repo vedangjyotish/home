@@ -1,0 +1,42 @@
+.d_menu {
+  height: 3.2rem;
+  background-color: #4e0700;
+  display: flex;
+  justify-content: space-around;
+  align-items: stretch;
+  z-index: 999;
+}
+
+a {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+
+  text-decoration: none;
+
+  color: #fff9f8;
+  font-size: 1.5rem;
+  font-weight: 600;
+  transition: all 500ms ease;
+}
+
+a:hover {
+  color: #4e0700;
+  background-color: #f6d6cf;
+}
+
+svg {
+  margin-left: 0.75rem;
+  height: 1rem;
+  transition: all 500ms ease;
+}
+
+a:hover svg {
+  fill: #4e0700;
+}
+
+.active {
+  background: linear-gradient(180deg, rgba(181,31,0,1) 0%, rgba(217,82,0,1) 100%);
+}

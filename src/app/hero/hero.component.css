@@ -1,0 +1,36 @@
+.hero {
+  position: relative;
+  z-index: 333;
+}
+
+.hero__chakra {
+  z-index: 222;
+  position: absolute;
+  top: 10%;
+  animation: 60s linear infinite spin;
+}
+
+.hero__portrait {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.hero__portrait img {
+  width: 48.5rem;
+}
+
+.hero__chakra img {
+  z-index: 111;
+  height: 47rem;
+  overflow: hidden;
+}
+
+@keyframes spin {
+  form {
+    transform: rotate(90deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
