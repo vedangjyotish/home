@@ -35,12 +35,12 @@ export const cdata = [
   {
     cid: 'c4',
     name: 'Palmistry',
-    img: 'pic4.jpg',
+    img: 'hand.png',
     alt: 'random',
     rating: 4.9,
     highlights: ["Lal Kitab Kundali", "Singinficance of planets", "Remedial treatment"],
     tagline: ["Just 1 year of progress", " 2 hours a week to reach your goals"],
     price: "40,000",
-    featured: false,
+    featured: true,
   }
 ]
