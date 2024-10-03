@@ -1,8 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
-* {
+*,
+*::before,
+*::after {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+html {
+  user-select: none;
 }
 
 h1,
@@ -15,23 +21,34 @@ h6 {
   font-weight: 700;
 }
 
+html,
 body {
   font-family: "Raleway", sans-serif;
   font-weight: 400;
-}
-
-html {
+  /* line-height: 1.6; */
+  scroll-behavior: smooth;
   background-color: #fbeae7;
   font-size: 62.5%;
   height: 100%;
 }
 
+a {
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+/* img { */
+/*   width: 100%; */
+/* } */
+
 .main {
   max-width: 112rem;
-  min-height: 150vh;
+  /* min-height: 150vh; */
   margin: 0 auto;
   background-color: #f6d6cf;
-  /* position: relative; */
 }
 
 p {

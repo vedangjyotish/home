@@ -1,0 +1,13 @@
+.animated_arrow {
+  display: inline-block;
+  animation: moveIcon 0.75s infinite alternate;
+}
+
+@keyframes moveIcon {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(2rem); /* Adjust the distance as needed */
+  }
+}

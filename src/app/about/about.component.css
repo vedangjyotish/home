@@ -1,4 +1,5 @@
 .about {
+  padding: 0 20%;
   min-height: 52.2rem;
   background-color: #b51f00;
   display: grid;
@@ -42,4 +43,40 @@
 .about_contents p {
   color: #fbeae7;
   font-size: 1.6rem;
+}
+
+@media (max-width: 768px) {
+  .about {
+    padding: 2rem 1rem 0 1rem;
+    min-height: auto;
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 0.5rem; 
+
+  }
+
+  .img_holder {
+    grid-row-start: 2;
+  }
+
+  .about_contents {
+    max-width: 63rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .about_contents h1 {
+    flex-grow: 0;
+    align-self: center;
+  }
+
+  .about_contents p {
+    color: #fbeae7;
+    font-size: 1.6rem;
+  }
+
 }

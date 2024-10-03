@@ -1,19 +1,29 @@
 .hero {
   position: relative;
-  z-index: 333;
+}
+
+.hero_bg {
+  margin-top: 13rem;
+  height: 57.3rem;
+  /* background-image: linear-gradient(to right bottom, rgba(184, 24, 0, 0.35), rgba(255, 184, 173, 0.3)), url(../../assets/hero/img/hero_bg.jpg); */
+  background-image: url(../../assets/hero/img/bg_1920x573.jpg);
+  background-size: cover;
+  /* background-position: top; */
 }
 
 .hero__chakra {
-  z-index: 222;
+  overflow: hidden;
   position: absolute;
   top: 10%;
+  left: 20%;
+  cursor: none;
   animation: 60s linear infinite spin;
 }
 
 .hero__portrait {
   position: absolute;
   bottom: 0;
-  right: 0;
+  right: 20%;
 }
 
 .hero__portrait img {
@@ -21,9 +31,7 @@
 }
 
 .hero__chakra img {
-  z-index: 111;
   height: 47rem;
-  overflow: hidden;
 }
 
 @keyframes spin {
@@ -32,5 +40,31 @@
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 768px) {
+
+.hero_bg {
+  margin-top: 5rem;
+  height: 40rem;
+}
+
+.hero__chakra {
+  top: 30%;
+  left: 0;
+}
+
+.hero__portrait {
+  position: absolute;
+  bottom: -2px;
+  right: 0; 
+}
+  .hero__portrait img {
+    width: 24.25rem;
+  }
+
+  .hero__chakra img {
+    height: 23.5rem;
   }
 }

@@ -7,12 +7,29 @@
     </div>
   </div>
   <div class="header_right">
-    <a href="" class="helper"><img src="../../../assets/icons/telephone.svg" alt=""><span> + 91 925 251 3320</span></a>
+    <a href=""><img src="../../../assets/icons/telephone.png" alt=""></a>
+    <a href=""> + 91 925 251 3320</a>
     <a href=""><img src="../../../assets/icons/wa.svg" alt=""></a>
     <a href=""><img src="../../../assets/icons/telegram.svg" alt=""></a>
     <a href=""><img src="../../../assets/icons/insta.svg" alt=""></a>
     <a href=""><img src="../../../assets/icons/x.svg" alt=""></a>
     <a href=""><img src="../../../assets/icons/fb.svg" alt=""></a>
-    <a href=""><img src="../../../assets/icons/yt.svg" alt=""></a>
+    <a href=""><img src="../../../assets/icons/yt.png" alt=""></a>
+  </div>
+  <div class="header_hamburger" (click)="onHamClick($event)">
+    <div class="bar1"></div>
+    <div class="bar2"></div>
+    <div class="bar3"></div>
   </div>
 </header>
+<div class="mobile_temp_menu" [class.active]="active === true">
+    <a routerLink='/' routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="onHamClick($event)">Home</a>
+    <a routerLink="/courses" routerLinkActive="active" (click)="onHamClick($event)">Courses</a>
+    <a routerLink="/services" routerLinkActive="active" (click)="onHamClick($event)">Services</a>
+    <a routerLink="/blogs" routerLinkActive="active" (click)="onHamClick($event)">Blogs</a>
+    <a routerLink="/appointment" routerLinkActive="active" (click)="onHamClick($event)">Appointment</a>
+    <a routerLink="/aboutus" routerLinkActive="active" (click)="onHamClick($event)">About us</a>
+    <a routerLink="/contactus" routerLinkActive="active" (click)="onHamClick($event)">Contact us</a>
+    <a routerLink="/myaccount" routerLinkActive="active" (click)="onHamClick($event)">My Account</a>
+    <a routerLink="/cart" routerLinkActive="active" (click)="onHamClick($event)">Cart</a>
+</div>

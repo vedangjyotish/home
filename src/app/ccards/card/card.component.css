@@ -4,7 +4,14 @@
   height: 42.4rem;
   border-radius: 1.2rem;
   background-color: #fbeae7;
+  transition: box-shadow 500ms ease-in;
 }
+
+.card:hover {
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+  z-index: 888;
+}
+
 
 .card_pic {
   display: flex;
@@ -125,6 +132,11 @@ li::before {
   color: #fbeae7;
   background-color: #861400;
   border-radius: 0.8rem;
+}
+
+.enroll_btn a {
+  text-decoration: none;
+  color: #fbeae7;
 }
 
 

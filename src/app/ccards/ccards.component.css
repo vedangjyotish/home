@@ -1,8 +1,11 @@
 .c_cards_container {
   min-height: 63.2rem;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
+  align-items: center;
   justify-content: space-around;
+  background-color: #f6d6cf;
 }
 
 .c_cards_container h1 {
@@ -27,8 +30,69 @@
 }
 
 .c_cards {
+  margin-top: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 3rem;
 }
+
+.arrow_container {
+  /* border: 1px solid #20c20e; */
+  /* position: relative; */
+  /* display: inline-block; */
+  width: 10rem;
+  /* overflow: hidden; */
+}
+
+.course_list {
+  /* position: absolute; */
+  /* top: 50%; */
+  /* left: 50%; */
+  /* transform: translate(-50%, -50%); */
+
+  font-family: "Raleway", sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  text-align: center;
+  color: #9d1900;
+  /* color: #000000; */
+
+  /* opacity: 1; */
+  /* transition: opacity 0.3s ease; */
+}
+
+/* .arrow_container:hover .animated_arrow { */
+/*   opacity: 0; */
+/* } */
+/**/
+/* .arrow_container:hover .course_list { */
+/*   opacity: 1; */
+/* } */
+
+
+.animated_arrow {
+  width: 2.8rem;
+  display: inline-block;
+  animation: moveIcon 0.75s infinite alternate;
+}
+
+@keyframes moveIcon {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(2rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .c_cards {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+  }
+}
+

@@ -1,18 +1,19 @@
 import { DecimalPipe } from "@angular/common";
 import { Component, Input, Output, EventEmitter } from "@angular/core";
+import { RouterLink } from "@angular/router";
 // import { Component, computed, signal } from '@angular/core';
 // import { cdata } from '../cdata';
 
 @Component({
   selector: 'app-card',
   standalone: true,
-  imports: [DecimalPipe],
+  imports: [DecimalPipe, RouterLink],
   templateUrl: './card.component.html',
   styleUrl: './card.component.css'
 })
 
 export class CardComponent {
-  @Input({ required: true }) cid!: string;
+  @Input({required: true }) cid!: string;
   @Input({required: true}) name!: string;
   @Input() alt!: string;
   @Input({required: true}) img!: string;

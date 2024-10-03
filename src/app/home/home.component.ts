@@ -13,5 +13,4 @@ import { ScardsComponent } from '../scards/scards.component';
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
-
 }
