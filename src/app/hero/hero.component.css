@@ -43,6 +43,19 @@
   }
 }
 
+@media (max-width: 1440px) {
+  .hero__chakra {
+    top: 10%;
+    left: 5%;
+  }
+
+  .hero__portrait {
+    position: absolute;
+    bottom: -2px;
+    right: 0; 
+  }
+}
+
 @media (max-width: 768px) {
 
 .hero_bg {

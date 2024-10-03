@@ -53,6 +53,12 @@ a:hover svg {
   background: linear-gradient(180deg, rgba(181,31,0,1) 0%, rgba(217,82,0,1) 100%);
 }
 
+@media (max-width: 1440px) {
+  .d_menu {
+    padding: 0 10%;
+  }
+}
+
 @media (max-width: 768px) {
   .d_menu {
     display: none;
