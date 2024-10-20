@@ -3,7 +3,7 @@
 }
 
 .hero_bg {
-  margin-top: 13rem;
+  /* margin-top: 13rem; */
   height: 57.3rem;
   /* background-image: linear-gradient(to right bottom, rgba(184, 24, 0, 0.35), rgba(255, 184, 173, 0.3)), url(../../assets/hero/img/hero_bg.jpg); */
   background-image: url(../../assets/hero/img/bg_1920x573.jpg);

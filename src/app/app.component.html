@@ -1,3 +1,5 @@
-<app-navbar></app-navbar>
-<router-outlet />
+<app-navbar [sSwitch]="slideSwitch()" [sUpSwitch]="slideUpSwitch()" (hamClick)="scrollTop()"></app-navbar>
+<div [style.paddingTop]="paddingTop()">
+  <router-outlet />
+</div>
 <app-footer></app-footer>
