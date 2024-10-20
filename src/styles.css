@@ -25,7 +25,6 @@ html,
 body {
   font-family: "Raleway", sans-serif;
   font-weight: 400;
-  /* line-height: 1.6; */
   scroll-behavior: smooth;
   background-color: #fbeae7;
   font-size: 62.5%;
@@ -39,10 +38,6 @@ a {
 ul {
   list-style: none;
 }
-
-/* img { */
-/*   width: 100%; */
-/* } */
 
 .main {
   max-width: 112rem;
