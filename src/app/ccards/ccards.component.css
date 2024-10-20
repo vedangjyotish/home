@@ -30,7 +30,8 @@
 }
 
 .c_cards {
-  margin-top: 2rem;
+  width: 60%;
+  margin: 2rem auto 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -87,8 +88,15 @@
   }
 }
 
+@media (max-width: 1440px) {
+  .c_cards {
+    width: 80%;
+  }
+}
+
 @media (max-width: 768px) {
   .c_cards {
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: center;

@@ -46,12 +46,12 @@ export class AppComponent {
     const position = this.ViewportScroller.getScrollPosition();
     const Y = position[1];
 
-    console.log(Y);
+    // console.log(Y);
 
     if (Y >= 570 && this.mobileScreen() === false) {
       this.slideUpSwitch.set(true);
     }
-    console.log(this.slideUpSwitch());
+    // console.log(this.slideUpSwitch());
 
     if (Y >= 600 && this.mobileScreen() === false) {
       // this.paddingTop.set('6rem');

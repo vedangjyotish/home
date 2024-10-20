@@ -1,9 +1,34 @@
+.s_cards_heading {
+  padding: 2rem;
+  width: 60%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.s_cards_heading span {
+  padding: 1rem;
+  border-bottom: 1px solid #9d1900;
+}
+
+.s_cards_heading h1 {
+  font-family: "Raleway", sans-serif;
+  font-size: 4.2rem;
+  text-align: center;
+  color: #9d1900;
+}
+
 .scards {
-  min-height: 63.2rem;
+  padding: 2.5rem;
+  /* min-height: 63.2rem; */
+  width: 60%;
+  margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 3rem;
+  flex-wrap: wrap;
 }
 
 .scard {
@@ -61,7 +86,8 @@ img {
 
 .scard__contact {
   background-color: #861400;
-  width: 12rem;
+  width: auto;
+  padding: 1rem 1.5rem;
   height: 3rem;
   color: #fff9f8;
   display: flex;
@@ -72,8 +98,16 @@ img {
   border-radius: 0.5rem;
 }
 
+@media (max-width: 1440px) {
+  .scards {
+    width: 80%;
+  }
+
+}
+
 @media (max-width: 768px) {
   .scards {
+    width: 100%;
     min-height: auto;
     padding: 2rem;
     flex-direction: column;
