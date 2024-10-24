@@ -1,0 +1,97 @@
+.courses_container {
+  width: 60%;
+  margin: 2rem auto 0 auto;
+  margin-bottom: 2rem;
+}
+
+.user_avatar img {
+  width: 6.4rem;
+}
+
+.courses_header {
+  padding: 2rem;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.user_text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.user_welcome h1 {
+  font-family: "Raleway", sans-serif;
+  font-size: 2.2rem;
+  color: #660d00;
+}
+
+/* .user_avatar { */
+/*   background-color: #b51f00; */
+/* } */
+
+.courses_content {
+  border: 1px solid #955281;
+  border-radius: 1rem;
+  padding: 2rem 0 2rem 0;
+  background-color: #c971af;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 3rem;
+}
+
+.course_banner {
+  width: 100%;
+  height: 30rem;
+  background-color: #b51f00;
+  margin-bottom: 2rem;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.banner_text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.banner_text h1 {
+  font-style: italic;
+  font-family: "Raleway", sans-serif;
+  font-size: 4.4rem;
+  color: #fbeae7;
+}
+
+.banner_text p {
+  color: #fbeae7;
+  font-size: 1.8rem;
+}
+
+.banner_portrait {
+  position: relative;
+}
+
+.banner_portrait img {
+  position: absolute;
+  bottom: -1px;
+  right: 25%;
+  height: 25rem;
+}
+
+.clipped {
+  clip-path: circle(50% at 50% 50%);
+}
+
+@media (max-width: 1440px) {
+  .courses_container {
+    width: 80%;
+  }
+  .course_banner {
+    width: 100%;
+  }
+}

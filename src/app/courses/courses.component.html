@@ -1,0 +1,39 @@
+<div class="courses_container">
+  <div class="courses_header">
+    <div class="user_avatar">
+      <img class="clipped" src="../../assets/user/userAvatar.jpg" alt="">
+    </div>
+    <div class="user_text">
+      <div class="user_welcome">
+        <h1>Welcome, Aaditya</h1>
+      </div>
+      <!-- <div class="user_tagline">Lorem ipsum dolor</div> -->
+    </div>
+  </div>
+  <!-- courser header ends -->
+  <div class="course_banner">
+    <div class="banner_text">
+      <h1>Great courses</h1>
+      <p>Change your destiny now</p>
+    </div>
+    <div class="banner_portrait">
+      <img src="../../assets/about/img/portrait2.png" alt="">
+    </div>
+  </div>
+  <!-- banner ends -->
+  <div class="courses_content">
+    @for (d of data; track d.cid ) {
+    <!-- @if (d.featured) { -->
+    <app-card 
+       [cid]="d.cid" 
+       [name]="d.name" 
+       [alt]="d.alt" 
+       [img]="d.img" 
+       [rating]="d.rating" 
+       [highlights]="d.highlights" 
+       [taglines]="d.tagline" 
+       [price]="d.price"></app-card>
+    <!-- } -->
+    }
+  </div>
+</div>
