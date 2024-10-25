@@ -7,6 +7,11 @@
   box-sizing: border-box;
 }
 
+:root {
+  --head-font: "Cinzel", serif;
+  --body-font: "Raleway", sans-serif;
+}
+
 html {
   user-select: none;
 }
