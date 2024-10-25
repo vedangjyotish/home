@@ -3,6 +3,7 @@ import { ComingsoonComponent } from './comingsoon/comingsoon.component';
 import { HomeComponent } from './home/home.component';
 import { DevelopmentComponent } from './development/development.component';
 import { CoursesComponent } from './courses/courses.component';
+import { CourseComponent } from './course/course.component';
 
 export const routes: Routes = [
   {
@@ -40,6 +41,10 @@ export const routes: Routes = [
   {
     path: 'cart',
     component: ComingsoonComponent,
+  },
+  {
+    path: 'course/:cid',
+    component: CourseComponent,
   },
   {
     path: 'development',

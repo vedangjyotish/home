@@ -1,0 +1,53 @@
+/* <div class="the_course_container"> */
+/*   <div class="the_course_banner"> */
+/*   </div> */
+/*   <div class="the_course_cart"> */
+/*     <p>Amount</p> */
+/*   </div> */
+/*   <div class="the_course_intro"> */
+/*     <h1> {{ cname }}</h1> */
+/*   </div> */
+/*   <div class="the_course_module"> */
+/*     <h1> {{ cname }}</h1> */
+/*   </div> */
+/* </div> */
+.the_course_container {
+  width: 60%;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  /* grid-template-rows: repeat(auto-fit, 1fr); */
+  grid-gap: 1rem;
+}
+
+.the_course_banner {
+  background-color: red;
+  min-height: 30rem;
+}
+
+.the_course_cart {
+  background-color: yellow;
+  min-height: 3rem;
+
+  grid-column: 2 / 2;
+  grid-row: 1 / -1;
+}
+
+.the_course_intro {
+  background-color: blue;
+  min-height: 30rem;
+}
+
+.the_course_module {
+  background-color: orange;
+  min-height: 30rem;
+}
+
+@media (max-width: 1440px) {
+  .the_course_container {
+    width: 80%;
+  }
+}

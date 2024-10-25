@@ -1,6 +1,6 @@
 import { Component, HostListener, inject, signal } from '@angular/core';
 import { ViewportScroller } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, Router } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
@@ -26,6 +26,7 @@ export class AppComponent {
 
   constructor(
     private ViewportScroller: ViewportScroller,
+    // private router: Router
   ) {
     this.breakpointObserver.observe([
       '(max-width: 768px)'
@@ -45,6 +46,8 @@ export class AppComponent {
   onWindowScroll(): void {
     const position = this.ViewportScroller.getScrollPosition();
     const Y = position[1];
+
+    // console.log(this.router.url === '/courses');
 
     // console.log(Y);
 
