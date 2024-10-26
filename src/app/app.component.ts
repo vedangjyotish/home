@@ -1,18 +1,17 @@
 import { Component, HostListener, inject, signal } from '@angular/core';
 import { ViewportScroller } from '@angular/common';
-import { RouterOutlet, Router } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
-import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-// import { EventEmitter } from 'stream';
+import { BreakpointObserver } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, NavbarComponent, HomeComponent, FooterComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
   title = 'vedang';
@@ -22,54 +21,38 @@ export class AppComponent {
   slideSwitch = signal(false);
   slideUpSwitch = signal(false);
 
-  breakpointObserver = inject(BreakpointObserver);
+  private breakpointObserver = inject(BreakpointObserver);
 
-  constructor(
-    private ViewportScroller: ViewportScroller,
-    // private router: Router
-  ) {
-    this.breakpointObserver.observe([
-      '(max-width: 768px)'
-    ]).subscribe((result: BreakpointState)=>{
-      if(result.matches){
-        // console.log('Screen width is 768px of less');
-        this.mobileScreen.set(true);
-        this.paddingTop.set('1rem');
-      } else{
-        // console.log('Screen width is more than 600px');
-        this.desktopScreen.set(true);
-      }
+  constructor(private viewportScroller: ViewportScroller) {
+    this.observeScreenSize();
+  }
+
+  private observeScreenSize(): void {
+    this.breakpointObserver.observe(['(max-width: 768px)']).subscribe(({ matches }) => {
+      this.mobileScreen.set(matches);
+      this.paddingTop.set(matches ? '1rem' : '13rem');
+      this.desktopScreen.set(!matches);
     });
   }
 
-  @HostListener('window:scroll', [])
+  @HostListener('window:scroll')
   onWindowScroll(): void {
-    const position = this.ViewportScroller.getScrollPosition();
-    const Y = position[1];
+    const scrollY = this.viewportScroller.getScrollPosition()[1];
 
-    // console.log(this.router.url === '/courses');
-
-    // console.log(Y);
-
-    if (Y >= 570 && this.mobileScreen() === false) {
+    if (scrollY >= 570 && !this.mobileScreen()) {
       this.slideUpSwitch.set(true);
     }
-    // console.log(this.slideUpSwitch());
 
-    if (Y >= 600 && this.mobileScreen() === false) {
-      // this.paddingTop.set('6rem');
+    if (scrollY >= 600 && !this.mobileScreen()) {
       this.slideSwitch.set(true);
-    } else if (Y < 600 && this.desktopScreen()) {
+    } else if (scrollY < 600 && this.desktopScreen()) {
       this.paddingTop.set('13rem');
       this.slideSwitch.set(false);
-    } else {
-      // this.paddingTop.set('13rem');
-      // this.slideSwitch.set(true);
     }
   }
 
-  scrollTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth'});
+  scrollTop(): void {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
-
 }
+

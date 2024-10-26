@@ -1,0 +1,12 @@
+li {
+  list-style-type: none;
+  margin-top: 0.25rem;
+  color: #861400;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+li::before {
+  content: url('../../assets/ccards/img/check.svg');
+  vertical-align: -30%;
+}

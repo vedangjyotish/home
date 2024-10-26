@@ -4,6 +4,9 @@ import { HomeComponent } from './home/home.component';
 import { DevelopmentComponent } from './development/development.component';
 import { CoursesComponent } from './courses/courses.component';
 import { CourseComponent } from './course/course.component';
+import path from 'path';
+import { ModsComponent } from './mods/mods.component';
+import { TabsComponent } from './tabs/tabs.component';
 
 export const routes: Routes = [
   {
@@ -45,6 +48,16 @@ export const routes: Routes = [
   {
     path: 'course/:cid',
     component: CourseComponent,
+    children: [
+      {
+        path: 'mods/:index',
+        component: ModsComponent
+      }, 
+      {
+        path: 'tabs',
+        component: TabsComponent
+      }
+    ]
   },
   {
     path: 'development',

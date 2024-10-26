@@ -23,39 +23,24 @@
     <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur sunt id aliquam optio voluptate? Veniam deleniti quos reprehenderit quaerat eaque, ab eum quam asperiores perferendis quidem inventore sapiente accusantium et.</p>
     <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nam doloremque fugiat soluta aliquid laudantium laboriosam voluptatem adipisci? Cupiditate inventore veniam accusamus delectus corrupti reiciendis vitae eveniet laboriosam, aspernatur voluptates aperiam.</p>
   </div>
+    <!-- course module starts -->
   <div class="the_course_module">
     <div class="course_module_tabs">
-      <a class="highlighted" href="#">Course Modules</a>
-      <a class="greyed" href="#">Reviews</a>
+      <a class="tab__buttons" [class]="{'active': activeTabIndex === 0}" (click)="showContents($event, bLine, 0)" href="#">Course Modules</a>
+      <a class="tab__buttons" [class]="{'active': activeTabIndex === 1}" (click)="showContents($event, bLine, 1)" href="">Instructor</a>
+      <a class="tab__buttons" [class]="{'active': activeTabIndex === 2}" (click)="showContents($event, bLine, 2)" href="#">Reviews</a>
+      <div #bLine class="b_line"></div>
     </div>
     <div class="course_modules">
       <div class="course_modules_buttons">
-        <div class="mods active">Module 1</div>
-        <div class="mods inactive">Module 2</div>
-        <div class="mods inactive">Module 3</div>
+        <a [routerLink]="['mods', 0]" class="mods" [class]="{'active': activeModuleIndex === 0}" (click)="toggleModuleActive(0)">Module 1</a>
+        <a [routerLink]="['mods', 1]" class="mods" [class]="{'active': activeModuleIndex === 1}" (click)="toggleModuleActive(1)">Module 2</a>
+        <a [routerLink]="['mods', 2]" class="mods" [class]="{'active': activeModuleIndex === 2}" (click)="toggleModuleActive(2)">Module 3</a>
       </div>
       <div class="course_modules_contents">
-        <li>Lal kitab Grammar</li>
-        <li>lal kitab theory</li>
-        <li>lal kitab rules and Regualtions</li>
-        <li>lal kitab 35 and 36 year cycle(Dasha)</li>
-        <li>all types of Kundali planetary aspects and their effects and power</li>
-        <li>significance of planets</li>
-        <li>significance of Houses</li>
-        <li>sign's significance friends and enemies of the planets</li>
-        <li>things represented by planets</li>
-        <li>planetary age and day</li>
-        <li>what is each planet in each house?</li>
-        <li>what is a pucca house and what is its importance?</li>
-        <li>planet's activation and its importance</li>
-        <li>planets of Activation Destiny</li>
-        <li>how to make Varshfala?</li>
-        <li>bilmukabil planets and its importance Bali ke Bakre of Kurbani ke Bakre concept</li>
-        <li>+method and rules to read 1 to 12 house</li>
-        <li>what is blank house?</li>
-        <li>concept of sleeping houses and sleeping planets</li>
-        <li>Takkar, dhoka, drashti, buniyad, achanak chot, rin ,chandra kundali</li>
+        <router-outlet />
       </div>
     </div>
   </div>
+    <!-- course module ends -->
 </div>

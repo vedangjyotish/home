@@ -11,3 +11,51 @@
     transform: translateX(2rem); /* Adjust the distance as needed */
   }
 }
+
+.tab__container {
+  width: 60%;
+  margin: 3rem auto;
+  font-size: 1.8rem;
+}
+
+/* Hide radio buttons */
+.tab-input {
+  display: none;
+}
+
+/* Tab container with long bottom border */
+.tab-bar {
+  display: flex;
+  border-bottom: 4px solid #999; /* Long border across the entire tab bar */
+  justify-content: space-around;
+}
+
+/* Label as tabs */
+.tab {
+  position: relative;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+/* Bottom border for each tab using ::before */
+.tab::before {
+  content: '';
+  position: absolute;
+  bottom: -4px; /* Position it below the main border */
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: transparent; /* Start as transparent */
+  transition: background-color 0.3s ease;
+}
+
+/* Change border color when tab is active */
+.tab-input:checked + .tab::before {
+  background-color: #333; /* Change border color on active */
+}
+
+/* Change text color on active */
+.tab-input:checked + .tab {
+  color: #333;
+}
