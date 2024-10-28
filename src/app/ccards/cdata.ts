@@ -238,10 +238,6 @@ export const cdata = [
         module: 2,
         list: ["Planetary motions"],
       },
-      {
-        module: 3,
-        list: ["Remedies"]
-      }
     ],
   },
   {

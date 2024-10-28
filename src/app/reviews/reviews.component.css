@@ -1,0 +1,68 @@
+.review_container {
+  /* background-color: orangered; */
+  min-height: 50rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.review_card {
+  padding: 2rem;
+  background-color: #660e00;
+  color: #fcfcf7;
+  border-radius: 1rem;
+  width: 50rem;
+  height: 30rem;
+  display: flex;
+  font-size: 1.8rem;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.user_name_rating {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user_rating {
+  color: #FCFF4B;
+}
+
+.user_review {
+  color: #ffc6b9;
+}
+
+
+.user_name {
+  color: #ffc6b9;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: center;
+}
+
+.user_title p {
+  font-weight: 500;
+}
+
+.user_avatar {
+  background-color: #fcfbf7;
+  color: #660e00;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--body-font);
+  font-weight: 700;
+}
+
+.date_stamp {
+  font-size: 1.5rem;
+  font-style: italic;
+  color: #ffc6b9;
+}

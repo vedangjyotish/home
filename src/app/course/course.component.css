@@ -130,9 +130,9 @@
   transition: all .3s ease-in-out;
 }
 
-.the_course_module_container {
-  min-height: 70rem;
-}
+/* .the_course_module_container { */
+/*   min-height: 70rem; */
+/* } */
 
 /* Media Queries */
 @media (max-width: 1440px) {

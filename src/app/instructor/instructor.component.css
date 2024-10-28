@@ -1,0 +1,29 @@
+.instructor_container {
+  min-height: 50rem;
+  /* background-color: greenyellow; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.instructor_contents {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  place-content: center;
+}
+
+.instructor_contents img {
+  height: 30rem;
+  align-self: center;
+  justify-self: center;
+}
+
+.instructor_contents p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  font-size: 1.8rem;
+  color: #660e00;
+  font-weight: 400;
+}
