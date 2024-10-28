@@ -1,6 +1,13 @@
-@for (mod of mods; track mod.id) {
-  <li>{{ mod }}</li>
-  } @empty {
-    <p>No Modules</p>
-  }
-
+<div class="course_modules">
+  <div class="course_modules_buttons">
+    <a class="mods" 
+       *ngFor="let mod of modules(); let index = index" 
+       [class]="{'active': activeModuleIndex() === index}" 
+       (click)="toggleModuleActive(index)">
+      Module {{ mod.module }}
+    </a>
+  </div>
+  <div class="course_modules_contents">
+    <li *ngFor="let item of moduleList()">{{ item }}</li>
+  </div>
+</div>

@@ -1,37 +1,52 @@
-import { Component, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { cdata } from '../ccards/cdata';
+import { Component, computed, inject, input, signal } from '@angular/core';
+import { RouterOutlet, RouterLink } from '@angular/router';
+import { CourseService } from '../ccards/courses.service';
+import { CommonModule } from '@angular/common';
+
+interface Module {
+  module: number;
+  list: string[];
+}
 
 @Component({
   selector: 'app-mods',
   standalone: true,
-  imports: [],
+  imports: [RouterOutlet, RouterLink, CommonModule],
   templateUrl: './mods.component.html',
   styleUrl: './mods.component.css'
 })
 export class ModsComponent {
-  private data = cdata;
+  cid = input.required<string>();
 
-  Index:number = 0;
+  private coursesService = inject(CourseService);
 
-  mods:any[] = [];
+  activeModuleIndex = signal(0);
 
-  constructor(private route: ActivatedRoute) {}
+  private memoizedModules: Module[] | null = null;
+  private memoizedCid: string | null = null;
 
-  ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      let cid = params['cid'];
-      let mod = params['index'];
-      // console.log(this.mod);
-      // console.log(params);
+  modules = computed<Module[]>(() => {
+    if (this.memoizedCid === this.cid() && this.memoizedModules) {
+      return this.memoizedModules;
+    }
 
-      const course = this.data.find((el) => el.cid === cid);
-      this.mods = course ? course.mods[mod] : [];
+    const course = this.coursesService.courses.find((c) => c.cid === this.cid());
+    this.memoizedModules = course?.mods || [];
+    this.memoizedCid = this.cid();
+    return this.memoizedModules;
+  });
 
-      this.mods.forEach((element) => {
-        console.log(element);
-      });
 
-    })
+  moduleList = computed(() => {
+    const course = this.coursesService.courses.find((c) => c.cid === this.cid());
+    if (!course || !course.mods) {
+      return [];
+    }
+    const module = course.mods[this.activeModuleIndex()];
+    return module ? module.list : [];
+  });
+
+  toggleModuleActive(index: number) {
+    this.activeModuleIndex.set(index);
   }
 }

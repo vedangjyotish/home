@@ -1,7 +1,7 @@
 <div class="the_course_container">
   <div class="the_course_banner">
     <div class="the_course_info">
-      <h1>Numerology</h1>
+      <h1>{{ cname() }}</h1>
       <p>Unlock the secret of Numbers</p>
     </div>
     <div class="the_course_image">
@@ -15,7 +15,7 @@
   <!-- course cart ends -->
   <div class="the_course_intro">
     <div class="course_intro_heading">
-      <h2> {{ cname }}</h2>
+      <h2> {{ cname() }}</h2>
       <div class="course_author">
         <h3>by Shiv Purushottam Sharma</h3>
       </div>
@@ -26,21 +26,15 @@
     <!-- course module starts -->
   <div class="the_course_module">
     <div class="course_module_tabs">
-      <a class="tab__buttons" [class]="{'active': activeTabIndex === 0}" (click)="showContents($event, bLine, 0)" href="#">Course Modules</a>
-      <a class="tab__buttons" [class]="{'active': activeTabIndex === 1}" (click)="showContents($event, bLine, 1)" href="">Instructor</a>
-      <a class="tab__buttons" [class]="{'active': activeTabIndex === 2}" (click)="showContents($event, bLine, 2)" href="#">Reviews</a>
+      <a [routerLink]="['tabs', 0]" class="tab__buttons" [class]="{'active': activeTabIndex() === 0}" (click)="showContents($event, bLine, 0)" >Course Modules</a>
+      <a [routerLink]="['tabs', 1]" class="tab__buttons" [class]="{'active': activeTabIndex() === 1}" (click)="showContents($event, bLine, 1)" >Instructor</a>
+      <a [routerLink]="['tabs', 2]" class="tab__buttons" [class]="{'active': activeTabIndex() === 2}" (click)="showContents($event, bLine, 2)" >Reviews</a>
       <div #bLine class="b_line"></div>
     </div>
-    <div class="course_modules">
-      <div class="course_modules_buttons">
-        <a [routerLink]="['mods', 0]" class="mods" [class]="{'active': activeModuleIndex === 0}" (click)="toggleModuleActive(0)">Module 1</a>
-        <a [routerLink]="['mods', 1]" class="mods" [class]="{'active': activeModuleIndex === 1}" (click)="toggleModuleActive(1)">Module 2</a>
-        <a [routerLink]="['mods', 2]" class="mods" [class]="{'active': activeModuleIndex === 2}" (click)="toggleModuleActive(2)">Module 3</a>
-      </div>
-      <div class="course_modules_contents">
-        <router-outlet />
-      </div>
+    <div class="the_course_module_container">
+      <router-outlet />
     </div>
+    <!-- course module container ends -->
   </div>
     <!-- course module ends -->
 </div>

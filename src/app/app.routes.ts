@@ -7,6 +7,8 @@ import { CourseComponent } from './course/course.component';
 import path from 'path';
 import { ModsComponent } from './mods/mods.component';
 import { TabsComponent } from './tabs/tabs.component';
+import { InstructorComponent } from './instructor/instructor.component';
+import { ReviewsComponent } from './reviews/reviews.component';
 
 export const routes: Routes = [
   {
@@ -50,12 +52,21 @@ export const routes: Routes = [
     component: CourseComponent,
     children: [
       {
-        path: 'mods/:index',
-        component: ModsComponent
-      }, 
+        path: 'tabs/0',
+        component: ModsComponent,
+      },
       {
-        path: 'tabs',
-        component: TabsComponent
+        path: 'tabs/1',
+        component: InstructorComponent,
+      },
+      {
+        path: 'tabs/2',
+        component: ReviewsComponent,
+      },
+      {
+        path: '',
+        redirectTo: 'tabs/0',
+        pathMatch: 'full'
       }
     ]
   },

@@ -1,6 +1,6 @@
-import { Component, Input, Renderer2 } from '@angular/core';
-import { cdata } from '../ccards/cdata';
+import { Component, Input, Renderer2, signal } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
+import { CourseService } from '../ccards/courses.service';
 
 @Component({
   selector: 'app-course',
@@ -10,63 +10,40 @@ import { RouterLink, RouterOutlet } from '@angular/router';
   styleUrl: './course.component.css'
 })
 export class CourseComponent {
-  // Course data
-  private data = cdata;
-
-  // Course name to be displayed
-  cname: string = '';
+  cname = signal('');
   
-  // Index of the currently active tab
-  activeTabIndex: number = 0;
+  activeTabIndex = signal(0)
 
-  // Index of the currently active module
   activeModuleIndex: number = 0;
 
-  // Input property to receive course ID from the parent component
+  constructor( private renderer: Renderer2, private coursesService: CourseService) {};
+
+  private coursesMap = new Map(this.coursesService.courses.map(course => [course.cid, course]));
   @Input()
   set cid(uid: string) {
-    // Find the course name based on the course ID and assign it to cname
-    const course = this.data.find((el) => el.cid === uid);
-    this.cname = course ? course.name : 'Unknown Course';
+    const course = this.coursesMap.get(uid);
+    this.cname.set(course ? course.name : 'Unknown Course');
   }
 
-  constructor( private renderer: Renderer2) {};
-
-  // Method to handle tab switching and move the underline element
   showContents(event: Event, element: HTMLElement, index: number) {
     event.preventDefault();
+    this.activeTabIndex.set(index);
 
-    // Handle tab switching
-    this.updateActiveTab(index);
     this.updateUnderlinePosition(event, element, index);
   }
 
-  // Method to update the active tab index
-  private updateActiveTab(index: number) {
-    this.activeTabIndex = index;
-  }
-
-  // Method to update the underline position
   private updateUnderlinePosition(event: Event, element: HTMLElement, index: number) {
-    event.preventDefault(); // Prevent default anchor navigation
+    event.preventDefault();
 
-    // Update the active tab index
-    this.activeTabIndex = index;
+    this.activeTabIndex.set(index);
 
-    // Get target element dimensions
     const targetLink = event.target as HTMLAnchorElement;
     const offsetWidth = targetLink.offsetWidth;
     const offsetLeft = targetLink.offsetLeft;
     
-    
-
-    // Adjust the width and position of the underline element
     this.renderer.setStyle(element, 'width', `${offsetWidth}px`);
     this.renderer.setStyle(element, 'left', `${offsetLeft}px`);
   }
 
-  toggleModuleActive(index: number) {
-    this.activeModuleIndex = index;
-  }
 }
 

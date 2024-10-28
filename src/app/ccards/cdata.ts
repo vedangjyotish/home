@@ -10,54 +10,64 @@ export const cdata = [
     price: "40,000",
     featured: true,
     mods: [
-      [
-        "lal kitab theory",
-        "lal kitab rules and Regulations",
-        "lal kitab 35 and 36 year cycle (Dasha)",
-        "all types of Kundali planetary aspects and their effects & power",
-        "significance of planets",
-        "significance of Houses",
-        "sign's significance friends and enemies of the planets",
-        "things represented by planets",
-        "planetary age and day",
-        "what is each planet in each house?",
-        "what is a pucca house and what is its importance?",
-        "planet's activation and its importance",
-        "planets of Activation Destiny",
-        "how to make Varshfala?",
-        "bilmukabil planets and its importance Bali ke Bakre of Kurbani ke Bakre concept",
-        "+method and rules to read 1 to 12 house",
-        "what is blank house?",
-        "concept of sleeping houses and sleeping planets",
-        "Takkar, dhoka, drashti, buniyad, achanak chot, rin, chandra kundali"
-      ],
-      [
-        "Significators of all planets",
-        "Energy of planets",
-        "energy of planets in each house",
-        "effect of aspect of one planet on another planet",
-        "how to read planets combinations",
-        "Varshfala Chart Detail analysis",
-        "prediction through combination of houses",
-        "which house is giving good/bad result"
-      ],
-      [
-        "How to Make Remedies?",
-        "Makaan Kundali",
-        "How to Make Nishaniyan",
-        "Vastu Remedies of Lal Kitab",
-        "Astrological Remedies of Lal Kitab",
-        "Remedial treatment",
-        "Dhan Yoga Combinations",
-        "Santan (Child) Yoga Combinations",
-        "Prediction in the Lal Kitab Varshfala",
-        "Promotion in the Lal Kitab Varshfala",
-        "Marriage in the Lal Kitab Varshfala",
-        "Job and Career in the Lal Kitab Varshfala",
-        "Yoga in the Lal Kitab Varshfala",
-        "Many More.."
-      ]
+      {
+        module: 1,
+        list: [
+          "lal kitab theory",
+          "lal kitab rules and Regulations",
+          "lal kitab 35 and 36 year cycle (Dasha)",
+          "all types of Kundali planetary aspects and their effects & power",
+          "significance of planets",
+          "significance of Houses",
+          "sign's significance friends and enemies of the planets",
+          "things represented by planets",
+          "planetary age and day",
+          "what is each planet in each house?",
+          "what is a pucca house and what is its importance?",
+          "planet's activation and its importance",
+          "planets of Activation Destiny",
+          "how to make Varshfala?",
+          "bilmukabil planets and its importance Bali ke Bakre of Kurbani ke Bakre concept",
+          "+method and rules to read 1 to 12 house",
+          "what is blank house?",
+          "concept of sleeping houses and sleeping planets",
+          "Takkar, dhoka, drashti, buniyad, achanak chot, rin, chandra kundali"
+        ]
+      },
+      {
+        module: 2,
+        list: [
+          "Significators of all planets",
+          "Energy of planets",
+          "energy of planets in each house",
+          "effect of aspect of one planet on another planet",
+          "how to read planets combinations",
+          "Varshfala Chart Detail analysis",
+          "prediction through combination of houses",
+          "which house is giving good/bad result"
+        ],
+      },
+      {
+        module: 3,
+        list: [
+          "How to Make Remedies?",
+          "Makaan Kundali",
+          "How to Make Nishaniyan",
+          "Vastu Remedies of Lal Kitab",
+          "Astrological Remedies of Lal Kitab",
+          "Remedial treatment",
+          "Dhan Yoga Combinations",
+          "Santan (Child) Yoga Combinations",
+          "Prediction in the Lal Kitab Varshfala",
+          "Promotion in the Lal Kitab Varshfala",
+          "Marriage in the Lal Kitab Varshfala",
+          "Job and Career in the Lal Kitab Varshfala",
+          "Yoga in the Lal Kitab Varshfala",
+          "Many More.."
+        ]
+      },
     ],
+
   },
   {
     cid: 'c2',
@@ -70,11 +80,19 @@ export const cdata = [
     price: "4,500",
     featured: true,
     mods: [
-      ["How to read charts"],
-      ["Planetary motions"],
-      ["Remedies"]
-    ]
-
+      {
+        module: 1,
+        list: ["How to read charts"],
+      },
+      {
+        module: 2,
+        list: ["Planetary motions"],
+      },
+      {
+        module: 3,
+        list: ["Remedies"]
+      }
+    ],
   },
   {
     cid: 'c3',
@@ -87,9 +105,18 @@ export const cdata = [
     price: "20,000",
     featured: true,
     mods: [
-      ["How to read charts"],
-      ["Planetary motions"],
-      ["Remedies"]
+      {
+        module: 1,
+        list: ["How to read charts"],
+      },
+      {
+        module: 2,
+        list: ["Planetary motions"],
+      },
+      {
+        module: 3,
+        list: ["Remedies"]
+      }
     ],
   },
   {
@@ -103,9 +130,18 @@ export const cdata = [
     price: "40,000",
     featured: true,
     mods: [
-      ["How to read charts"],
-      ["Planetary motions"],
-      ["Remedies"]
+      {
+        module: 1,
+        list: ["How to read charts"],
+      },
+      {
+        module: 2,
+        list: ["Planetary motions"],
+      },
+      {
+        module: 3,
+        list: ["Remedies"]
+      }
     ],
   },
   {
@@ -119,9 +155,18 @@ export const cdata = [
     price: "40,000",
     featured: true,
     mods: [
-      ["How to read charts"],
-      ["Planetary motions"],
-      ["Remedies"]
+      {
+        module: 1,
+        list: ["How to read charts"],
+      },
+      {
+        module: 2,
+        list: ["Planetary motions"],
+      },
+      {
+        module: 3,
+        list: ["Remedies"]
+      }
     ],
   },
   {
@@ -135,9 +180,18 @@ export const cdata = [
     price: "40,000",
     featured: false,
     mods: [
-      ["How to read charts"],
-      ["Planetary motions"],
-      ["Remedies"]
+      {
+        module: 1,
+        list: ["How to read charts"],
+      },
+      {
+        module: 2,
+        list: ["Planetary motions"],
+      },
+      {
+        module: 3,
+        list: ["Remedies"]
+      }
     ],
   },
   {
@@ -151,9 +205,18 @@ export const cdata = [
     price: "40,000",
     featured: true,
     mods: [
-      ["How to read charts"],
-      ["Planetary motions"],
-      ["Remedies"]
+      {
+        module: 1,
+        list: ["How to read charts"],
+      },
+      {
+        module: 2,
+        list: ["Planetary motions"],
+      },
+      {
+        module: 3,
+        list: ["Remedies"]
+      }
     ],
   },
   {
@@ -167,9 +230,18 @@ export const cdata = [
     price: "40,000",
     featured: true,
     mods: [
-      ["How to read charts"],
-      ["Planetary motions"],
-      ["Remedies"]
+      {
+        module: 1,
+        list: ["How to read charts"],
+      },
+      {
+        module: 2,
+        list: ["Planetary motions"],
+      },
+      {
+        module: 3,
+        list: ["Remedies"]
+      }
     ],
   },
   {
@@ -183,9 +255,18 @@ export const cdata = [
     price: "40,000",
     featured: true,
     mods: [
-      ["How to read charts"],
-      ["Planetary motions"],
-      ["Remedies"]
+      {
+        module: 1,
+        list: ["How to read charts"],
+      },
+      {
+        module: 2,
+        list: ["Planetary motions"],
+      },
+      {
+        module: 3,
+        list: ["Remedies"]
+      }
     ],
   },
   {
@@ -199,9 +280,18 @@ export const cdata = [
     price: "40,000",
     featured: true,
     mods: [
-      ["How to read charts"],
-      ["Planetary motions"],
-      ["Remedies"]
+      {
+        module: 1,
+        list: ["How to read charts"],
+      },
+      {
+        module: 2,
+        list: ["Planetary motions"],
+      },
+      {
+        module: 3,
+        list: ["Remedies"]
+      }
     ],
   }
 ]
