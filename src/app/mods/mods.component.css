@@ -16,6 +16,31 @@ li::before {
   min-height: 50rem;
 }
 
+.course_module_info p {
+  color: #861400;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.course_module_info p:nth-child(2)::before,
+.course_module_info p:nth-child(3)::before {
+  content: "";
+  display: inline-block;
+  width: 0.8rem;
+  height: 0.8rem;
+  background-color: var(--color-dark-2);
+  border-radius: 50%;
+  margin-right: 0.8rem;
+}
+
+.course_module_info {
+  padding: 1.5rem 0 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
+
 /* Module Buttons and Contents */
 .course_modules {
   width: 100%;
@@ -33,6 +58,7 @@ li::before {
   gap: 1rem;
 }
 
+
 .mods {
   padding: 0.75rem 2rem;
   font-size: 1.5rem;
@@ -46,4 +72,60 @@ li::before {
 .mods.active {
   color: #fbeae7;
   background-color: #861400;
+}
+
+@media (max-width: 768px) {
+  .courseModulesContainer,
+  .course_module_info,
+  .course_modules_contents {
+    width: 100%;
+  }
+
+  li {
+    margin-top: 0.15rem;
+    font-size: 1.3rem;
+    font-weight: 600;
+  }
+
+  .course_modules {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 1.6rem;
+
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr max-content;
+    gap: 0;
+  }
+
+  .course_modules_buttons {
+    padding: 2rem 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 0.2rem;
+  }
+
+  .mods {
+    align-self: center;
+    padding: 0.75rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    border-radius: 0;
+  }
+
+  .courseModulesContainer {
+    min-height: 40rem;
+  }
+
+  .course_module_info p {
+    color: #861400;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+
+  .course_modules_contents {
+    padding: 0rem 1rem 1rem 1rem;
+  }
 }

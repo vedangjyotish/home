@@ -27,3 +27,26 @@
   color: #660e00;
   font-weight: 400;
 }
+
+@media (max-width: 768px) {
+  .instructor_container {
+    display: block;
+  }
+
+  .instructor_contents {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: max-content max-content;
+    place-content: center;
+  }
+
+  .instructor_contents img {
+    padding: 2rem 0;
+  }
+
+  .instructor_contents p {
+    font-weight: 500;
+    padding: 1rem 2rem 2rem 2rem;
+    grid-row: 2;
+  }
+}

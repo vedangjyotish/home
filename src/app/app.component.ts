@@ -23,7 +23,9 @@ export class AppComponent {
 
   private breakpointObserver = inject(BreakpointObserver);
 
-  constructor(private viewportScroller: ViewportScroller) {
+  constructor(
+    private viewportScroller: ViewportScroller,
+  ) {
     this.observeScreenSize();
   }
 

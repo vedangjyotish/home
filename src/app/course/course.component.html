@@ -1,40 +1,60 @@
-<div class="the_course_container">
-  <div class="the_course_banner">
-    <div class="the_course_info">
-      <h1>{{ cname() }}</h1>
-      <p>Unlock the secret of Numbers</p>
-    </div>
-    <div class="the_course_image">
-      <img src="../../assets/ccards/img/numerology.png" alt="">
-    </div>
-  </div>
-  <!-- course banner ends -->
-  <div class="the_course_cart">
-    <p>Amount</p>
-  </div>
-  <!-- course cart ends -->
-  <div class="the_course_intro">
-    <div class="course_intro_heading">
-      <h2> {{ cname() }}</h2>
-      <div class="course_author">
-        <h3>by Shiv Purushottam Sharma</h3>
+<div class="course_container_bg">
+  <div class="the_course_container">
+    <div class="the_course_banner">
+      <div class="the_course_info">
+        <h1>{{ cname() }}</h1>
+        <p>Unlock the secret of Numbers</p>
+      </div>
+      <div class="the_course_image">
+        <img src="../../assets/ccards/img/numerology.png" alt="">
       </div>
     </div>
-    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur sunt id aliquam optio voluptate? Veniam deleniti quos reprehenderit quaerat eaque, ab eum quam asperiores perferendis quidem inventore sapiente accusantium et.</p>
-    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nam doloremque fugiat soluta aliquid laudantium laboriosam voluptatem adipisci? Cupiditate inventore veniam accusamus delectus corrupti reiciendis vitae eveniet laboriosam, aspernatur voluptates aperiam.</p>
-  </div>
+    <!-- course banner ends -->
+    <div class="the_course_cart">
+      <div class="the_course_cart_card">
+        <img src="../../assets/ccards/img/numerology.png" alt="">
+        <p class="price"> &#8377; 40000</p>
+        <button class="mods" type="submit">Add to cart</button>
+        <button class="mods active" type="submit">Enroll Now</button>
+        <div class="about_the_course">
+          <div class="info_lines">
+            <img src="../../assets/icons/calendar.svg" alt="">  
+            <p>start date : 05-12-2024</p>
+          </div>
+          <div class="info_lines">
+            <img src="../../assets/icons/check_round.svg" alt="">  
+            <p>available seats : 12</p>
+          </div>
+          <div class="info_lines">
+            <img src="../../assets/icons/clock.svg" alt="">  
+            <p>Duration : 6 months</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- course cart ends -->
+    <div class="the_course_intro">
+      <div class="course_intro_heading">
+        <h2> {{ cname() }}</h2>
+        <div class="course_author">
+          <h3>by Shiv Purushottam Sharma</h3>
+        </div>
+      </div>
+      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Tenetur sunt id aliquam optio voluptate? Veniam deleniti quos reprehenderit quaerat eaque, ab eum quam asperiores perferendis quidem inventore sapiente accusantium et.</p>
+      <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nam doloremque fugiat soluta aliquid laudantium laboriosam voluptatem adipisci? Cupiditate inventore veniam accusamus delectus corrupti reiciendis vitae eveniet laboriosam, aspernatur voluptates aperiam.</p>
+    </div>
     <!-- course module starts -->
-  <div class="the_course_module">
-    <div class="course_module_tabs">
-      <a [routerLink]="['tabs', 0]" class="tab__buttons" [class]="{'active': activeTabIndex() === 0}" (click)="showContents($event, bLine, 0)" >Course Modules</a>
-      <a [routerLink]="['tabs', 1]" class="tab__buttons" [class]="{'active': activeTabIndex() === 1}" (click)="showContents($event, bLine, 1)" >Instructor</a>
-      <a [routerLink]="['tabs', 2]" class="tab__buttons" [class]="{'active': activeTabIndex() === 2}" (click)="showContents($event, bLine, 2)" >Reviews</a>
-      <div #bLine class="b_line"></div>
+    <div class="the_course_module">
+      <div class="course_module_tabs">
+        <a [routerLink]="['tabs', 0]" class="tab__buttons" [class]="{'active': activeTabIndex() === 0}" (click)="showContents($event, bLine, 0)" >Course Modules</a>
+        <a [routerLink]="['tabs', 1]" class="tab__buttons" [class]="{'active': activeTabIndex() === 1}" (click)="showContents($event, bLine, 1)" >Instructor</a>
+        <a [routerLink]="['tabs', 2]" class="tab__buttons" [class]="{'active': activeTabIndex() === 2}" (click)="showContents($event, bLine, 2)" >Reviews</a>
+        <div #bLine class="b_line"></div>
+      </div>
+      <div class="the_course_module_container">
+        <router-outlet />
+      </div>
     </div>
-    <div class="the_course_module_container">
-      <router-outlet />
-    </div>
-    <!-- course module container ends -->
-  </div>
     <!-- course module ends -->
+  </div>
 </div>

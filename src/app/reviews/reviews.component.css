@@ -1,5 +1,4 @@
 .review_container {
-  /* background-color: orangered; */
   min-height: 50rem;
   display: flex;
   justify-content: center;
@@ -65,4 +64,16 @@
   font-size: 1.5rem;
   font-style: italic;
   color: #ffc6b9;
+}
+
+@media (max-width: 768px) {
+  .review_container {
+    min-height: 30rem;
+  }
+
+  .review_card {
+    padding: 1rem;
+    width: 30rem;
+    height: 20rem;
+  }
 }

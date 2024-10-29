@@ -1,3 +1,25 @@
+button {
+  all: unset; /* Removes all default styles */
+  box-sizing: border-box; /* Ensures consistent box model */
+}
+
+button {
+  /* Alternatively, you can manually reset individual properties */
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  padding: 0;
+  outline: none;
+  text-align: inherit;
+  cursor: pointer;
+}
+
+.course_container_bg {
+  background: url('../../assets/svg/bg_course.svg') no-repeat center center fixed;
+  background-size: cover;
+}
+
 /* General Container Styling */
 .the_course_container {
   width: 60%;
@@ -42,13 +64,6 @@
   font-style: italic;
 }
 
-/* Cart Styling */
-.the_course_cart {
-  background-color: yellow;
-  min-height: 3rem;
-  grid-column: 2;
-  grid-row: 1 / span 3;
-}
 
 /* Intro Styling */
 .the_course_intro {
@@ -130,9 +145,69 @@
   transition: all .3s ease-in-out;
 }
 
-/* .the_course_module_container { */
-/*   min-height: 70rem; */
-/* } */
+/* Cart Styling */
+.the_course_cart {
+  grid-column: 2;
+  grid-row: 1 / span 3;
+}
+
+.the_course_cart_card {
+  font-size: 1.6rem;
+  padding: 1.5rem 0.5rem;
+
+  background-color: #ffc6b9;
+  border-radius: 1.2rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+
+.price {
+  font-family: var(--head-font);
+  font-size: 2.3rem;
+  font-weight: 700;
+  color: #861400;
+}
+
+.mods {
+  padding: 0.75rem 2rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  border-radius: 0.8rem;
+  color: #861400;
+  background-color: #fbeae7;
+}
+
+.mods.active {
+  color: #fbeae7;
+  background-color: #861400;
+}
+
+.about_the_course {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.about_the_course img {
+  width: 2.2rem;
+}
+
+.about_the_course .info_lines {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.about_the_course .info_lines p {
+  text-transform: capitalize;
+  color: #861400;
+  font-weight: 600;
+}
 
 /* Media Queries */
 @media (max-width: 1440px) {
@@ -141,3 +216,60 @@
   }
 }
 
+@media (max-width: 768px) {
+
+  .the_course_banner {
+    width: 100%;
+  }
+
+  .the_course_intro {
+    width: 100%;
+  }
+
+  .the_course_module {
+    width: 100%;
+  }
+
+  .course_module_tabs {
+    width: 100%;
+  }
+
+  .the_course_module {
+    padding: 0.3rem;
+  }
+
+  .b_line {
+    position: absolute;
+    top: 7.6rem;
+    left: 1rem;
+    width: 9rem;
+  }
+
+  .course_container_bg {
+    padding-top: 9rem;
+  }
+
+  .the_course_container {
+    width: 100%;
+    padding: 1rem;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .the_course_cart {
+    width: 100%;
+    grid-column: 1;
+    grid-row: 4 / -1;
+  }
+
+  .the_course_banner {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+  }
+
+  .the_course_image {
+    padding-top: 2rem;
+    grid-row: 1; 
+  }
+}

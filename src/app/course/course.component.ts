@@ -1,5 +1,5 @@
 import { Component, Input, Renderer2, signal } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterOutlet, NavigationEnd } from '@angular/router';
 import { CourseService } from '../ccards/courses.service';
 
 @Component({
@@ -16,7 +16,23 @@ export class CourseComponent {
 
   activeModuleIndex: number = 0;
 
-  constructor( private renderer: Renderer2, private coursesService: CourseService) {};
+  constructor( 
+              private renderer: Renderer2, 
+              private coursesService: CourseService,
+              private router: Router
+             ) { 
+               // this.scrollToTop(); 
+             };
+
+   private scrollToTop() {
+     this.router.events.subscribe((event) => {
+       if (event instanceof NavigationEnd) {
+         if (this.router.url.endsWith('/tabs/0')) {
+           window.scrollTo(0, 1);
+         }
+       }
+     }); 
+   }
 
   private coursesMap = new Map(this.coursesService.courses.map(course => [course.cid, course]));
   @Input()
