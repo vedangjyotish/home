@@ -215,33 +215,7 @@ img {
 }
 
 @media (max-width: 768px) {
-  .header {
-    padding: 1rem 2%;
-  }
-  .header_right {
-    display: none;
-  }
-  .header_hamburger {
-    display: block;
-    padding-right: 1rem;
-  }
-  img {
-    width: 4.8rem;
-  }
-
-  .header_left h1 {
-    font-size: 2.4rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
-
-  .header_left span {
-    display: block;
-    color: #fff9f8;
-    font-size: 1.6rem;
-    letter-spacing: 1.2px;
-    line-height: 1rem;
-  }
+  
 }
 
 .d_menu {
@@ -308,6 +282,34 @@ img {
 @media (max-width: 768px) {
   .d_menu {
     display: none;
+  }
+  
+  .header {
+    padding: 1rem 2%;
+  }
+  .header_right {
+    display: none;
+  }
+  .header_hamburger {
+    display: block;
+    padding-right: 1rem;
+  }
+  img {
+    width: 4.8rem;
+  }
+
+  .header_left h1 {
+    font-size: 2.4rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .header_left span {
+    display: block;
+    color: #fff9f8;
+    font-size: 1.6rem;
+    letter-spacing: 1.2px;
+    line-height: 1rem;
   }
 }
 

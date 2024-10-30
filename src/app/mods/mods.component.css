@@ -28,7 +28,7 @@ li::before {
   display: inline-block;
   width: 0.8rem;
   height: 0.8rem;
-  background-color: var(--color-dark-2);
+  background-color: #861400;
   border-radius: 50%;
   margin-right: 0.8rem;
 }
