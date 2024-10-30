@@ -57,3 +57,36 @@ p {
 }
 
 
+input[type="text"], 
+input[type="password"], 
+input[type="email"], 
+input[type="number"],
+textarea, 
+select {
+    /* Remove default padding, margin, and border */
+    padding: 0;
+    margin: 0;
+    border: none;
+
+    /* Reset background and color */
+    background: transparent;
+    color: inherit;
+
+    /* Remove any default outline */
+    outline: none;
+
+    /* Remove default font styling */
+    font: inherit;
+
+    /* Set width and height to auto to avoid browser-specific sizing */
+    width: auto;
+    height: auto;
+    
+    /* Optional: Remove box-shadow */
+    box-shadow: none;
+    
+    /* Optional: Remove appearance on some browsers (like iOS Safari) */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}

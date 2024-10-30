@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { bdata } from './blogdata';
 
 @Component({
   selector: 'app-blog',
@@ -8,5 +9,5 @@ import { Component } from '@angular/core';
   styleUrl: './blog.component.css'
 })
 export class BlogComponent {
-
+  bdata = bdata;
 }

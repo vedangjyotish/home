@@ -1,1 +1,24 @@
-<p>blog works!</p>
+<div class="blogContainer">
+  <div class="blog_container">
+    <div class="posts">
+      @for (b of bdata; track b.bid) {
+        <div class="post">
+          <div class="post_image">
+            <img [src]="'assets/blogs/' + b.img" alt="">
+            <div class="date">{{ b.date }}</div>
+          </div>
+          <!-- post image ends -->
+          <article>
+            <h3>{{ b.name }}</h3>
+            <h1>{{ b.title }}</h1>
+            <h2>{{ b.sub }}</h2>
+          </article>
+          <!-- article ends -->
+        </div>
+        <!-- post ends -->
+      }
+    </div>
+    <!-- posts ends -->
+  </div>
+</div>
+
