@@ -4,11 +4,15 @@ import { HomeComponent } from './home/home.component';
 import { DevelopmentComponent } from './development/development.component';
 import { CoursesComponent } from './courses/courses.component';
 import { CourseComponent } from './course/course.component';
-import path from 'path';
 import { ModsComponent } from './mods/mods.component';
-import { TabsComponent } from './tabs/tabs.component';
 import { InstructorComponent } from './instructor/instructor.component';
 import { ReviewsComponent } from './reviews/reviews.component';
+import { ServicesComponent } from './services/services.component';
+import { BlogComponent } from './blog/blog.component';
+import { AppointmentComponent } from './appointment/appointment.component';
+import { AboutusComponent } from './aboutus/aboutus.component';
+import { ContactComponent } from './contact/contact.component';
+import { AccountComponent } from './account/account.component';
 
 export const routes: Routes = [
   {
@@ -21,27 +25,27 @@ export const routes: Routes = [
   },
   {
     path: 'services',
-    component: ComingsoonComponent,
+    component: ServicesComponent,
   },
   {
     path: 'blogs',
-    component: ComingsoonComponent,
+    component: BlogComponent,
   },
   {
     path: 'appointment',
-    component: ComingsoonComponent,
+    component: AppointmentComponent,
   },
   {
     path: 'aboutus',
-    component: ComingsoonComponent,
+    component: AboutusComponent,
   },
   {
     path: 'contactus',
-    component: ComingsoonComponent,
+    component: ContactComponent,
   },
   {
     path: 'myaccount',
-    component: ComingsoonComponent,
+    component: AccountComponent,
   },
   {
     path: 'cart',

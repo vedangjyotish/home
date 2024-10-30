@@ -16,7 +16,7 @@ button {
 }
 
 .course_container_bg {
-  background: url('../../assets/svg/bg_course.svg') no-repeat center center fixed;
+  background: url('../../assets/svg/bg_services.svg') no-repeat center center fixed;
   background-size: cover;
 }
 
