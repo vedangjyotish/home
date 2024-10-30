@@ -1,15 +1,28 @@
 .coursesContainer {
-  background: url('../../assets/svg/bg_services.svg') no-repeat center center fixed;
-  background-size: cover;
+  background-color: #fceae8;
 }
+
 .courses_container {
   width: 60%;
   margin: 0 auto;
   margin-bottom: 2rem;
 }
 
-.user_avatar img {
-  width: 6.4rem;
+/* .user_avatar img { */
+/*   width: 6.4rem; */
+/* } */
+
+.user_avatar {
+  background-color: #660e00;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+  font-weight: 600;
+  color: #fec6b9;
 }
 
 .courses_header {

@@ -1,22 +1,21 @@
 .servicesContainer {
   background-color: #f1d9da;
   padding: 5rem 0 0 0;
-  background: url('../../assets/svg/bg_services.svg') no-repeat center center fixed;
-  background-size: cover;
 }  
 
 .services_contents {
   padding: 2rem;
-  /* background-color: #ffe6e7; */
+  background-color: #ffe6e7;
   height: 30rem;
   width: 60%;
   margin: 0 auto;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-top-right-radius: 0.5rem;
-  border-top-left-radius: 0.5rem;
+  border-radius: 0.5rem;
 }
+
+
 
 .services_tagline p {
   font-family: var(--body-font);
