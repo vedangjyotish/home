@@ -13,6 +13,7 @@ import { AppointmentComponent } from './appointment/appointment.component';
 import { AboutusComponent } from './aboutus/aboutus.component';
 import { ContactComponent } from './contact/contact.component';
 import { AccountComponent } from './account/account.component';
+import { CartComponent } from './cart/cart.component';
 
 export const routes: Routes = [
   {
@@ -49,7 +50,7 @@ export const routes: Routes = [
   },
   {
     path: 'cart',
-    component: ComingsoonComponent,
+    component: CartComponent,
   },
   {
     path: 'course/:cid',

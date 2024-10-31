@@ -1,0 +1,14 @@
+.cartContainer {
+  padding: 3rem 0;
+  background-color: #f1d9d9;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cartContainer p {
+  font-family: var(--body-font);
+  color: #861400;
+  font-size: 2.8rem;
+}
