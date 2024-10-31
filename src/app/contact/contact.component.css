@@ -1,0 +1,198 @@
+.appointmentContainer {
+  padding: 3rem 0;
+  background-color: #f1d9d9;
+}
+
+.appointment_container {
+  padding: 5rem 8rem;
+  background-color: #ffe7e7;
+  width: 60%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  border-radius: 0.5rem;
+}
+
+.contact_details {
+  padding: 2rem 4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 2rem;
+  /* background-color: #660e00; */
+  /* background: linear-gradient(0deg, rgb(189, 44, 0), rgb(102, 14, 0)); */
+  background: linear-gradient(235deg, rgb(189, 44, 0), rgb(102, 14, 0));
+  /* color: #ffc6b9; */
+  color: #fefafc;
+  border-radius: 1rem;
+}
+
+.contact_details h1 {
+  font-family: var(--body-font);
+  font-size: 1.8rem;
+}
+
+
+.contact_details a {
+  color: inherit; /* Inherit the color from the parent or set to desired color */
+  text-decoration: none; /* Remove underline */
+  font-weight: normal; /* Reset font weight */
+  background: none; /* Remove any background if present */
+  padding: 0; /* Reset padding if any */
+  margin: 0; /* Reset margin if any */
+  border: none; /* Remove border if present */
+}
+
+.contact_details a:hover {
+  text-decoration: underline; /* Adds underline on hover */
+}
+
+.contact_details p, 
+.contact_details a {
+  font-size: 1.4rem;
+  font-weight: 600;
+}
+
+.contact_details_section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.contact_details_section p:nth-of-type(2) {
+  font-weight: 400;
+  font-style: italic;
+}
+
+.social_media {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.social_media a img {
+  width: 2.8rem;
+}
+
+.appointment_form {
+  justify-self: center;
+  align-self: center;
+}
+
+.appointment_form h1 {
+  font-family: var(--body-font);
+  font-weight: 500;
+  color: #861400;
+  font-size: 3.2rem;
+  padding-bottom: 3rem;
+}
+
+.form_details,
+.form_data,
+.flex_line {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+label,
+.form_data .details {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #861400;
+}
+
+.form_data input[type="text"], 
+.form_data input[type="password"], 
+.form_data input[type="email"], 
+.form_data input[type="number"], 
+textarea, 
+select {
+    padding: 0.5rem 1rem;
+    margin: 0;
+    border: 1px solid #861400;
+    border-radius: 0.5rem;
+    background: transparent;
+    outline: none;
+    font: inherit;
+    font-size: 1.5rem;
+    width: auto;
+    height: auto;
+    box-shadow: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+.form_data input::placeholder {
+  color: #ff5a45;
+}
+
+select {
+    appearance: none; /* Removes default arrow in most browsers */
+    -webkit-appearance: none; /* Removes default arrow in WebKit browsers */
+    -moz-appearance: none; /* Removes default arrow in Firefox */
+    
+    background-color: #861400;
+    color: #ffe7e7; /* Set text color */
+
+    /* Positioning and styling the custom arrow */
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23ffe7e7" d="M7 10l5 5 5-5z"/></svg>');
+    /* Replace %23333 with the hex code for the arrow color */
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    padding-right: 2rem; /* Adds space for the custom arrow */
+}
+
+button {
+    border: none;
+    background: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    color: inherit;
+    outline: none;
+    cursor: pointer;
+    box-shadow: none;
+    width: auto;
+    height: auto;
+}
+
+.submit {
+  padding: 0.75rem 2rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  border-radius: 0.8rem;
+  color: #fbeae7;
+  background-color: #861400;
+}
+
+@media (max-width: 1440px) {
+  .appointment_container {
+    width: 80%;
+  }
+}
+
+@media (max-width: 768px) {
+  .appointmentContainer {
+    padding: 8rem 0 0 0;
+  }
+  .appointment_container {
+    padding: 5rem 0;
+    width: 100%;
+    grid-template-columns: 1fr;
+  }
+
+  .appointment_container img {
+    display: none;
+  }
+
+  .contact_details {
+    width: 90%;
+    margin: 0 auto 5rem auto;
+  }
+}
+
+
