@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { ComingsoonComponent } from './comingsoon/comingsoon.component';
 import { HomeComponent } from './home/home.component';
 import { DevelopmentComponent } from './development/development.component';
 import { CoursesComponent } from './courses/courses.component';

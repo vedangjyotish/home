@@ -22,13 +22,13 @@
 .slideMenu {
   height: 6rem;
   background-color: rgba(252, 234, 232, 0.9);
-  /* background-color: rgba(102, 13, 0, 0.5); */
 }
 
 .header {
   height: 10rem;
   background-color: #660d00;
 }
+
 
 .slide_header_text, .slide_menu_header_left, .header_left, .header_right, .header_text {
   display: flex;
@@ -48,6 +48,7 @@ h1, p {
 img {
   width: 6.5rem;
 }
+
 
 .slide_logo {
   width: 4.1rem;
@@ -75,6 +76,7 @@ img {
 .header_right img, .m_menu_sm_links img, .m_menu_contact_phone img, .m_menu_contact_email img {
   width: 2.8rem;
 }
+
 
 .header_right a {
   color: #fff9f8;
@@ -111,7 +113,7 @@ img {
   align-items: center;
   gap: 1rem;
   position: fixed;
-  top: 10rem;
+  top: 7rem;
   z-index: 1000;
   padding: 1.6rem;
   cursor: pointer;
@@ -165,13 +167,6 @@ img {
   gap: 1rem;
 }
 
-/* .header_right .helper { */
-/*   display: flex; */
-/*   align-items: center; */
-/*   justify-content: space-between; */
-/*   gap: 0.8rem; */
-/* } */
-
 .d_menu {
   height: 3.2rem;
   padding: 0 20%;
@@ -191,6 +186,7 @@ img {
   margin: 0 auto;
 }
 
+
 .d_menu a {
   flex: 1;
   display: flex;
@@ -209,12 +205,6 @@ img {
   background-color: #f6d6cf;
 }
 
-.d_menu svg {
-  margin-left: 0.75rem;
-  height: 1rem;
-  transition: all 500ms ease;
-}
-
 .d_menu a:hover svg {
   fill: #4e0700;
 }
@@ -223,14 +213,42 @@ img {
   background: linear-gradient(180deg, rgba(181,31,0,1) 0%, rgba(217,82,0,1) 100%);
 }
 
-/* Grouped media queries */
 @media (max-width: 1440px) {
   .header {
     padding: 1rem 10%;
+    height: 8rem;
+    background-color: #660d00;
+  }
+
+  .header_left h1 {
+    font-size: calc(3.6rem * 0.65);
+  }
+
+  .header_left span {
+    font-size: calc(1.5rem * 0.85);
+  }
+
+  img {
+    width: 4rem;
+  }
+
+  .header_right img {
+    width: calc(2.8rem * 0.75);
+  }
+
+  .header_right a {
+    padding: calc(1rem * 0.5);
+    font-size: calc(1.6rem * 0.8);
   }
 
   .d_menu {
     padding: 0 10%;
+    height: calc(3.2rem * 0.8);
+    top: 8rem;
+  }
+
+  .d_menu a {
+    font-size: calc(1.5rem * 0.9);
   }
 }
 

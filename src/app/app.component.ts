@@ -17,7 +17,7 @@ export class AppComponent {
   title = 'vedang';
   mobileScreen = signal(false);
   desktopScreen = signal(false);
-  paddingTop = signal('13rem');
+  paddingTop = signal('9rem');
   slideSwitch = signal(false);
   slideUpSwitch = signal(false);
 
@@ -48,7 +48,7 @@ export class AppComponent {
     if (scrollY >= 600 && !this.mobileScreen()) {
       this.slideSwitch.set(true);
     } else if (scrollY < 600 && this.desktopScreen()) {
-      this.paddingTop.set('13rem');
+      this.paddingTop.set('9rem');
       this.slideSwitch.set(false);
     }
   }
