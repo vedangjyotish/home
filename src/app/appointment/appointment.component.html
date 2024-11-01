@@ -1,6 +1,7 @@
 <div class="appointmentContainer">
   <div class="appointment_container">
-    <img src="../../assets/appointment/girl.png" alt="">
+    <!-- <img src="../../assets/appointment/girl.png" alt=""> -->
+    <img [src]="imageUrl" alt="">
     <div class="appointment_form">
       <h1>Celestial remedies,<br>without the hassle</h1>
       <form action="#">
@@ -36,7 +37,7 @@
           </div>
 
           <div class="message_data">
-            <textarea id="text" rows="8" cols="31" placeholder="Message..."></textarea>
+            <textarea id="text" [rows]="textAreaRows" [cols]="textAreaCols" placeholder="Message..."></textarea>
           </div>
           <!-- form_data class end -->
           <button type="submit" class="submit">Submit</button>

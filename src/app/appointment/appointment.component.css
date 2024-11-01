@@ -68,6 +68,15 @@ select {
     appearance: none;
 }
 
+.submit {
+  padding: 0.75rem 2rem;
+  font-size: 1.5rem;
+  font-weight: 600;
+  border-radius: 0.8rem;
+  color: #fbeae7;
+  background-color: #861400;
+}
+
 .form_data input::placeholder {
   color: #ff5a45;
 }
@@ -102,33 +111,115 @@ button {
     height: auto;
 }
 
-.submit {
-  padding: 0.75rem 2rem;
-  font-size: 1.5rem;
-  font-weight: 600;
-  border-radius: 0.8rem;
-  color: #fbeae7;
-  background-color: #861400;
-}
 
 @media (max-width: 1440px) {
   .appointment_container {
-    width: 80%;
+    padding: calc(3rem * 0.5) calc(2rem * 0.3) calc(3rem * 0.5) calc(3rem * 0.9);
+    width: 50%;
+    margin: 0 auto;
+    display: grid;
+    gap: 2rem;
+    place-content: center;
+    grid-template-columns: max-content max-content;
+    border-radius: 0.5rem;
+  }
+
+  .appointment_container img,
+  .appointment_form {
+    justify-self: center;
+    align-self: center;
+  }
+
+  .appointment_form h1 {
+    font-size: calc(3.2rem * 0.7);
+    padding-bottom: calc(3.2rem * 0.6);
+  }
+
+  .form_details,
+  .form_data,
+  .flex_line {
+    gap: calc(1rem * 0.7);
+  }
+
+  label,
+  .form_data .details {
+    font-size: calc(1.5rem * 0.8);
+  }
+
+  .form_data input[type="text"], 
+  .form_data input[type="password"], 
+  .form_data input[type="email"], 
+  .form_data input[type="number"], 
+  textarea, 
+  select {
+    padding: calc(0.5rem * 0.7) calc(1rem * 0.7);
+    margin: 0;
+    border: calc(1px * 0.6) solid #861400;
+    border-radius: 0.5rem;
+    font-size: calc(1.5rem * 0.8);
+  }
+
+  .submit {
+    padding: calc(0.75rem * 0.8) calc(2rem * 0.8);
+    font-size: calc(1.5rem * 0.8);
+    font-weight: 600;
+    border-radius: calc(0.8rem * 0.6);
+    color: #fbeae7;
+    background-color: #861400;
   }
 }
 
 @media (max-width: 768px) {
   .appointmentContainer {
-    padding: 8rem 0;
-  }
-  .appointment_container {
-    padding: 5rem 0;
-    width: 100%;
-    grid-template-columns: 1fr;
+    padding: 8rem 0 0 0;
   }
 
   .appointment_container img {
     display: none;
+  }
+  .appointment_container {
+    padding: 8rem 0;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .appointment_form h1 {
+    font-size: calc(3.2rem * 1);
+    padding-bottom: calc(3.2rem * 1);
+  }
+
+  .form_details,
+  .form_data,
+  .flex_line {
+    gap: calc(1rem * 1);
+  }
+
+  label,
+  .form_data .details {
+    font-size: calc(1.5rem * 1);
+  }
+
+  .form_data input[type="text"], 
+  .form_data input[type="password"], 
+  .form_data input[type="email"], 
+  .form_data input[type="number"], 
+  textarea, 
+  select {
+    padding: calc(0.5rem * 1) calc(1rem * 1);
+    margin: 0;
+    border: calc(1px * 1) solid #861400;
+    border-radius: 0.5rem;
+    font-size: calc(1.5rem * 1);
+  }
+
+  .submit {
+    padding: calc(0.75rem * 1) calc(2rem * 1);
+    font-size: calc(1.5rem * 1);
+    font-weight: 600;
+    border-radius: calc(0.8rem * 1);
+    color: #fbeae7;
+    background-color: #861400;
   }
 }
 
