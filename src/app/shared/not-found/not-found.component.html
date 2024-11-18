@@ -1,0 +1,20 @@
+<div class="not-found-container">
+  <div class="svg-container">
+    <svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+      <!-- Background circles -->
+      <circle cx="400" cy="200" r="150" class="circle-bg" />
+      <circle cx="400" cy="200" r="100" class="circle-accent" />
+      
+      <!-- 404 Text -->
+      <text x="400" y="220" text-anchor="middle" class="error-text">404</text>
+      <text x="400" y="280" text-anchor="middle" class="sub-text">Page Not Found</text>
+    </svg>
+  </div>
+  
+  <div class="message-container">
+    <p class="redirect-message">
+      You will be redirected to home in {{ countdown() }} seconds...
+    </p>
+    <button class="home-button" (click)="goToHome()">Go to Home</button>
+  </div>
+</div>

@@ -14,6 +14,7 @@ import { ContactComponent } from './contact/contact.component';
 import { AccountComponent } from './account/account.component';
 import { CartComponent } from './cart/cart.component';
 import { ADMIN_ROUTES } from './admin/admin.routes';
+import { NotFoundComponent } from './shared/not-found/not-found.component';
 
 export const routes: Routes = [
   {
@@ -55,6 +56,14 @@ export const routes: Routes = [
   {
     path: 'cart',
     component: CartComponent,
+  },
+  {
+    path: '404',
+    component: NotFoundComponent
+  },
+  {
+    path: '**',
+    redirectTo: '404'
   },
   {
     path: 'course/:cid',
