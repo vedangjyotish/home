@@ -1,0 +1,143 @@
+<div class="courses-container">
+  <div class="courses-header">
+    <h2>Course Management</h2>
+    <button class="btn-primary" (click)="isCreating.set(true)" *ngIf="!isCreating() && !isEditing()">Create New Course</button>
+  </div>
+
+  <!-- Course Form -->
+  <div class="course-form" *ngIf="isCreating() || isEditing()">
+    <h3>{{ isEditing() ? 'Edit Course' : 'Create New Course' }}</h3>
+    
+    <div class="form-group">
+      <label>Course Name</label>
+      <input type="text" [(ngModel)]="newCourse.name" placeholder="Enter course name">
+    </div>
+
+    <div class="form-group">
+      <label>Course Image (JPG/JPEG, max 100KB)</label>
+      <div class="image-upload">
+        <input type="file" 
+               accept=".jpg,.jpeg" 
+               (change)="handleImageUpload($event)"
+               #fileInput>
+        <div class="image-preview" *ngIf="newCourse.image">
+          <img [src]="newCourse.image" [alt]="newCourse.name">
+        </div>
+        <div class="error-message" *ngIf="imageError()">
+          {{ imageError() }}
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Course Price</label>
+      <input type="number" [(ngModel)]="newCourse.price" placeholder="Enter price">
+    </div>
+
+    <div class="form-group">
+      <label>Highlights (3 required)</label>
+      <div class="highlights-container">
+        <input *ngFor="let highlight of newCourse.highlights; let i = index" 
+               type="text" 
+               [(ngModel)]="newCourse.highlights[i]" 
+               placeholder="Enter highlight"
+               maxlength="70">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Taglines (2 required)</label>
+      <div class="taglines-container">
+        <input *ngFor="let tagline of newCourse.tagline; let i = index" 
+               type="text" 
+               [(ngModel)]="newCourse.tagline[i]" 
+               placeholder="Enter tagline"
+               maxlength="70">
+      </div>
+    </div>
+
+    <div class="form-group modules-section">
+      <label>Modules</label>
+      <button class="btn-secondary add-module" (click)="addModule()">+ Add Module</button>
+      
+      <div class="module-container" *ngFor="let module of newCourse.modules; let moduleIndex = index">
+        <div class="module-header">
+          <h4>Module {{ moduleIndex + 1 }}</h4>
+          <button class="btn-icon delete" (click)="removeModule(moduleIndex)" *ngIf="newCourse.modules.length > 1">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+
+        <div class="module-items">
+          <div class="module-item" *ngFor="let item of module; let itemIndex = index">
+            <input type="text" 
+                   [(ngModel)]="newCourse.modules[moduleIndex][itemIndex]" 
+                   placeholder="Enter module item"
+                   maxlength="70">
+            <button class="btn-icon delete" (click)="removeModuleItem(moduleIndex, itemIndex)">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <button class="btn-secondary add-item" (click)="addModuleItem(moduleIndex)" 
+                  *ngIf="module.length < 10">+ Add Item</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button class="btn-secondary" (click)="resetForm()">Cancel</button>
+      <button class="btn-primary" 
+              (click)="isEditing() ? updateCourse() : createCourse()"
+              [disabled]="!validateCourse()">
+        {{ isEditing() ? 'Update' : 'Create' }} Course
+      </button>
+    </div>
+  </div>
+
+  <!-- Courses List -->
+  <div class="courses-list" *ngIf="!isCreating() && !isEditing()">
+    <div class="course-card" *ngFor="let course of courses()">
+      <div class="course-header">
+        <img [src]="course.image" [alt]="course.name">
+        <h3>{{ course.name }}</h3>
+      </div>
+      
+      <div class="course-details">
+        <p class="price">₹{{ course.price }}</p>
+        
+        <div class="highlights">
+          <h4>Highlights:</h4>
+          <ul>
+            <li *ngFor="let highlight of course.highlights">{{ highlight }}</li>
+          </ul>
+        </div>
+
+        <div class="taglines">
+          <h4>Taglines:</h4>
+          <ul>
+            <li *ngFor="let tagline of course.tagline">{{ tagline }}</li>
+          </ul>
+        </div>
+
+        <div class="modules">
+          <h4>Modules:</h4>
+          <div class="module" *ngFor="let module of course.modules; let i = index">
+            <h5>Module {{ i + 1 }}</h5>
+            <ul>
+              <li *ngFor="let item of module">{{ item }}</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="course-actions">
+        <button class="btn-icon" (click)="startEdit(course)">
+          <i class="fas fa-edit"></i>
+        </button>
+        <button class="btn-icon delete" (click)="deleteCourse(course.id!)">
+          <i class="fas fa-trash"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

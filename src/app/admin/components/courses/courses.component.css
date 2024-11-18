@@ -1,0 +1,288 @@
+.courses-container {
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.courses-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2.4rem;
+}
+
+.courses-header h2 {
+  color: #2c3e50;
+  margin: 0;
+  font-size: 2.2rem;
+}
+
+/* Form Styles */
+.course-form {
+  background-color: #f8f9fa;
+  padding: 2rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.course-form h3 {
+  color: #2c3e50;
+  margin: 0 0 2rem 0;
+  font-size: 1.8rem;
+}
+
+.form-group {
+  margin-bottom: 1.6rem;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 0.8rem;
+  color: #2c3e50;
+  font-size: 1.4rem;
+}
+
+input[type="text"],
+input[type="number"] {
+  width: 100%;
+  padding: 1rem;
+  border: 1px solid #dfe6e9;
+  border-radius: 4px;
+  font-size: 1.4rem;
+}
+
+.highlights-container,
+.taglines-container {
+  display: grid;
+  gap: 1rem;
+}
+
+.modules-section {
+  margin-top: 2.4rem;
+}
+
+.add-module {
+  margin-bottom: 1.6rem;
+}
+
+.module-container {
+  background-color: #ffffff;
+  padding: 1.6rem;
+  border-radius: 4px;
+  margin-bottom: 1.6rem;
+  border: 1px solid #dfe6e9;
+}
+
+.module-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.2rem;
+}
+
+.module-header h4 {
+  margin: 0;
+  color: #2c3e50;
+  font-size: 1.6rem;
+}
+
+.module-items {
+  display: grid;
+  gap: 1rem;
+}
+
+.module-item {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.add-item {
+  margin-top: 1rem;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 2.4rem;
+}
+
+/* Course List Styles */
+.courses-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.course-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  overflow: hidden;
+}
+
+.course-header {
+  position: relative;
+}
+
+.course-header img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.course-header h3 {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: 0;
+  padding: 1.2rem;
+  background: linear-gradient(transparent, rgba(0,0,0,0.7));
+  color: #ffffff;
+  font-size: 1.8rem;
+}
+
+.course-details {
+  padding: 1.6rem;
+}
+
+.price {
+  font-size: 2rem;
+  color: #2c3e50;
+  font-weight: 600;
+  margin: 0 0 1.6rem 0;
+}
+
+.highlights,
+.taglines,
+.modules {
+  margin-bottom: 1.6rem;
+}
+
+.highlights h4,
+.taglines h4,
+.modules h4 {
+  color: #2c3e50;
+  margin: 0 0 0.8rem 0;
+  font-size: 1.6rem;
+}
+
+.modules h5 {
+  color: #2c3e50;
+  margin: 1.2rem 0 0.8rem 0;
+  font-size: 1.4rem;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  color: #2c3e50;
+  font-size: 1.4rem;
+  margin-bottom: 0.4rem;
+}
+
+.course-actions {
+  padding: 1.6rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  border-top: 1px solid #dfe6e9;
+}
+
+/* Button Styles */
+.btn-primary {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  padding: 1rem 1.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.4rem;
+  transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #2980b9;
+}
+
+.btn-primary:disabled {
+  background-color: #95a5a6;
+  cursor: not-allowed;
+}
+
+.btn-secondary {
+  background-color: #95a5a6;
+  color: white;
+  border: none;
+  padding: 1rem 1.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.4rem;
+  transition: background-color 0.3s;
+}
+
+.btn-secondary:hover {
+  background-color: #7f8c8d;
+}
+
+.btn-icon {
+  padding: 0.8rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background-color: #3498db;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+.btn-icon:hover {
+  background-color: #2980b9;
+}
+
+.btn-icon.delete {
+  background-color: #e74c3c;
+}
+
+.btn-icon.delete:hover {
+  background-color: #c0392b;
+}
+
+.image-upload {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.image-upload input[type="file"] {
+  padding: 1rem;
+  border: 1px dashed #dfe6e9;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1.4rem;
+}
+
+.image-preview {
+  width: 200px;
+  height: 200px;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid #dfe6e9;
+}
+
+.image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.error-message {
+  color: #e74c3c;
+  font-size: 1.4rem;
+}
