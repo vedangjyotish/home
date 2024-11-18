@@ -1,0 +1,72 @@
+<div class="settings-container">
+  <header class="settings-header">
+    <h2>Admin Settings</h2>
+  </header>
+
+  <div class="settings-grid">
+    <div class="settings-card">
+      <h3>Notification Settings</h3>
+      <div class="setting-item">
+        <label class="switch">
+          <input type="checkbox" [checked]="settings().emailNotifications" 
+                 (change)="updateSetting('emailNotifications', $event)">
+          <span class="slider"></span>
+        </label>
+        <span>Email Notifications</span>
+      </div>
+      <div class="setting-item">
+        <label class="switch">
+          <input type="checkbox" [checked]="settings().pushNotifications"
+                 (change)="updateSetting('pushNotifications', $event)">
+          <span class="slider"></span>
+        </label>
+        <span>Push Notifications</span>
+      </div>
+    </div>
+
+    <div class="settings-card">
+      <h3>Display Settings</h3>
+      <div class="setting-item">
+        <label class="switch">
+          <input type="checkbox" [checked]="settings().darkMode"
+                 (change)="updateSetting('darkMode', $event)">
+          <span class="slider"></span>
+        </label>
+        <span>Dark Mode</span>
+      </div>
+      <div class="setting-item">
+        <label class="switch">
+          <input type="checkbox" [checked]="settings().compactView"
+                 (change)="updateSetting('compactView', $event)">
+          <span class="slider"></span>
+        </label>
+        <span>Compact View</span>
+      </div>
+    </div>
+
+    <div class="settings-card">
+      <h3>Security Settings</h3>
+      <div class="setting-item">
+        <label class="switch">
+          <input type="checkbox" [checked]="settings().twoFactorAuth"
+                 (change)="updateSetting('twoFactorAuth', $event)">
+          <span class="slider"></span>
+        </label>
+        <span>Two-Factor Authentication</span>
+      </div>
+      <div class="setting-item">
+        <label class="switch">
+          <input type="checkbox" [checked]="settings().sessionTimeout"
+                 (change)="updateSetting('sessionTimeout', $event)">
+          <span class="slider"></span>
+        </label>
+        <span>Session Timeout</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="settings-actions">
+    <button class="btn-primary" (click)="saveSettings()">Save Changes</button>
+    <button class="btn-secondary" (click)="resetSettings()">Reset to Default</button>
+  </div>
+</div>

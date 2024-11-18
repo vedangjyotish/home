@@ -17,7 +17,7 @@ export class AppComponent {
   title = 'vedang';
   mobileScreen = signal(false);
   desktopScreen = signal(false);
-  paddingTop = signal('9rem');
+  paddingTop = signal('13rem');
   slideSwitch = signal(false);
   slideUpSwitch = signal(false);
 
@@ -32,7 +32,7 @@ export class AppComponent {
   private observeScreenSize(): void {
     this.breakpointObserver.observe(['(max-width: 768px)']).subscribe(({ matches }) => {
       this.mobileScreen.set(matches);
-      this.paddingTop.set(matches ? '1rem' : '13rem');
+      this.paddingTop.set(matches ? '6rem' : '13rem');
       this.desktopScreen.set(!matches);
     });
   }
@@ -48,7 +48,7 @@ export class AppComponent {
     if (scrollY >= 600 && !this.mobileScreen()) {
       this.slideSwitch.set(true);
     } else if (scrollY < 600 && this.desktopScreen()) {
-      this.paddingTop.set('9rem');
+      this.paddingTop.set('13rem');
       this.slideSwitch.set(false);
     }
   }
@@ -57,4 +57,3 @@ export class AppComponent {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 }
-

@@ -1,0 +1,42 @@
+<div class="admin-layout">
+  <nav class="admin-sidebar">
+    <div class="sidebar-header">
+      <h1>Admin Panel</h1>
+    </div>
+    <ul class="nav-links">
+      <li>
+        <a routerLink="./dashboard" routerLinkActive="active">
+          <span class="icon">📊</span>
+          Dashboard
+        </a>
+      </li>
+      <li>
+        <a routerLink="./users" routerLinkActive="active">
+          <span class="icon">👥</span>
+          Users
+        </a>
+      </li>
+      <li>
+        <a routerLink="./settings" routerLinkActive="active">
+          <span class="icon">⚙️</span>
+          Settings
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <main class="admin-main">
+    <header class="admin-header">
+      <div class="user-info">
+        <span class="welcome-text">Welcome, Admin</span>
+      </div>
+      <div class="header-actions">
+        <button class="btn-icon" (click)="logout()">Logout</button>
+      </div>
+    </header>
+
+    <div class="admin-content">
+      <router-outlet></router-outlet>
+    </div>
+  </main>
+</div>

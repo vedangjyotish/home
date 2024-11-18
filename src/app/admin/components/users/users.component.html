@@ -1,0 +1,38 @@
+<div class="users-container">
+  <header class="users-header">
+    <h2>User Management</h2>
+    <button class="btn-primary" (click)="addUser()">Add User</button>
+  </header>
+
+  <div class="users-table-container">
+    <table class="users-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Role</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users()">
+          <td>{{user.id}}</td>
+          <td>{{user.name}}</td>
+          <td>{{user.email}}</td>
+          <td>{{user.role}}</td>
+          <td>
+            <span class="status-badge" [class.active]="user.active">
+              {{user.active ? 'Active' : 'Inactive'}}
+            </span>
+          </td>
+          <td class="actions">
+            <button class="btn-icon" (click)="editUser(user)">Edit</button>
+            <button class="btn-icon delete" (click)="deleteUser(user.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
