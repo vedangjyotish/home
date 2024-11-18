@@ -13,11 +13,16 @@ import { AboutusComponent } from './aboutus/aboutus.component';
 import { ContactComponent } from './contact/contact.component';
 import { AccountComponent } from './account/account.component';
 import { CartComponent } from './cart/cart.component';
+import { ADMIN_ROUTES } from './admin/admin.routes';
 
 export const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
+  },
+  {
+    path: 'admin',
+    children: ADMIN_ROUTES
   },
   {
     path: 'courses',
@@ -66,11 +71,6 @@ export const routes: Routes = [
       {
         path: 'tabs/2',
         component: ReviewsComponent,
-      },
-      {
-        path: '',
-        redirectTo: 'tabs/0',
-        pathMatch: 'full'
       }
     ]
   },
