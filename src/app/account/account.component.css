@@ -246,6 +246,10 @@ input {
   transition: border-color 0.3s ease;
 }
 
+input.error {
+  border-color: #e74c3c;
+}
+
 input:focus {
   outline: none;
   border-color: #9b59b6;
@@ -263,6 +267,11 @@ input:focus {
   font-size: 1.7rem;
   cursor: pointer;
   transition: background 0.3s ease;
+}
+
+.submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
 }
 
 .submit-btn:hover {
@@ -332,6 +341,12 @@ input:focus {
   font-size: 3.6rem;
   vertical-align: middle;
   margin-left: 1rem;
+}
+
+.error-message {
+  color: #e74c3c;
+  font-size: 1.2rem;
+  margin-top: 0.5rem;
 }
 
 @keyframes wave {

@@ -20,17 +20,22 @@
 
       <div class="login-form member-form" *ngIf="showMemberForm">
         <h2 class="form-title">Member Login</h2>
-        <form (ngSubmit)="onMemberSubmit()">
+        <form #memberLoginForm="ngForm" (ngSubmit)="onMemberSubmit()">
           <div class="form-group">
-            <label for="memberPhone">Phone Number</label>
+            <label for="memberId">Phone Number</label>
             <input 
-              type="tel" 
-              id="memberPhone" 
-              [(ngModel)]="memberPhone" 
-              name="memberPhone"
+              type="text" 
+              id="memberId" 
+              [(ngModel)]="memberId" 
+              name="memberId"
+              #memberIdInput="ngModel"
+              (input)="onMemberIdInput($event)"
               placeholder="Enter your phone number"
-              pattern="[0-9]{10}"
-              required>
+              required
+              [class.error]="memberIdInput.invalid && memberIdInput.touched">
+            <div *ngIf="memberIdInput.invalid && memberIdInput.touched" class="error-message">
+              Please enter a valid 10-digit phone number
+            </div>
           </div>
           <div class="form-group">
             <label for="memberPassword">Password</label>
@@ -39,10 +44,16 @@
               id="memberPassword" 
               [(ngModel)]="memberPassword" 
               name="memberPassword"
+              #memberPasswordInput="ngModel"
               placeholder="Enter your password"
-              required>
+              required
+              minlength="8"
+              [class.error]="memberPasswordInput.invalid && memberPasswordInput.touched">
+            <div *ngIf="memberPasswordInput.invalid && memberPasswordInput.touched" class="error-message">
+              Password must be at least 8 characters long
+            </div>
           </div>
-          <button type="submit" class="submit-btn">Login</button>
+          <button type="submit" class="submit-btn" [disabled]="memberLoginForm.invalid">Login</button>
         </form>
         <div class="form-footer">
           <a href="#" class="forgot-password">Forgot Password?</a>
@@ -57,7 +68,7 @@
 
       <div class="login-form student-form" *ngIf="showStudentForm">
         <h2 class="form-title">Student Login</h2>
-        <form (ngSubmit)="onStudentSubmit()">
+        <form #studentLoginForm="ngForm" (ngSubmit)="onStudentSubmit()">
           <div class="form-group">
             <label for="studentId">Email or Phone Number</label>
             <input 
@@ -65,8 +76,14 @@
               id="studentId" 
               [(ngModel)]="studentId" 
               name="studentId"
+              #studentIdInput="ngModel"
+              (input)="onStudentIdInput($event)"
               placeholder="Enter email or phone number"
-              required>
+              required
+              [class.error]="studentIdInput.invalid && studentIdInput.touched">
+            <div *ngIf="studentIdInput.invalid && studentIdInput.touched" class="error-message">
+              Please enter a valid email or 10-digit phone number
+            </div>
           </div>
           <div class="form-group">
             <label for="studentPassword">Password</label>
@@ -75,10 +92,16 @@
               id="studentPassword" 
               [(ngModel)]="studentPassword" 
               name="studentPassword"
+              #studentPasswordInput="ngModel"
               placeholder="Enter your password"
-              required>
+              required
+              minlength="8"
+              [class.error]="studentPasswordInput.invalid && studentPasswordInput.touched">
+            <div *ngIf="studentPasswordInput.invalid && studentPasswordInput.touched" class="error-message">
+              Password must be at least 8 characters long
+            </div>
           </div>
-          <button type="submit" class="submit-btn">Login</button>
+          <button type="submit" class="submit-btn" [disabled]="studentLoginForm.invalid">Login</button>
         </form>
         <div class="form-footer">
           <a href="#" class="forgot-password">Forgot Password?</a>
