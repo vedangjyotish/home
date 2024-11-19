@@ -36,6 +36,21 @@
   height: 42rem;
   border-radius: 12px;
   position: relative;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Base state for cards */
+.scards:hover .scard {
+  opacity: 0.7;
+  transform: scale(0.98);
+}
+
+/* Hovered card */
+.scards .scard:hover {
+  opacity: 1;
+  transform: scale(1.03) translateY(-5px);
+  box-shadow: 0 15px 30px rgba(134, 20, 0, 0.2);
+  z-index: 1;
 }
 
 .scard h2 {
@@ -66,11 +81,7 @@
   color: #861400;
   font-size: 1.1rem;
   text-align: center;
-}
-
-hr {
-  width: 2.2rem;
-  /* color: #fff9f8; */
+  transition: all 0.3s ease-in-out;
 }
 
 img {
@@ -80,7 +91,7 @@ img {
   border-top-right-radius: 12px;
   border-top-left-radius: 12px;
   border-bottom-right-radius: 12px;
-
+  transition: all 0.3s ease-in-out;
 }
 
 .scard__contact {
@@ -95,25 +106,54 @@ img {
   position: absolute;
   bottom: -19px;
   border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 4px 6px rgba(134, 20, 0, 0.2);
 }
 
-/* @media (max-width: 1920px) { */
-/*   .scards { */
-/*     width: 75%; */
-/*   } */
-/* } */
+.scard__contact:hover {
+  transform: translateY(-2px);
+  background-color: #9d1900;
+  box-shadow: 0 6px 12px rgba(134, 20, 0, 0.3);
+}
+
+.scard__contact:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 4px rgba(134, 20, 0, 0.2);
+}
+
+.scard__contact p {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.scard__contact p::before {
+  content: '→';
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.3s ease;
+}
+
+.scard__contact:hover p::before {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+hr {
+  width: 2.2rem;
+}
 
 @media (max-width: 1440px) {
   .scards {
     width: 80%;
   }
-
 }
 
 @media (max-width: 768px) {
   .scards {
     width: 100%;
-    min-height: auto;
     padding: 2rem;
     flex-direction: column;
     gap: 3rem;

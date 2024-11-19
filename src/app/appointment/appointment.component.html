@@ -23,16 +23,12 @@
           </div>
           <!-- form_data class end -->
           <div class="flex_line">
-            <label for="sec_ser">
+            <label for="service">
               Select Service :
             </label>
-            <select>
-              <option value="Marriage Problem">Marriage Problem</option>
-              <option value="Career Problem">Career Problem</option>
-              <option value="Business Problem">Business Problem</option>
-              <option value="Health Problem">Health Problem</option>
-              <option value="Home or Vastu Problem">Vastu Problem</option>
-              <option value="study problem">Study Problem</option>
+            <select id="service" name="service" [(ngModel)]="selectedService" required>
+              <option value="" disabled>Select a service</option>
+              <option *ngFor="let service of services" [value]="service">{{ service }}</option>
             </select>
           </div>
 
