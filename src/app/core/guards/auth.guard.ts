@@ -1,23 +1,32 @@
-import { inject, PLATFORM_ID } from '@angular/core';
-import { Router, type CanActivateFn } from '@angular/router';
-import { isPlatformBrowser } from '@angular/common';
+import { Injectable } from '@angular/core';
+import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { TokenStorageService } from '../services/token-storage.service';
 
-export const authGuard: CanActivateFn = (route, state) => {
-  const router = inject(Router);
-  const platformId = inject(PLATFORM_ID);
-  
-  let isAuthenticated = false;
-  
-  if (isPlatformBrowser(platformId)) {
-    isAuthenticated = localStorage.getItem('student_token') !== null;
+@Injectable({
+  providedIn: 'root'
+})
+export class AuthGuard {
+  constructor(
+    private tokenStorage: TokenStorageService,
+    private router: Router
+  ) {}
+
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+    if (!this.tokenStorage.isLoggedIn()) {
+      this.router.navigate(['/account']);
+      return false;
+    }
+
+    // Check if route requires specific user type
+    const requiredUserType = route.data['userType'] as 'student' | 'member';
+    if (requiredUserType) {
+      const userType = this.tokenStorage.getUserType();
+      if (userType !== requiredUserType) {
+        this.router.navigate(['/account']);
+        return false;
+      }
+    }
+
+    return true;
   }
-  
-  if (!isAuthenticated) {
-    router.navigate(['/students/auth'], {
-      queryParams: { returnUrl: state.url }
-    });
-    return false;
-  }
-  
-  return true;
-};
+}

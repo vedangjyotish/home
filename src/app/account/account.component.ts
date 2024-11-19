@@ -16,6 +16,8 @@ export class AccountComponent {
   studentPassword = '';
   memberId = '';
   memberPassword = '';
+  errorMessage = '';
+  successMessage = '';
 
   constructor(
     private router: Router,
@@ -26,11 +28,18 @@ export class AccountComponent {
   showStudentLogin() {
     this.showStudentForm = true;
     this.showMemberForm = false;
+    this.clearMessages();
   }
 
   showMemberLogin() {
     this.showMemberForm = true;
     this.showStudentForm = false;
+    this.clearMessages();
+  }
+
+  clearMessages() {
+    this.errorMessage = '';
+    this.successMessage = '';
   }
 
   onStudentIdInput(event: Event) {
@@ -76,34 +85,36 @@ export class AccountComponent {
   }
 
   onStudentSubmit() {
+    this.clearMessages();
     if (this.isValidStudentId(this.studentId) && this.studentPassword.length >= 8) {
       this.studentAuth.login({ id: this.studentId, password: this.studentPassword })
         .subscribe({
           next: (response) => {
-            console.log('Student login successful', response);
-            // Handle successful login (e.g., store token, redirect)
-            this.router.navigate(['/students/dashboard']);
+            this.successMessage = 'Login successful! Redirecting...';
+            setTimeout(() => {
+              this.router.navigate(['/students/dashboard']);
+            }, 1000);
           },
           error: (error) => {
-            console.error('Student login failed', error);
-            // Handle login error (show message to user)
+            this.errorMessage = error.message || 'Login failed. Please check your credentials.';
           }
         });
     }
   }
 
   onMemberSubmit() {
+    this.clearMessages();
     if (this.isValidMemberId(this.memberId) && this.memberPassword.length >= 8) {
       this.memberAuth.login({ phone: this.memberId, password: this.memberPassword })
         .subscribe({
           next: (response) => {
-            console.log('Member login successful', response);
-            // Handle successful login (e.g., store token, redirect)
-            this.router.navigate(['/members/dashboard']);
+            this.successMessage = 'Login successful! Redirecting...';
+            setTimeout(() => {
+              this.router.navigate(['/members/dashboard']);
+            }, 1000);
           },
           error: (error) => {
-            console.error('Member login failed', error);
-            // Handle login error (show message to user)
+            this.errorMessage = error.message || 'Login failed. Please check your credentials.';
           }
         });
     }
@@ -115,6 +126,7 @@ export class AccountComponent {
     }
     this.showStudentForm = false;
     this.showMemberForm = false;
+    this.clearMessages();
     this.router.navigate(['/account']);
   }
 }

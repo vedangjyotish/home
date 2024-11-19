@@ -20,6 +20,8 @@
 
       <div class="login-form member-form" *ngIf="showMemberForm">
         <h2 class="form-title">Member Login</h2>
+        <div *ngIf="errorMessage" class="error-message alert">{{ errorMessage }}</div>
+        <div *ngIf="successMessage" class="success-message alert">{{ successMessage }}</div>
         <form #memberLoginForm="ngForm" (ngSubmit)="onMemberSubmit()">
           <div class="form-group">
             <label for="memberId">Phone Number</label>
@@ -68,6 +70,8 @@
 
       <div class="login-form student-form" *ngIf="showStudentForm">
         <h2 class="form-title">Student Login</h2>
+        <div *ngIf="errorMessage" class="error-message alert">{{ errorMessage }}</div>
+        <div *ngIf="successMessage" class="success-message alert">{{ successMessage }}</div>
         <form #studentLoginForm="ngForm" (ngSubmit)="onStudentSubmit()">
           <div class="form-group">
             <label for="studentId">Email or Phone Number</label>
