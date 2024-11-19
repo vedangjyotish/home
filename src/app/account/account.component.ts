@@ -1,37 +1,49 @@
-import { Component, Renderer2, ElementRef } from '@angular/core';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-account',
-  standalone: true,
-  imports: [],
   templateUrl: './account.component.html',
-  styleUrl: './account.component.css'
+  styleUrls: ['./account.component.css'],
+  standalone: true,
+  imports: [CommonModule, FormsModule, RouterModule]
 })
 export class AccountComponent {
+  showMemberForm = false;
+  showStudentForm = false;
+  
+  // Member login form
+  memberPhone = '';
+  memberPassword = '';
+  
+  // Student login form
+  studentId = '';
+  studentPassword = '';
 
-  constructor(private renderer: Renderer2, private el: ElementRef) { }
-  //   const signUpButton = document.getElementById('signUp');
-  // const signInButton = document.getElementById('signIn');
-  // const container = document.getElementById('container');
-
-  signUp(ev: Event) {
-    ev.preventDefault();
-    const myElement = this.el.nativeElement.querySelector('#container'); 
-    this.renderer.addClass(myElement, 'right-panel-active'); 
-    // container.classList.add("right-panel-active");
+  showMemberLogin() {
+    this.showMemberForm = true;
+    this.showStudentForm = false;
   }
 
-  signIn(ev: Event) {
-    ev.preventDefault();
-    // container.classList.remove("right-panel-active");
-    const myElement = this.el.nativeElement.querySelector('#container'); 
-    this.renderer.removeClass(myElement, 'right-panel-active'); 
+  showStudentLogin() {
+    this.showStudentForm = true;
+    this.showMemberForm = false;
   }
 
-  // signUpButton.addEventListener('click', () => {
-  // });
-  //
-  // signInButton.addEventListener('click', () => {
-  // });
+  hideLoginForms() {
+    this.showMemberForm = false;
+    this.showStudentForm = false;
+  }
 
+  onMemberSubmit() {
+    // TODO: Implement member login logic
+    console.log('Member login:', { phone: this.memberPhone, password: this.memberPassword });
+  }
+
+  onStudentSubmit() {
+    // TODO: Implement student login logic
+    console.log('Student login:', { id: this.studentId, password: this.studentPassword });
+  }
 }

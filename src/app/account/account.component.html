@@ -1,30 +1,95 @@
 <div class="accountContainer">
   <!-- FORMULAIRE DE CONNEXION -->
-  <div class="card">
-    <h2>Login Form</h2>
+  <div class="login-container">
+    <div class="login-card">
+      <h1 class="login-title" *ngIf="!showMemberForm && !showStudentForm">
+        Welcome 
+        <span class="wave-emoji">👋</span>
+      </h1>
+      
+      <div class="login-options" *ngIf="!showMemberForm && !showStudentForm">
+        <button class="login-option-btn member-btn" (click)="showMemberLogin()">
+          <i class="fas fa-user"></i>
+          Member Login
+        </button>
+        <button class="login-option-btn student-btn" (click)="showStudentLogin()">
+          <i class="fas fa-graduation-cap"></i>
+          Student Login
+        </button>
+      </div>
 
-    <!-- SE CONNECTER / S'INSCRIRE -->
-    <div class="login_register">
-      <a class="login">Login</a>
-      <a class="register">Signup</a>
-    </div>
+      <div class="login-form member-form" *ngIf="showMemberForm">
+        <h2 class="form-title">Member Login</h2>
+        <form (ngSubmit)="onMemberSubmit()">
+          <div class="form-group">
+            <label for="memberPhone">Phone Number</label>
+            <input 
+              type="tel" 
+              id="memberPhone" 
+              [(ngModel)]="memberPhone" 
+              name="memberPhone"
+              placeholder="Enter your phone number"
+              pattern="[0-9]{10}"
+              required>
+          </div>
+          <div class="form-group">
+            <label for="memberPassword">Password</label>
+            <input 
+              type="password" 
+              id="memberPassword" 
+              [(ngModel)]="memberPassword" 
+              name="memberPassword"
+              placeholder="Enter your password"
+              required>
+          </div>
+          <button type="submit" class="submit-btn">Login</button>
+        </form>
+        <div class="form-footer">
+          <a href="#" class="forgot-password">Forgot Password?</a>
+          <p>Not a member? <a [routerLink]="['/signup/member']" class="signup-link">Sign up</a></p>
+          <div class="back-to-options">
+            <a (click)="hideLoginForms()" class="back-link">
+              <i class="fas fa-chevron-left"></i> Back to Account Page
+            </a>
+          </div>
+        </div>
+      </div>
 
-    <!-- FORMULAIRE -->
-    <form class="form">
-      <input type="email" placeholder="Email Address" class="email">
-      <input type="password" placeholder="password" class="pass">
-    </form>
-
-    <!-- MOT DE PASSE OUBLIE ? -->
-    <a class="fp">Forgot password?</a>
-
-    <!-- BOUTTON LOGIN -->
-    <button type="button" class="login_btn">Login</button>
-
-    <!-- PIED DE LA CARD -->
-    <div class="footer_card">
-      <p>Not a member?</p>
-      <a >Singup now</a>
+      <div class="login-form student-form" *ngIf="showStudentForm">
+        <h2 class="form-title">Student Login</h2>
+        <form (ngSubmit)="onStudentSubmit()">
+          <div class="form-group">
+            <label for="studentId">Email or Phone Number</label>
+            <input 
+              type="text" 
+              id="studentId" 
+              [(ngModel)]="studentId" 
+              name="studentId"
+              placeholder="Enter email or phone number"
+              required>
+          </div>
+          <div class="form-group">
+            <label for="studentPassword">Password</label>
+            <input 
+              type="password" 
+              id="studentPassword" 
+              [(ngModel)]="studentPassword" 
+              name="studentPassword"
+              placeholder="Enter your password"
+              required>
+          </div>
+          <button type="submit" class="submit-btn">Login</button>
+        </form>
+        <div class="form-footer">
+          <a href="#" class="forgot-password">Forgot Password?</a>
+          <p>New student? <a [routerLink]="['/signup/student']" class="signup-link">Sign up</a></p>
+          <div class="back-to-options">
+            <a (click)="hideLoginForms()" class="back-link">
+              <i class="fas fa-chevron-left"></i> Back to Account Page
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
