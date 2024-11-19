@@ -38,6 +38,10 @@ export const routes: Routes = [
     component: BlogComponent,
   },
   {
+    path: 'blog/:id',
+    loadComponent: () => import('./blog/blog-post/blog-post.component').then(c => c.BlogPostComponent)
+  },
+  {
     path: 'appointment',
     component: AppointmentComponent,
   },

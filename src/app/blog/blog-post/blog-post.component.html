@@ -1,0 +1,25 @@
+<div class="blog-post-container" *ngIf="post">
+    <div class="blog-post-header">
+        <h1>{{post.title}}</h1>
+        <div class="meta-info">
+            <span class="author">By {{post.name}}</span>
+            <span class="date">{{post.date}}</span>
+        </div>
+    </div>
+    
+    <div class="featured-image">
+        <img [src]="'assets/blogs/' + post.img" [alt]="post.title">
+    </div>
+
+    <div class="blog-content">
+        <p class="summary">{{post.sub}}</p>
+        <div class="content">
+            <!-- Add more content here when available in the data structure -->
+        </div>
+    </div>
+</div>
+
+<div class="not-found" *ngIf="!post">
+    <h2>Blog post not found</h2>
+    <p>The blog post you're looking for doesn't exist.</p>
+</div>
