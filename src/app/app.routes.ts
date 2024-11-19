@@ -58,14 +58,6 @@ export const routes: Routes = [
     component: CartComponent,
   },
   {
-    path: '404',
-    component: NotFoundComponent
-  },
-  {
-    path: '**',
-    redirectTo: '404'
-  },
-  {
     path: 'course/:cid',
     component: CourseComponent,
     children: [
@@ -86,5 +78,22 @@ export const routes: Routes = [
   {
     path: 'development',
     component: DevelopmentComponent,
-  }
+  },
+  {
+    path: 'students', loadChildren: () => import('./students/students.module').then(m => m.StudentsModule)
+  },
+  {
+    path: 'members', loadChildren: () => import('./members/members.module').then(m => m.MembersModule)
+  },
+  {
+    path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule)
+  },
+  {
+    path: '404',
+    component: NotFoundComponent
+  },
+  {
+    path: '**',
+    redirectTo: '404'
+  },
 ];

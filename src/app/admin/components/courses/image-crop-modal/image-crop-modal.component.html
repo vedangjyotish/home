@@ -1,0 +1,39 @@
+<div class="modal" #modal (click)="onModalClick($event)">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Crop Image</h3>
+      <button class="close-button" type="button" (click)="closeModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      @if (imageFile) {
+        <image-cropper
+          [imageFile]="imageFile"
+          [maintainAspectRatio]="true"
+          [aspectRatio]="aspectRatio"
+          [resizeToWidth]="resizeToWidth"
+          [resizeToHeight]="resizeToHeight"
+          format="jpeg"
+          (imageCropped)="imageCropped($event)"
+          (imageLoaded)="imageLoaded()"
+          [cropperMinWidth]="400"
+          [cropperMinHeight]="300"
+          [alignImage]="'center'"
+          [roundCropper]="false"
+          outputType="base64"
+          [autoCrop]="true"
+          (cropperReady)="imageLoaded()"
+          (loadImageFailed)="imageError()"
+          [canvasRotation]="0"
+          [transform]="{ flipH: false, flipV: false, rotate: 0 }"
+        ></image-cropper>
+      }
+      <div class="dimensions-info">
+        Recommended dimensions: 800x600 pixels (4:3 ratio)
+      </div>
+      <div class="modal-actions">
+        <button type="button" class="btn-secondary" (click)="closeModal()">Cancel</button>
+        <button type="button" class="btn-primary" (click)="submitCrop()">Apply Crop</button>
+      </div>
+    </div>
+  </div>
+</div>

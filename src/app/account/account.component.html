@@ -56,11 +56,11 @@
           <button type="submit" class="submit-btn" [disabled]="memberLoginForm.invalid">Login</button>
         </form>
         <div class="form-footer">
-          <a href="#" class="forgot-password">Forgot Password?</a>
-          <p>Not a member? <a [routerLink]="['/signup/member']" class="signup-link">Sign up</a></p>
+          <a class="forgot-password">Forgot Password?</a>
+          <p>Not a member? <a [routerLink]="['/members/signup']" class="signup-link">Sign up</a></p>
           <div class="back-to-options">
-            <a (click)="hideLoginForms()" class="back-link">
-              <i class="fas fa-chevron-left"></i> Back to Account Page
+            <a class="back-link" (click)="goBack($event)">
+              <i class="fas fa-arrow-left"></i> Back to Login Options
             </a>
           </div>
         </div>
@@ -104,11 +104,11 @@
           <button type="submit" class="submit-btn" [disabled]="studentLoginForm.invalid">Login</button>
         </form>
         <div class="form-footer">
-          <a href="#" class="forgot-password">Forgot Password?</a>
-          <p>New student? <a [routerLink]="['/signup/student']" class="signup-link">Sign up</a></p>
+          <a class="forgot-password">Forgot Password?</a>
+          <p>New student? <a [routerLink]="['/students/signup']" class="signup-link">Sign up</a></p>
           <div class="back-to-options">
-            <a (click)="hideLoginForms()" class="back-link">
-              <i class="fas fa-chevron-left"></i> Back to Account Page
+            <a class="back-link" (click)="goBack($event)">
+              <i class="fas fa-arrow-left"></i> Back to Login Options
             </a>
           </div>
         </div>

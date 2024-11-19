@@ -1,46 +1,35 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { RouterModule, Router } from '@angular/router';
+import { NgForm } from '@angular/forms';
+import { Router } from '@angular/router';
+import { StudentAuthService } from '../students/auth/student-auth.service';
+import { MemberAuthService } from '../members/auth/member-auth.service';
 
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
-  styleUrls: ['./account.component.css'],
-  standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule]
+  styleUrls: ['./account.component.css']
 })
 export class AccountComponent {
-  showMemberForm = false;
   showStudentForm = false;
-  
-  // Member login form
-  memberPhone = '';
-  memberPassword = '';
-  memberId = '';
-  
-  // Student login form
+  showMemberForm = false;
   studentId = '';
   studentPassword = '';
+  memberId = '';
+  memberPassword = '';
 
-  // Validation patterns
-  emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-  phonePattern = /^[0-9]{10}$/;
-
-  constructor(private router: Router) {}
-
-  showMemberLogin() {
-    this.showMemberForm = true;
-    this.showStudentForm = false;
-  }
+  constructor(
+    private router: Router,
+    private studentAuth: StudentAuthService,
+    private memberAuth: MemberAuthService
+  ) {}
 
   showStudentLogin() {
     this.showStudentForm = true;
     this.showMemberForm = false;
   }
 
-  hideLoginForms() {
-    this.showMemberForm = false;
+  showMemberLogin() {
+    this.showMemberForm = true;
     this.showStudentForm = false;
   }
 
@@ -88,22 +77,44 @@ export class AccountComponent {
 
   onStudentSubmit() {
     if (this.isValidStudentId(this.studentId) && this.studentPassword.length >= 8) {
-      // Proceed with login
-      console.log('Student login submitted:', { id: this.studentId, password: this.studentPassword });
-      // Add your login logic here
+      this.studentAuth.login({ id: this.studentId, password: this.studentPassword })
+        .subscribe({
+          next: (response) => {
+            console.log('Student login successful', response);
+            // Handle successful login (e.g., store token, redirect)
+            this.router.navigate(['/students/dashboard']);
+          },
+          error: (error) => {
+            console.error('Student login failed', error);
+            // Handle login error (show message to user)
+          }
+        });
     }
   }
 
   onMemberSubmit() {
     if (this.isValidMemberId(this.memberId) && this.memberPassword.length >= 8) {
-      // Proceed with login
-      console.log('Member login submitted:', { id: this.memberId, password: this.memberPassword });
-      // Add your login logic here
+      this.memberAuth.login({ phone: this.memberId, password: this.memberPassword })
+        .subscribe({
+          next: (response) => {
+            console.log('Member login successful', response);
+            // Handle successful login (e.g., store token, redirect)
+            this.router.navigate(['/members/dashboard']);
+          },
+          error: (error) => {
+            console.error('Member login failed', error);
+            // Handle login error (show message to user)
+          }
+        });
     }
   }
 
-  goBack() {
+  goBack(event?: Event) {
+    if (event) {
+      event.preventDefault();
+    }
     this.showStudentForm = false;
     this.showMemberForm = false;
+    this.router.navigate(['/account']);
   }
 }
