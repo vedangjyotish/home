@@ -12,20 +12,26 @@
             <img class="cart-item-image" [src]="'../../assets/ccards/img/' + item.courseImage" [alt]="item.courseName">
             <div class="cart-item-details">
               <h3>{{ item.courseName }}</h3>
-              <p class="cart-item-price">₹{{ item.price }}</p>
             </div>
             <button class="remove-btn" (click)="removeItem(item.courseId)">×</button>
           </div>
 
           <div class="module-selection">
             <h4>Select Modules:</h4>
-            <div class="module-grid">
-              <div class="module-checkbox" *ngFor="let i of getModuleArray(item.totalModules)">
-                <input type="checkbox" 
-                       [id]="'module-' + item.courseId + '-' + i"
-                       [checked]="item.selectedModules.includes(i)"
-                       (change)="updateModuleSelection(item, i, $event)">
-                <label [for]="'module-' + item.courseId + '-' + i">Module {{ i + 1 }}</label>
+            <div class="module-list">
+              <div class="module-item" *ngFor="let moduleIndex of getModuleArray(item.courseId)">
+                <div class="module-header">
+                  <div class="module-checkbox">
+                    <input type="checkbox" 
+                           [id]="'module-' + item.courseId + '-' + moduleIndex"
+                           [checked]="item.selectedModules.includes(moduleIndex)"
+                           (change)="updateModuleSelection(item, moduleIndex, $event)">
+                    <label [for]="'module-' + item.courseId + '-' + moduleIndex">
+                      <span class="module-title">Module {{ moduleIndex + 1 }}</span>
+                      <span class="module-price">₹{{ getModulePrice(item.courseId, moduleIndex) }}</span>
+                    </label>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -34,6 +40,21 @@
 
       <div class="payment-section">
         <h3 class="payment-header">Payment Details</h3>
+        <div class="selected-modules-summary">
+          <h4>Selected Modules:</h4>
+          <div class="summary-items" *ngFor="let item of cartItems()">
+            <h5>{{ item.courseName }}</h5>
+            <div class="module-summary" *ngFor="let moduleIndex of item.selectedModules">
+              <span>Module {{ moduleIndex + 1 }}</span>
+              <span class="module-price">₹{{ getModulePrice(item.courseId, moduleIndex) }}</span>
+            </div>
+          </div>
+          <div class="total-amount">
+            <strong>Total Amount:</strong>
+            <span>₹{{ totalAmount() }}</span>
+          </div>
+        </div>
+
         <div class="payment-instructions">
           <p>Please follow these steps to complete your enrollment:</p>
           <ol>

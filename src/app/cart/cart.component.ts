@@ -2,7 +2,9 @@ import { Component, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CartService } from '../services/cart.service';
+import { CourseService } from '../services/course.service';
 import { ICartItem, IPaymentDetails } from '../interfaces/cart.interface';
+import { ICourse } from '../interfaces/course.interface';
 import { Router, RouterLink } from '@angular/router';
 import { cdata } from '../ccards/cdata';
 import { TokenStorageService } from '../core/services/token-storage.service';
@@ -16,6 +18,7 @@ import { TokenStorageService } from '../core/services/token-storage.service';
 })
 export class CartComponent {
   cartItems = this.cartService.getCartItems();
+  courses = signal<{ [key: string]: ICourse }>({});
   showPaymentForm = signal(false);
   suggestedCourse = signal<typeof cdata[0] | null>(null);
   isAnimating = signal(false);
@@ -32,21 +35,62 @@ export class CartComponent {
   };
 
   totalAmount = computed(() => {
-    return this.cartItems().reduce((total, item) => total + item.price, 0);
+    return this.cartItems().reduce((total, item) => {
+      const selectedModulePrices = item.selectedModules.map(moduleIndex => {
+        const course = this.courses()[item.courseId];
+        if (course && course.mods[moduleIndex] && course.mods[moduleIndex].m_price) {
+          return parseInt(course.mods[moduleIndex].m_price.replace(/,/g, ''));
+        }
+        return 0;
+      });
+      return total + selectedModulePrices.reduce((sum, price) => sum + price, 0);
+    }, 0);
   });
 
   whatsappNumber = this.cartService.getWhatsAppNumber();
 
   constructor(
     private cartService: CartService,
+    private courseService: CourseService,
     private router: Router,
     private tokenStorage: TokenStorageService
   ) {
-    // Get student name from token storage
     const user = this.tokenStorage.getUser();
     if (user && user.name) {
       this.studentName.set(user.name);
     }
+    
+    // Load course details for cart items
+    this.loadCourseDetails();
+  }
+
+  private loadCourseDetails() {
+    this.cartItems().forEach(item => {
+      this.courseService.getCourseById(item.courseId).subscribe(course => {
+        if (course) {
+          this.courses.update(courses => ({
+            ...courses,
+            [course.cid]: course
+          }));
+        }
+      });
+    });
+  }
+
+  getModulePrice(courseId: string, moduleIndex: number): string {
+    const course = this.courses()[courseId];
+    if (course && course.mods[moduleIndex] && course.mods[moduleIndex].m_price) {
+      return course.mods[moduleIndex].m_price;
+    }
+    return '0';
+  }
+
+  getModuleList(courseId: string, moduleIndex: number): string[] {
+    const course = this.courses()[courseId];
+    if (course && course.mods[moduleIndex]) {
+      return course.mods[moduleIndex].list;
+    }
+    return [];
   }
 
   removeItem(courseId: string) {
@@ -58,26 +102,31 @@ export class CartComponent {
 
   updateModuleSelection(item: ICartItem, moduleIndex: number, event: Event) {
     const isChecked = (event.target as HTMLInputElement).checked;
-    if (isChecked) {
-      item.selectedModules = [...item.selectedModules, moduleIndex];
-    } else {
-      item.selectedModules = item.selectedModules.filter(i => i !== moduleIndex);
-    }
+    const updatedItems = this.cartItems().map(cartItem => {
+      if (cartItem.courseId === item.courseId) {
+        return {
+          ...cartItem,
+          selectedModules: isChecked 
+            ? [...cartItem.selectedModules, moduleIndex]
+            : cartItem.selectedModules.filter(i => i !== moduleIndex)
+        };
+      }
+      return cartItem;
+    });
     
-    // Update price based on selected modules
-    if (item.selectedModules.length === 0) {
+    // Find the updated item to check if all modules are deselected
+    const updatedItem = updatedItems.find(i => i.courseId === item.courseId);
+    if (updatedItem && updatedItem.selectedModules.length === 0) {
       this.removeItem(item.courseId);
     } else {
-      item.price = this.cartService.calculateModulePrice(
-        parseInt(item.price.toString()),
-        item.selectedModules.length,
-        item.selectedModules.length
-      );
+      // Update the cart service with the new items
+      this.cartService.updateCart(updatedItems);
     }
   }
 
-  getModuleArray(totalModules: number): number[] {
-    return Array.from({ length: totalModules }, (_, i) => i);
+  getModuleArray(courseId: string): number[] {
+    const course = this.courses()[courseId];
+    return course ? Array.from({ length: course.mods.length }, (_, i) => i) : [];
   }
 
   startSuggestionAnimation() {

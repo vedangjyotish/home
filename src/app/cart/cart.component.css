@@ -1,33 +1,33 @@
 .cart-page {
   background-color: #f1d9da;
-  padding: 5rem 2rem;
+  padding: 3rem;
   min-height: 100vh;
 }
 
 .cart-container {
-  background-color: #ffe6e7;
-  border-radius: 0.5rem;
-  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 1.2rem;
+  box-shadow: 0 0.2rem 1rem rgba(0, 0, 0, 0.1);
+  padding: 2.4rem;
   max-width: 120rem;
   margin: 0 auto;
-  box-shadow: 0 0.2rem 1rem rgba(0, 0, 0, 0.1);
 }
 
 .cart-header {
   color: #ff5a45;
   font-size: 2.8rem;
   font-weight: 700;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
   text-align: center;
 }
 
 .cart-content {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 2rem;
+  display: flex;
+  gap: 3rem;
 }
 
 .cart-items {
+  flex: 2;
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -35,69 +35,65 @@
 
 .cart-item {
   background-color: #fff;
-  border-radius: 0.5rem;
-  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 0.2rem 0.8rem rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+  overflow: hidden;
   border: 0.1rem solid #ffd1d1;
 }
 
 .cart-item-header {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
+  display: flex;
   align-items: center;
-  gap: 2rem;
-  margin-bottom: 2rem;
+  padding: 2rem;
+  border-bottom: 0.1rem solid #e2e8f0;
 }
 
 .cart-item-image {
-  width: 10rem;
-  height: 10rem;
+  width: 12rem;
+  height: 8rem;
   object-fit: cover;
-  border-radius: 0.5rem;
+  border-radius: 0.8rem;
   border: 0.1rem solid #ffd1d1;
+}
+
+.cart-item-details {
+  flex: 1;
+  margin-left: 2rem;
 }
 
 .cart-item-details h3 {
   color: #861400;
   font-size: 2rem;
-  margin-bottom: 1rem;
-}
-
-.cart-item-price {
-  color: #ff5a45;
-  font-size: 1.8rem;
-  font-weight: 600;
+  margin-bottom: 0.8rem;
 }
 
 .remove-btn {
-  background: none;
-  border: none;
-  color: #ff5a45;
-  font-size: 2.4rem;
-  cursor: pointer;
-  padding: 1rem;
-  line-height: 1;
-  transition: color 0.3s;
-  height: 4rem;
-  width: 4rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 3.2rem;
+  height: 3.2rem;
   border-radius: 50%;
+  border: none;
+  background: #f7fafc;
+  color: #718096;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: all 0.2s;
 }
 
 .remove-btn:hover {
-  color: #861400;
-  background-color: #ffd1d1;
+  background: #e2e8f0;
+  color: #4a5568;
 }
 
 .module-selection {
   margin-top: 1.5rem;
+  padding: 2rem;
 }
 
 .module-selection h4 {
   color: #861400;
-  font-size: 1.6rem;
-  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  margin-bottom: 1.6rem;
 }
 
 .module-grid {
@@ -115,6 +111,7 @@
   border: 0.1rem solid #ffd1d1;
   border-radius: 0.4rem;
   transition: all 0.3s;
+  margin: 1.2rem 0;
 }
 
 .module-checkbox:hover {
@@ -126,13 +123,33 @@
   height: 1.8rem;
   accent-color: #ff5a45;
   cursor: pointer;
+  margin-right: 1.2rem;
 }
 
 .module-checkbox label {
-  color: #861400;
-  font-size: 1.4rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
   cursor: pointer;
-  user-select: none;
+  font-size: 1.6rem;
+  padding: 1rem 1.5rem;
+  gap: 2rem;
+}
+
+.module-title {
+  font-weight: 500;
+  color: #2d3748;
+  flex: 1;
+  margin: 0.8rem 0;
+}
+
+.module-price {
+  color: #2c5282;
+  font-weight: 600;
+  font-size: 1.6rem;
+  white-space: nowrap;
+  margin: 0.8rem 0;
 }
 
 .payment-section {
@@ -141,11 +158,14 @@
   padding: 2rem;
   margin-top: 2rem;
   border: 0.1rem solid #ffd1d1;
+  flex: 1;
+  position: sticky;
+  top: 2rem;
 }
 
 .payment-header {
   color: #ff5a45;
-  font-size: 2.2rem;
+  font-size: 2.4rem;
   margin-bottom: 2rem;
 }
 
@@ -172,6 +192,9 @@
 .payment-form {
   display: grid;
   gap: 1.5rem;
+  background: #fff;
+  border-radius: 1rem;
+  padding: 2rem;
 }
 
 .form-group {
@@ -208,6 +231,7 @@
   font-weight: 600;
   cursor: pointer;
   transition: background-color 0.3s;
+  width: 100%;
 }
 
 .submit-button:hover {
@@ -215,7 +239,7 @@
 }
 
 .whatsapp-info {
-  margin-top: 2rem;
+  margin-top: 1.6rem;
   text-align: center;
   color: #861400;
   font-size: 1.4rem;
@@ -231,62 +255,62 @@
 }
 
 .empty-cart p {
-  font-size: 2rem;
-  margin-bottom: 2rem;
+  font-size: 1.8rem;
+  margin-bottom: 2.4rem;
 }
 
 .suggested-course {
-  margin: 3rem auto;
   max-width: 40rem;
-  opacity: 0;
-  transform: translateY(2rem);
-  animation: fadeIn 0.5s forwards;
-}
-
-.suggested-course.animating .course-preview {
-  animation: pulse 0.2s infinite alternate;
+  margin: 3rem auto;
+  padding: 2.4rem;
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 0.2rem 1rem rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 }
 
 .suggestion-text {
   font-size: 1.8rem;
-  color: #ff5a45;
-  margin-bottom: 1.5rem;
+  color: #4a5568;
+  margin-bottom: 2rem;
+  text-align: center;
 }
 
 .course-preview {
-  background-color: #fff5f5;
-  border: 0.1rem solid #ffd1d1;
-  border-radius: 0.5rem;
-  padding: 2rem;
   cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 2rem;
+  transition: transform 0.2s;
+  border-radius: 0.8rem;
+  overflow: hidden;
+  background-color: #fff;
 }
 
 .course-preview:hover {
-  transform: translateY(-0.5rem);
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
-  border-color: #ff5a45;
+  transform: translateY(-0.4rem);
 }
 
 .course-preview img {
-  width: 12rem;
-  height: 12rem;
-  object-fit: cover;
-  border-radius: 0.5rem;
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: contain;
+  background-color: #f7fafc;
+  margin-bottom: 1.6rem;
+  padding: 1rem;
+}
+
+.course-info {
+  padding: 0 1.2rem 1.2rem;
 }
 
 .course-info h3 {
-  font-size: 1.8rem;
-  color: #861400;
+  font-size: 2rem;
+  color: #2d3748;
   margin-bottom: 1rem;
+  line-height: 1.4;
 }
 
 .course-price {
-  font-size: 1.6rem;
-  color: #ff5a45;
+  font-size: 1.8rem;
+  color: #2c5282;
   font-weight: 600;
 }
 
@@ -296,23 +320,22 @@
 
 .browse-btn {
   display: inline-block;
-  padding: 1.4rem 2.8rem;
-  background-color: #ff5a45;
+  padding: 1.2rem 2.4rem;
+  background: #2c5282;
   color: #fff;
   text-decoration: none;
-  border-radius: 0.4rem;
-  font-size: 1.8rem;
-  font-weight: 600;
-  transition: all 0.3s ease;
+  border-radius: 0.8rem;
+  font-size: 1.6rem;
+  font-weight: 500;
+  transition: background 0.2s;
 }
 
 .browse-btn:hover {
-  background-color: #861400;
-  transform: translateY(-0.2rem);
+  background: #2a4365;
 }
 
 .cart-welcome {
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   padding: 1rem;
   background: linear-gradient(135deg, #861400 0%, #701100 100%);
   border-radius: 8px;
@@ -321,12 +344,72 @@
 
 .cart-welcome h3 {
   margin: 0;
-  font-size: 1.2rem;
+  font-size: 2.4rem;
   font-weight: 500;
+  color: #2d3748;
+}
+
+.selected-modules-summary {
+  background-color: #f8fafc;
+  border-radius: 1rem;
+  padding: 2.4rem;
+  margin-bottom: 2.4rem;
+}
+
+.selected-modules-summary h4 {
+  font-size: 2.2rem;
+  color: #2d3748;
+  margin-bottom: 2rem;
+  font-weight: 600;
+}
+
+.summary-items {
+  margin-top: 2rem;
+}
+
+.summary-items h5 {
+  font-size: 2rem;
+  color: #2d3748;
+  margin-bottom: 1.6rem;
+  font-weight: 500;
+}
+
+.module-summary {
+  display: flex;
+  justify-content: space-between;
+  padding: 1.2rem;
+  border-bottom: 0.1rem solid #e2e8f0;
+  font-size: 1.8rem;
+  color: #4a5568;
+}
+
+.module-summary .module-price {
+  font-size: 1.8rem;
+  color: #2c5282;
+}
+
+.total-amount {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2.4rem;
+  padding-top: 2rem;
+  border-top: 0.2rem solid #e2e8f0;
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: #1a202c;
+}
+
+.total-amount strong {
+  color: #2d3748;
+}
+
+.total-amount span {
+  color: #2c5282;
 }
 
 @media (min-width: 768px) {
   .cart-content {
+    display: grid;
     grid-template-columns: 2fr 1fr;
   }
   
@@ -337,7 +420,7 @@
 
 @media (max-width: 767px) {
   .cart-page {
-    padding: 2rem 1rem;
+    padding: 1.6rem;
   }
   
   .cart-header {
@@ -379,4 +462,12 @@
   to {
     transform: scale(1.02);
   }
+}
+
+.suggested-course.animating {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.suggested-course.animating .course-preview {
+  animation: pulse 0.2s infinite alternate;
 }

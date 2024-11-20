@@ -1,6 +1,7 @@
 export interface IModule {
   module: number;
   list: string[];
+  m_price: string;
 }
 
 export interface ICourse {

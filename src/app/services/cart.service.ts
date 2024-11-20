@@ -51,6 +51,11 @@ export class CartService {
         this.saveCartToStorage();
     }
 
+    updateCart(items: ICartItem[]) {
+        this.cartItems.set(items);
+        this.saveCartToStorage();
+    }
+
     removeFromCart(courseId: string) {
         const currentItems = this.cartItems();
         const updatedItems = currentItems.filter(item => item.courseId !== courseId);
