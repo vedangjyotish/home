@@ -73,7 +73,21 @@
 
     <div class="empty-cart" *ngIf="cartItems().length === 0">
       <p>Your cart is empty</p>
-      <a routerLink="/courses" class="browse-btn">Browse Courses</a>
+      
+      <div class="suggested-course" *ngIf="suggestedCourse()" [class.animating]="isAnimating()">
+        <p class="suggestion-text">How about this course?</p>
+        <div class="course-preview" (click)="goToCourse(suggestedCourse()!.cid)">
+          <img [src]="'../../assets/ccards/img/' + suggestedCourse()!.img" [alt]="suggestedCourse()!.name">
+          <div class="course-info">
+            <h3>{{ suggestedCourse()!.name }}</h3>
+            <p class="course-price">₹{{ suggestedCourse()!.price }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="browse-actions">
+        <a routerLink="/courses" class="browse-btn">Browse All Courses</a>
+      </div>
     </div>
   </div>
 </div>

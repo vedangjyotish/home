@@ -3,18 +3,22 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CartService } from '../services/cart.service';
 import { ICartItem, IPaymentDetails } from '../interfaces/cart.interface';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { cdata } from '../ccards/cdata';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent {
   cartItems = this.cartService.getCartItems();
   showPaymentForm = signal(false);
+  suggestedCourse = signal<typeof cdata[0] | null>(null);
+  isAnimating = signal(false);
+
   paymentDetails: IPaymentDetails = {
     name: '',
     email: '',
@@ -38,6 +42,9 @@ export class CartComponent {
 
   removeItem(courseId: string) {
     this.cartService.removeFromCart(courseId);
+    if (this.cartItems().length === 0) {
+      this.startSuggestionAnimation();
+    }
   }
 
   updateModuleSelection(item: ICartItem, moduleIndex: number, event: Event) {
@@ -60,8 +67,31 @@ export class CartComponent {
     }
   }
 
+  getModuleArray(totalModules: number): number[] {
+    return Array.from({ length: totalModules }, (_, i) => i);
+  }
+
+  startSuggestionAnimation() {
+    this.isAnimating.set(true);
+    let count = 0;
+    const animationInterval = setInterval(() => {
+      const randomIndex = Math.floor(Math.random() * cdata.length);
+      this.suggestedCourse.set(cdata[randomIndex]);
+      count++;
+      
+      if (count >= 10) { // Stop after 10 iterations
+        clearInterval(animationInterval);
+        this.isAnimating.set(false);
+      }
+    }, 200); // Change course every 200ms
+  }
+
   proceedToPayment() {
     this.showPaymentForm.set(true);
+  }
+
+  goToCourse(courseId: string) {
+    this.router.navigate(['/course', courseId]);
   }
 
   submitPayment() {
@@ -69,13 +99,8 @@ export class CartComponent {
     
     this.cartService.submitEnrollment(this.paymentDetails).subscribe({
       next: (enrollment) => {
-        // Clear cart after successful enrollment
         this.cartService.clearCart();
-        
-        // Show success message and WhatsApp instructions
         alert(`Enrollment submitted! Please send your payment proof to WhatsApp number: ${this.whatsappNumber}`);
-        
-        // Redirect to courses page
         this.router.navigate(['/courses']);
       },
       error: (error) => {
@@ -83,9 +108,5 @@ export class CartComponent {
         alert('Enrollment failed. Please try again or contact support.');
       }
     });
-  }
-
-  getModuleArray(totalModules: number): number[] {
-    return Array.from({ length: totalModules }, (_, i) => i);
   }
 }
