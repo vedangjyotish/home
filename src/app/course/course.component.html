@@ -43,7 +43,14 @@
       <div class="course_intro_heading">
         <h2>{{ cname() }}</h2>
         <div class="course_author">
-          <div class="rating">{{ stars }}</div>
+          <div class="rating">
+            <span *ngFor="let star of getStarArray()" class="star">
+              <i [class]="star === 'full' ? 'fas fa-star' : 
+                         star === 'half' ? 'fas fa-star-half-alt' : 
+                         'far fa-star'"></i>
+            </span>
+            <span class="rating-number">({{ rating }})</span>
+          </div>
           <h3>by Shiv Purushottam Sharma</h3>
         </div>
       </div>

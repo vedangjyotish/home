@@ -138,6 +138,20 @@ button {
   font-size: 2rem;
   color: #FFD700;
   margin-bottom: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.star {
+  color: #ffd700;
+  font-size: 1.2rem;
+}
+
+.rating-number {
+  margin-left: 0.5rem;
+  color: #666;
+  font-size: 0.9rem;
 }
 
 /* Module Styling */

@@ -95,15 +95,25 @@ export class CourseComponent implements OnInit {
     return course?.rating || 5;
   }
 
-  get stars(): string {
-    const fullStars = Math.floor(this.rating);
-    const hasHalfStar = this.rating % 1 >= 0.5;
-    let starString = '★'.repeat(fullStars);
-    if (hasHalfStar) {
-      starString += '⯨';
+  getStarArray(): string[] {
+    const rating = this.rating; 
+    const starsArray: string[] = [];
+
+    // Add full stars first
+    for (let i = 0; i < Math.floor(rating); i++) {
+      starsArray.push('full');
     }
-    const emptyStars = 5 - Math.ceil(this.rating);
-    starString += '☆'.repeat(emptyStars);
-    return starString;
+
+    // Add half star if there's a decimal
+    if (rating % 1 > 0) {
+      starsArray.push('half');
+    }
+
+    // Fill the rest with empty stars
+    while (starsArray.length < 5) {
+      starsArray.push('empty');
+    }
+
+    return starsArray;
   }
 }
