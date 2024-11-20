@@ -66,8 +66,13 @@ li::before {
   border-radius: 0.8rem;
   color: #861400;
   background-color: #fbeae7;
+  transition: all 0.3s ease;
 }
 
+.mods:hover:not(.active) {
+  background-color: rgba(134, 20, 0, 0.15);
+  color: #861400;
+}
 
 .mods.active {
   color: #fbeae7;
