@@ -1,15 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { StudentAuthService } from '../students/auth/student-auth.service';
 import { MemberAuthService } from '../members/auth/member-auth.service';
+import { TokenStorageService } from '../core/services/token-storage.service';
 
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.css']
 })
-export class AccountComponent {
+export class AccountComponent implements OnInit {
   showStudentForm = false;
   showMemberForm = false;
   studentId = '';
@@ -22,8 +23,32 @@ export class AccountComponent {
   constructor(
     private router: Router,
     private studentAuth: StudentAuthService,
-    private memberAuth: MemberAuthService
+    private memberAuth: MemberAuthService,
+    private tokenStorage: TokenStorageService
   ) {}
+
+  ngOnInit() {
+    // Check if user is already logged in
+    const user = this.tokenStorage.getUser();
+    if (user) {
+      this.redirectBasedOnUserType(user.type);
+    }
+  }
+
+  private redirectBasedOnUserType(userType: string) {
+    switch (userType) {
+      case 'student':
+        this.router.navigate(['/students/dashboard']);
+        break;
+      case 'member':
+        this.router.navigate(['/members/dashboard']);
+        break;
+      default:
+        // Handle unknown user type
+        this.tokenStorage.signOut();
+        this.errorMessage = 'Invalid user type';
+    }
+  }
 
   showStudentLogin() {
     this.showStudentForm = true;
@@ -44,80 +69,67 @@ export class AccountComponent {
 
   onStudentIdInput(event: Event) {
     const input = event.target as HTMLInputElement;
-    const value = input.value;
-    
-    // If the input is numeric, limit to 10 digits
-    if (/^\d+$/.test(value)) {
-      input.value = value.slice(0, 10);
-      this.studentId = input.value;
-    } else {
-      // If it's not numeric (email), don't apply the 10-digit limit
-      this.studentId = value;
-    }
+    // Allow both email and phone number input
+    this.studentId = input.value;
   }
 
   onMemberIdInput(event: Event) {
     const input = event.target as HTMLInputElement;
     const value = input.value;
     
-    // Only allow digits and limit to 10
-    if (/^\d*$/.test(value)) {
+    // If the input is numeric, limit to 10 digits
+    if (/^\d+$/.test(value)) {
       input.value = value.slice(0, 10);
+      this.memberId = input.value;
+    } else {
+      // If non-numeric, remove non-numeric characters
+      input.value = value.replace(/\D/g, '');
       this.memberId = input.value;
     }
   }
 
-  isValidStudentId(id: string): boolean {
-    // Check if it's a valid email
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (emailRegex.test(id)) {
-      return true;
-    }
-
-    // Check if it's a 10-digit number
-    const phoneRegex = /^\d{10}$/;
-    return phoneRegex.test(id);
-  }
-
-  isValidMemberId(id: string): boolean {
-    // Check if it's exactly 10 digits
-    return /^\d{10}$/.test(id);
-  }
-
   onStudentSubmit() {
-    this.clearMessages();
-    if (this.isValidStudentId(this.studentId) && this.studentPassword.length >= 8) {
-      this.studentAuth.login({ id: this.studentId, password: this.studentPassword })
-        .subscribe({
-          next: (response) => {
-            this.successMessage = 'Login successful! Redirecting...';
-            setTimeout(() => {
-              this.router.navigate(['/students/dashboard']);
-            }, 1000);
-          },
-          error: (error) => {
-            this.errorMessage = error.message || 'Login failed. Please check your credentials.';
-          }
-        });
+    if (!this.studentId || !this.studentPassword) {
+      this.errorMessage = 'Please fill in all fields';
+      return;
     }
+
+    this.studentAuth.login({ id: this.studentId, password: this.studentPassword }).subscribe({
+      next: (response) => {
+        this.successMessage = 'Login successful!';
+        this.errorMessage = '';
+        // Add a delay before redirecting
+        setTimeout(() => {
+          this.router.navigate(['/students/dashboard']);
+        }, 1000); // 1 second delay
+      },
+      error: (error) => {
+        this.errorMessage = error.message || 'Login failed';
+        this.successMessage = '';
+      }
+    });
   }
 
   onMemberSubmit() {
-    this.clearMessages();
-    if (this.isValidMemberId(this.memberId) && this.memberPassword.length >= 8) {
-      this.memberAuth.login({ phone: this.memberId, password: this.memberPassword })
-        .subscribe({
-          next: (response) => {
-            this.successMessage = 'Login successful! Redirecting...';
-            setTimeout(() => {
-              this.router.navigate(['/members/dashboard']);
-            }, 1000);
-          },
-          error: (error) => {
-            this.errorMessage = error.message || 'Login failed. Please check your credentials.';
-          }
-        });
+    if (!this.memberId || !this.memberPassword) {
+      this.errorMessage = 'Please fill in all fields';
+      return;
     }
+
+    this.memberAuth.login({ phone: this.memberId, password: this.memberPassword }).subscribe({
+      next: (response) => {
+        this.successMessage = 'Login successful!';
+        this.errorMessage = '';
+        // Add a delay before redirecting
+        setTimeout(() => {
+          this.router.navigate(['/members/dashboard']);
+        }, 1000); // 1 second delay
+      },
+      error: (error) => {
+        this.errorMessage = error.message || 'Login failed';
+        this.successMessage = '';
+      }
+    });
   }
 
   goBack(event?: Event) {

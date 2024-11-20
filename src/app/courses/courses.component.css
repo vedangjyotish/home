@@ -26,10 +26,19 @@
 }
 
 .courses_header {
-  /* background-color: #f56147; */
   padding: 5rem 2rem;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-left {
+  display: flex;
   gap: 1.5rem;
+}
+
+.header-right {
+  padding-right: 2rem;
 }
 
 .user_text {
@@ -100,6 +109,21 @@
 
 .clipped {
   clip-path: circle(50% at 50% 50%);
+}
+
+.logout-btn {
+  display: inline-block;
+  padding: 0.8rem 2rem;
+  font-size: 1.4rem;
+  color: #fbeae7;
+  background-color: #861400;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.logout-btn:hover {
+  background-color: #b51f00;
 }
 
 @media (max-width: 1440px) {

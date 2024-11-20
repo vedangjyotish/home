@@ -14,8 +14,13 @@
       <div class="the_course_cart_card">
         <img src="../../assets/ccards/img/numerology.png" alt="">
         <p class="price"> &#8377; 40000</p>
-        <button class="mods" type="submit">Add to cart</button>
-        <button class="mods active" type="submit">Enroll Now</button>
+        <ng-container *ngIf="!isEnrolled()">
+          <button class="mods" type="submit">Add to cart</button>
+          <button class="mods active" type="submit">Enroll Now</button>
+        </ng-container>
+        <ng-container *ngIf="isEnrolled()">
+          <button class="mods enrolled" disabled>Enrolled</button>
+        </ng-container>
         <div class="about_the_course">
           <div class="info_lines">
             <img src="../../assets/icons/calendar.svg" alt="">  

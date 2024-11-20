@@ -15,6 +15,7 @@ import { AccountComponent } from './account/account.component';
 import { CartComponent } from './cart/cart.component';
 import { ADMIN_ROUTES } from './admin/admin.routes';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
+import { StudentLogoutComponent } from './students/auth/student-logout.component';
 
 export const routes: Routes = [
   {
@@ -91,6 +92,10 @@ export const routes: Routes = [
   },
   {
     path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule)
+  },
+  {
+    path: 'student/logout',
+    component: StudentLogoutComponent
   },
   {
     path: '404',

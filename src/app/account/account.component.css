@@ -345,8 +345,31 @@ input:focus {
 
 .error-message {
   color: #e74c3c;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   margin-top: 0.5rem;
+}
+
+.error-message.alert,
+.success-message.alert {
+  text-align: center;
+  padding: 1.2rem;
+  margin-bottom: 2rem;
+  border-radius: 0.8rem;
+  font-family: var(--body-font);
+  font-size: 1.6rem;
+  font-weight: 500;
+}
+
+.error-message.alert {
+  background-color: #fdeaea;
+  color: #e74c3c;
+  border: 1px solid #fadbd8;
+}
+
+.success-message.alert {
+  background-color: #eafaf1;
+  color: #27ae60;
+  border: 1px solid #d5f5e3;
 }
 
 @keyframes wave {
