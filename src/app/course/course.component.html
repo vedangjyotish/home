@@ -1,20 +1,20 @@
-<div class="course_container_bg">
+<div class="course_container_bg" *ngIf="courseData() !== null">
   <div class="the_course_container">
     <div class="the_course_banner">
       <div class="the_course_info">
         <h1>{{ cname() }}</h1>
-        <p class="course_tagline">"Unlock the secret of Numbers"</p>
-        <p class="mini_tagline">Begin your journey to mastery</p>
+        <p class="course_tagline" *ngIf="taglines().length > 0">{{ taglines()[0] }}</p>
+        <p class="mini_tagline" *ngIf="taglines().length > 1">{{ taglines()[1] }}</p>
       </div>
       <div class="the_course_image">
-        <img src="../../assets/ccards/img/numerology.png" alt="">
+        <img [src]="image()" [alt]="cname()">
       </div>
     </div>
     <!-- course banner ends -->
     <div class="the_course_cart">
       <div class="the_course_cart_card">
-        <img src="../../assets/ccards/img/numerology.png" alt="">
-        <p class="price"> &#8377; 40000</p>
+        <img [src]="image()" [alt]="cname()">
+        <p class="price" *ngIf="price()"> &#8377; {{ price() }}</p>
         <ng-container *ngIf="!isEnrolled()">
           <button class="mods" type="submit">Add to cart</button>
           <button class="mods active" type="submit">Enroll Now</button>
@@ -49,7 +49,7 @@
                          star === 'half' ? 'fas fa-star-half-alt' : 
                          'far fa-star'"></i>
             </span>
-            <span class="rating-number">({{ rating }})</span>
+            <span class="rating-number">({{ rating() }})</span>
           </div>
           <h3>by Shiv Purushottam Sharma</h3>
         </div>
@@ -60,9 +60,9 @@
     <!-- course module starts -->
     <div class="the_course_module">
       <div class="course_module_tabs">
-        <a [routerLink]="['tabs', 0]" class="tab__buttons" [class]="{'active': activeTabIndex() === 0}" (click)="showContents($event, bLine, 0)" >Course Modules</a>
-        <a [routerLink]="['tabs', 1]" class="tab__buttons" [class]="{'active': activeTabIndex() === 1}" (click)="showContents($event, bLine, 1)" >Instructor</a>
-        <a [routerLink]="['tabs', 2]" class="tab__buttons" [class]="{'active': activeTabIndex() === 2}" (click)="showContents($event, bLine, 2)" >Reviews</a>
+        <a [routerLink]="['tabs', 0]" class="tab__buttons" [class.active]="activeTabIndex() === 0" (click)="showContents($event, bLine, 0)" >Course Modules</a>
+        <a [routerLink]="['tabs', 1]" class="tab__buttons" [class.active]="activeTabIndex() === 1" (click)="showContents($event, bLine, 1)" >Instructor</a>
+        <a [routerLink]="['tabs', 2]" class="tab__buttons" [class.active]="activeTabIndex() === 2" (click)="showContents($event, bLine, 2)" >Reviews</a>
         <div #bLine class="b_line"></div>
       </div>
       <div class="the_course_module_container">

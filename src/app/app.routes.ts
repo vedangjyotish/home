@@ -77,6 +77,11 @@ export const routes: Routes = [
       {
         path: 'tabs/2',
         component: ReviewsComponent,
+      },
+      {
+        path: '',
+        redirectTo: 'tabs/0',
+        pathMatch: 'full'
       }
     ]
   },

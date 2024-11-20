@@ -1,9 +1,9 @@
-import { Component, Input, Renderer2, signal, OnInit } from '@angular/core';
+import { Component, OnInit, computed, signal } from '@angular/core';
 import { Router, RouterLink, RouterOutlet, NavigationEnd, ActivatedRoute } from '@angular/router';
-import { CourseService } from '../ccards/courses.service';
 import { TokenStorageService } from '../core/services/token-storage.service';
 import { CommonModule } from '@angular/common';
-import { cdata } from '../ccards/cdata';
+import { CourseService } from '../services/course.service';
+import { ICourse } from '../interfaces/course.interface';
 
 @Component({
   selector: 'app-course',
@@ -13,48 +13,32 @@ import { cdata } from '../ccards/cdata';
   styleUrls: ['./course.component.css']
 })
 export class CourseComponent implements OnInit {
-  cname = signal('');
-  currentCourseId: string = 'c1'; // Set default course ID
-  isEnrolled = signal(false);
-  
+  courseData = signal<ICourse | null>(null);
   activeTabIndex = signal(0);
-  activeModuleIndex: number = 0;
+  isEnrolled = signal(false);
 
-  private readonly courseData = cdata;
+  // Computed values
+  cname = computed(() => this.courseData()?.name ?? '');
+  rating = computed(() => this.courseData()?.rating ?? 0);
+  mods = computed(() => this.courseData()?.mods ?? []);
+  image = computed(() => this.courseData()?.img ? `../../assets/ccards/img/${this.courseData()?.img}` : '');
+  price = computed(() => this.courseData()?.price ?? '');
+  taglines = computed(() => this.courseData()?.tagline ?? []);
+  highlights = computed(() => this.courseData()?.highlights ?? []);
 
-  constructor( 
-    private renderer: Renderer2, 
-    private coursesService: CourseService,
+  constructor(
+    private courseService: CourseService,
     private router: Router,
     private route: ActivatedRoute,
     private tokenStorage: TokenStorageService
   ) {}
 
   ngOnInit() {
-    // Subscribe to router events to handle scroll position
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        // If it's a tab route, maintain scroll position
-        if (event.url.includes('/tabs/')) {
-          const currentScroll = window.scrollY;
-          setTimeout(() => window.scrollTo(0, currentScroll), 0);
-        } else {
-          // For other routes, scroll to top
-          window.scrollTo(0, 0);
-        }
-      }
-    });
-
-    // Get the course ID from the route parameters
+    // Load course data when route params change
     this.route.params.subscribe(params => {
-      if (params['cid']) {
-        this.currentCourseId = params['cid'];
-      }
-      this.updateCourseData();
-      
-      // Navigate to the first tab by default if not already on a tab
-      if (!this.router.url.includes('/tabs/')) {
-        this.router.navigate(['tabs', 0], { relativeTo: this.route });
+      const cid = params['cid'];
+      if (cid) {
+        this.loadCourseData(cid);
       }
     });
 
@@ -67,97 +51,75 @@ export class CourseComponent implements OnInit {
     });
   }
 
-  private updateCourseData() {
-    // Try to get course from service first
-    const course = this.coursesMap.get(this.currentCourseId);
-    if (course) {
-      this.cname.set(course.name);
-    } else {
-      // Fallback to static data if not found in service
-      const staticCourse = this.courseData.find(c => c.cid === this.currentCourseId);
-      this.cname.set(staticCourse?.name || 'Unknown Course');
-    }
-    this.checkEnrollmentStatus();
+  private loadCourseData(cid: string) {
+    console.log('Loading course data for:', cid);
+    this.courseService.getCourseById(cid).subscribe({
+      next: (course) => {
+        console.log('Received course data:', course);
+        if (course) {
+          this.courseData.set(course);
+          this.checkEnrollmentStatus(cid);
+          
+          // Navigate to first tab if not already on a tab
+          if (!this.router.url.includes('/tabs/')) {
+            this.router.navigate(['tabs', 0], { relativeTo: this.route });
+          }
+        } else {
+          console.error('Course not found:', cid);
+          this.router.navigate(['/courses']);
+        }
+      },
+      error: (error) => {
+        console.error('Error loading course:', error);
+        this.router.navigate(['/courses']);
+      }
+    });
   }
 
-  private coursesMap = new Map(this.coursesService.courses.map(course => [course.cid, course]));
-  
-  @Input()
-  set cid(uid: string | undefined) {
-    if (uid) {
-      this.currentCourseId = uid;
-      this.updateCourseData();
-    }
-  }
-
-  private checkEnrollmentStatus() {
+  private checkEnrollmentStatus(cid: string) {
     const user = this.tokenStorage.getUser();
     if (user && user.enrolledCourses) {
-      this.isEnrolled.set(user.enrolledCourses.includes(this.currentCourseId));
+      this.isEnrolled.set(user.enrolledCourses.includes(cid));
     } else {
       this.isEnrolled.set(false);
     }
   }
 
+  getStarArray(): ('full' | 'half' | 'empty')[] {
+    const rating = this.rating();
+    const stars: ('full' | 'half' | 'empty')[] = [];
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 >= 0.5;
+
+    for (let i = 0; i < 5; i++) {
+      if (i < fullStars) {
+        stars.push('full');
+      } else if (i === fullStars && hasHalfStar) {
+        stars.push('half');
+      } else {
+        stars.push('empty');
+      }
+    }
+    return stars;
+  }
+
   showContents(event: Event, element: HTMLElement, index: number) {
     event.preventDefault();
     event.stopPropagation();
-    
     this.activeTabIndex.set(index);
-    this.updateUnderlinePosition(event, element, index);
+    this.updateUnderlinePosition(element, index);
   }
 
-  private updateUnderlinePosition(event: Event, element: HTMLElement, index: number) {
-    event.preventDefault();
-    this.activeTabIndex.set(index);
-
-    const targetLink = event.target as HTMLAnchorElement;
-    const offsetWidth = targetLink.offsetWidth;
-    const offsetLeft = targetLink.offsetLeft;
-    
-    this.renderer.setStyle(element, 'width', `${offsetWidth}px`);
-    this.renderer.setStyle(element, 'left', `${offsetLeft}px`);
-  }
-
-  private scrollTabsToCenter() {
-    const moduleSection = document.querySelector('.the_course_module');
-    if (moduleSection instanceof HTMLElement) {
-      const viewportHeight = window.innerHeight;
-      const elementRect = moduleSection.getBoundingClientRect();
-      const elementHeight = elementRect.height;
-      const scrollOffset = elementRect.top + window.scrollY - (viewportHeight - elementHeight) / 2;
-      
-      window.scrollTo({
-        top: scrollOffset,
-        behavior: 'smooth'
-      });
+  private updateUnderlinePosition(element: HTMLElement, index: number) {
+    const tabsContainer = element.parentElement;
+    if (tabsContainer) {
+      const activeTab = tabsContainer.children[index] as HTMLElement;
+      if (activeTab) {
+        const offsetWidth = activeTab.offsetWidth;
+        const offsetLeft = activeTab.offsetLeft;
+        element.style.width = `${offsetWidth}px`;
+        element.style.left = `${offsetLeft}px`;
+      }
     }
-  }
-
-  get rating(): number {
-    const course = this.courseData.find(c => c.cid === this.currentCourseId);
-    return course?.rating || 5;
-  }
-
-  getStarArray(): string[] {
-    const rating = this.rating; 
-    const starsArray: string[] = [];
-
-    // Add full stars first
-    for (let i = 0; i < Math.floor(rating); i++) {
-      starsArray.push('full');
-    }
-
-    // Add half star if there's a decimal
-    if (rating % 1 > 0) {
-      starsArray.push('half');
-    }
-
-    // Fill the rest with empty stars
-    while (starsArray.length < 5) {
-      starsArray.push('empty');
-    }
-
-    return starsArray;
   }
 }

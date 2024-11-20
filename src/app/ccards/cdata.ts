@@ -215,7 +215,7 @@ export const cdata = [
       },
       {
         module: 3,
-        list: ["Remedies"]
+        list: ["Remedies", "Diet Plan", "Medicines"]
       }
     ],
   },

@@ -1,20 +1,22 @@
-<div class="courseModulesContainer">
+<div class="courseModulesContainer" *ngIf="modules().length > 0">
   <div class="course_module_info">
     <p>6 Months</p>
-    <p>46 Videos</p>
-    <p>56 Hours total time</p>
+    <p>{{ modules().length }} Modules</p>
+    <p>{{ moduleList().length }} Topics</p>
   </div>
-<div class="course_modules">
-  <div class="course_modules_buttons">
-    <a class="mods" 
-       *ngFor="let mod of modules(); let index = index" 
-       [class]="{'active': activeModuleIndex() === index}" 
-       (click)="toggleModuleActive(index)">
-      Module {{ mod.module }}
-    </a>
+  <div class="course_modules">
+    <div class="course_modules_buttons">
+      <a class="mods" 
+         *ngFor="let mod of modules(); let index = index" 
+         [class.active]="activeModuleIndex() === index" 
+         (click)="toggleModuleActive(index)">
+        Module {{ mod.module }}
+      </a>
+    </div>
+    <div class="course_modules_contents">
+      <ul>
+        <li *ngFor="let item of moduleList()">{{ item }}</li>
+      </ul>
+    </div>
   </div>
-  <div class="course_modules_contents">
-    <li *ngFor="let item of moduleList()">{{ item }}</li>
-  </div>
-</div>
 </div>

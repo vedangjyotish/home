@@ -1,13 +1,8 @@
-import { Component, computed, inject, input, signal } from '@angular/core';
-import { RouterOutlet, RouterLink } from '@angular/router';
-import { CourseService } from '../ccards/courses.service';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
+import { RouterOutlet, RouterLink, ActivatedRoute } from '@angular/router';
+import { CourseService } from '../services/course.service';
 import { CommonModule } from '@angular/common';
-import { cdata } from '../ccards/cdata';
-
-interface Module {
-  module: number;
-  list: string[];
-}
+import { ICourse } from '../interfaces/course.interface';
 
 @Component({
   selector: 'app-mods',
@@ -16,52 +11,51 @@ interface Module {
   templateUrl: './mods.component.html',
   styleUrl: './mods.component.css'
 })
-export class ModsComponent {
-  cid = input<string>('c1'); // Set default value to 'c1'
-
-  private coursesService = inject(CourseService);
-  private readonly courseData = cdata;
-
+export class ModsComponent implements OnInit {
   activeModuleIndex = signal(0);
+  
+  private courseService = inject(CourseService);
+  private route = inject(ActivatedRoute);
+  private currentCourse = signal<ICourse | null>(null);
 
-  private memoizedModules: Module[] | null = null;
-  private memoizedCid: string | null = null;
-
-  modules = computed<Module[]>(() => {
-    if (this.memoizedCid === this.cid() && this.memoizedModules) {
-      return this.memoizedModules;
-    }
-
-    // Try to get course from service first
-    const course = this.coursesService.courses.find((c) => c.cid === this.cid());
-    if (course?.mods) {
-      this.memoizedModules = course.mods;
-    } else {
-      // Fallback to static data if not found in service
-      const staticCourse = this.courseData.find(c => c.cid === this.cid());
-      this.memoizedModules = staticCourse?.mods || [];
-    }
-    
-    this.memoizedCid = this.cid();
-    return this.memoizedModules;
+  modules = computed(() => {
+    return this.currentCourse()?.mods || [];
   });
 
   moduleList = computed(() => {
-    // Try service first
-    const course = this.coursesService.courses.find((c) => c.cid === this.cid());
-    if (course?.mods) {
-      const module = course.mods[this.activeModuleIndex()];
-      return module ? module.list : [];
-    }
-
-    // Fallback to static data
-    const staticCourse = this.courseData.find(c => c.cid === this.cid());
-    if (!staticCourse?.mods) {
-      return [];
-    }
-    const module = staticCourse.mods[this.activeModuleIndex()];
-    return module ? module.list : [];
+    const activeModule = this.modules()[this.activeModuleIndex()];
+    return activeModule?.list || [];
   });
+
+  ngOnInit() {
+    // Get the course ID from the parent route
+    const parentRoute = this.route.parent;
+    if (parentRoute) {
+      parentRoute.params.subscribe(params => {
+        const cid = params['cid'];
+        if (cid) {
+          this.loadCourseData(cid);
+        }
+      });
+    }
+  }
+
+  private loadCourseData(cid: string) {
+    console.log('ModsComponent: Loading course data for:', cid);
+    this.courseService.getCourseById(cid).subscribe({
+      next: (course) => {
+        console.log('ModsComponent: Received course:', course);
+        if (course) {
+          this.currentCourse.set(course);
+        } else {
+          console.error('Course not found:', cid);
+        }
+      },
+      error: (error) => {
+        console.error('Error loading course:', error);
+      }
+    });
+  }
 
   toggleModuleActive(index: number) {
     this.activeModuleIndex.set(index);
