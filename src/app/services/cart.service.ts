@@ -1,4 +1,4 @@
-import { Injectable, signal, inject, PLATFORM_ID } from '@angular/core';
+import { Injectable, signal, inject, PLATFORM_ID, computed } from '@angular/core';
 import { ICartItem, IPaymentDetails, IEnrollment } from '../interfaces/cart.interface';
 import { TokenStorageService } from '../core/services/token-storage.service';
 import { Observable, of } from 'rxjs';
@@ -11,6 +11,10 @@ export class CartService {
     private cartItems = signal<ICartItem[]>([]);
     private readonly WHATSAPP_NUMBER = '+91 1234567890'; // Replace with actual number
     private platformId = inject(PLATFORM_ID);
+
+    totalAmount = computed(() => {
+        return this.cartItems().reduce((total, item) => total + item.price, 0);
+    });
 
     constructor(private tokenStorage: TokenStorageService) {
         if (isPlatformBrowser(this.platformId)) {

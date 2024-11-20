@@ -1,0 +1,38 @@
+<div class="payment-upload-container">
+  <h2>Upload Payment Details</h2>
+  
+  <div class="upload-form">
+    <div class="error-message" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </div>
+    
+    <form (ngSubmit)="submitPayment()" #paymentForm="ngForm">
+      <div class="form-group">
+        <label for="transactionId">Transaction ID</label>
+        <input 
+          type="text" 
+          id="transactionId" 
+          name="transactionId" 
+          [(ngModel)]="transactionId" 
+          [disabled]="isSubmitting"
+          required>
+      </div>
+
+      <div class="form-group">
+        <label for="screenshot">Payment Screenshot</label>
+        <input 
+          type="file" 
+          id="screenshot" 
+          (change)="onFileSelected($event)" 
+          [disabled]="isSubmitting"
+          accept="image/*"
+          required>
+        <small class="help-text">Please upload a clear screenshot of your payment confirmation</small>
+      </div>
+
+      <button type="submit" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Submitting...' : 'Submit Payment' }}
+      </button>
+    </form>
+  </div>
+</div>

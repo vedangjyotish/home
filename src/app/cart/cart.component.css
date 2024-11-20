@@ -165,8 +165,11 @@
 
 .payment-header {
   color: #ff5a45;
-  font-size: 2.4rem;
+  font-size: 2.2rem;
+  font-weight: 600;
   margin-bottom: 2rem;
+  border-bottom: 0.2rem solid #ff5a45;
+  padding-bottom: 1rem;
 }
 
 .payment-instructions {
@@ -174,51 +177,89 @@
 }
 
 .payment-instructions p {
-  color: #861400;
   font-size: 1.6rem;
-  margin-bottom: 1rem;
+  margin-bottom: 1.6rem;
 }
 
 .payment-instructions ol {
-  color: #333;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   padding-left: 2rem;
 }
 
-.payment-instructions li {
-  margin-bottom: 0.5rem;
+.payment-instructions ol li {
+  margin-bottom: 1.2rem;
+}
+
+.payment-methods {
+  margin-top: 3rem;
+}
+
+.payment-method {
+  background-color: #f8f9fa;
+  border-radius: 0.8rem;
+  padding: 2.4rem;
+  margin-bottom: 2.4rem;
+}
+
+.payment-method h5 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #2c3e50;
+  margin-bottom: 1.6rem;
+}
+
+.upi-id {
+  font-size: 1.6rem;
+  color: #2c3e50;
+  font-weight: 500;
+}
+
+.bank-details {
+  display: grid;
+  gap: 1.4rem;
+}
+
+.bank-detail-item {
+  display: grid;
+  grid-template-columns: 16rem 1fr;
+  align-items: center;
+  font-size: 1.6rem;
+}
+
+.bank-detail-item .label {
+  color: #666;
+  font-weight: 500;
+}
+
+.bank-detail-item .value {
+  color: #2c3e50;
+  font-weight: 500;
 }
 
 .payment-form {
-  display: grid;
-  gap: 1.5rem;
-  background: #fff;
-  border-radius: 1rem;
-  padding: 2rem;
+  margin-top: 3rem;
 }
 
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+.payment-form .form-group {
+  margin-bottom: 2rem;
 }
 
-.form-group label {
-  color: #861400;
-  font-size: 1.4rem;
+.payment-form label {
+  font-size: 1.6rem;
+  margin-bottom: 0.8rem;
+  display: block;
+  color: #333;
 }
 
-.form-group input {
-  padding: 1rem;
-  border: 0.1rem solid #ffd1d1;
-  border-radius: 0.4rem;
-  font-size: 1.4rem;
-  transition: border-color 0.3s;
+.payment-form input,
+.payment-form textarea {
+  font-size: 1.6rem;
+  padding: 1.2rem;
 }
 
-.form-group input:focus {
-  outline: none;
-  border-color: #ff5a45;
+.payment-form button {
+  font-size: 1.6rem;
+  padding: 1.2rem 2.4rem;
 }
 
 .submit-button {

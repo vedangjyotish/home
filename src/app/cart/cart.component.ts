@@ -8,6 +8,7 @@ import { ICourse } from '../interfaces/course.interface';
 import { Router, RouterLink } from '@angular/router';
 import { cdata } from '../ccards/cdata';
 import { TokenStorageService } from '../core/services/token-storage.service';
+import { AuthService } from '../core/services/auth.service';
 
 @Component({
   selector: 'app-cart',
@@ -53,7 +54,8 @@ export class CartComponent {
     private cartService: CartService,
     private courseService: CourseService,
     private router: Router,
-    private tokenStorage: TokenStorageService
+    private tokenStorage: TokenStorageService,
+    private authService: AuthService
   ) {
     const user = this.tokenStorage.getUser();
     if (user && user.name) {
@@ -166,5 +168,17 @@ export class CartComponent {
         alert('Enrollment failed. Please try again or contact support.');
       }
     });
+  }
+
+  completeEnrollment() {
+    if (!this.authService.isLoggedIn()) {
+      // Store current cart state or course ID in session storage for redirect after login
+      sessionStorage.setItem('enrollmentRedirect', 'true');
+      this.router.navigate(['/auth/login']);
+      return;
+    }
+
+    // If logged in, navigate to payment upload page
+    this.router.navigate(['/payment-upload']);
   }
 }

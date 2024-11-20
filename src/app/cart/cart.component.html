@@ -56,38 +56,60 @@
         </div>
 
         <div class="payment-instructions">
+          <h4 class="payment-section-title">Payment Instructions</h4>
           <p>Please follow these steps to complete your enrollment:</p>
           <ol>
-            <li>Make the payment to our UPI ID: example&#64;upi</li>
+            <li>Make the payment using any of the methods below</li>
             <li>Take a screenshot of the payment confirmation</li>
             <li>Fill in your details below</li>
             <li>Submit the form to complete enrollment</li>
           </ol>
+
+          <div class="payment-methods">
+            <div class="payment-method">
+              <h5>UPI Payment</h5>
+              <p class="upi-id">UPI ID: example&#64;upi</p>
+            </div>
+
+            <div class="payment-method">
+              <h5>Bank Transfer</h5>
+              <div class="bank-details">
+                <div class="bank-detail-item">
+                  <span class="label">Account Holder:</span>
+                  <span class="value">Rahul Verma</span>
+                </div>
+                <div class="bank-detail-item">
+                  <span class="label">Account Number:</span>
+                  <span class="value">987654321098</span>
+                </div>
+                <div class="bank-detail-item">
+                  <span class="label">Bank Name:</span>
+                  <span class="value">HDFC Bank</span>
+                </div>
+                <div class="bank-detail-item">
+                  <span class="label">Branch:</span>
+                  <span class="value">Andheri West, Mumbai</span>
+                </div>
+                <div class="bank-detail-item">
+                  <span class="label">IFSC Code:</span>
+                  <span class="value">HDFC0001234</span>
+                </div>
+                <div class="bank-detail-item">
+                  <span class="label">Account Type:</span>
+                  <span class="value">Current Account</span>
+                </div>
+                <div class="bank-detail-item">
+                  <span class="label">MICR Code:</span>
+                  <span class="value">400240048</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <form class="payment-form" (ngSubmit)="submitPayment()">
-          <div class="form-group">
-            <label for="name">Full Name</label>
-            <input type="text" id="name" [(ngModel)]="paymentDetails.name" name="name" required>
-          </div>
-
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" id="email" [(ngModel)]="paymentDetails.email" name="email" required>
-          </div>
-
-          <div class="form-group">
-            <label for="phone">Phone Number</label>
-            <input type="tel" id="phone" [(ngModel)]="paymentDetails.phone" name="phone" required>
-          </div>
-
-          <div class="form-group">
-            <label for="transactionId">Transaction ID</label>
-            <input type="text" id="transactionId" [(ngModel)]="paymentDetails.transactionId" name="transactionId" required>
-          </div>
-
-          <button type="submit" class="submit-button">Complete Enrollment</button>
-        </form>
+        <button class="submit-button" (click)="completeEnrollment()">
+          Complete Enrollment
+        </button>
 
         <div class="whatsapp-info">
           <p>Send payment screenshot to WhatsApp: <span class="whatsapp-number">{{ whatsappNumber }}</span></p>

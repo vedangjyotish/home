@@ -2,7 +2,7 @@ import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { isPlatformBrowser } from '@angular/common';
-import { Student } from '../../students/models/student.model';
+import { Student } from '../../interfaces/student.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -85,10 +85,11 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    if (isPlatformBrowser(this.platformId)) {
-      return localStorage.getItem('student_token') !== null;
-    }
-    return false;
+    return !!this.currentStudentSubject.value;
+  }
+
+  isLoggedIn(): boolean {
+    return this.isAuthenticated();
   }
 
   getCurrentStudent(): Student | null {
