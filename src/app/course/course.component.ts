@@ -6,11 +6,12 @@ import { CourseService } from '../services/course.service';
 import { ICourse } from '../interfaces/course.interface';
 import { CartService } from '../services/cart.service'; 
 import { ICartItem } from '../interfaces/cart.interface'; 
+import { ModalComponent } from '../shared/modal/modal.component';
 
 @Component({
   selector: 'app-course',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, CommonModule],
+  imports: [RouterOutlet, RouterLink, CommonModule, ModalComponent],
   templateUrl: './course.component.html',
   styleUrls: ['./course.component.css']
 })
@@ -19,6 +20,9 @@ export class CourseComponent implements OnInit {
   activeTabIndex = signal(0);
   isEnrolled = signal(false);
   selectedModules: { [key: number]: boolean } = {};
+  isModalOpen = signal(false);
+  modalTitle = signal('');
+  modalMessage = signal('');
 
   // Computed values
   cname = computed(() => this.courseData()?.name ?? '');
@@ -163,7 +167,9 @@ export class CourseComponent implements OnInit {
       this.cartService.addToCart(cartItem);
       this.router.navigate(['/cart']);
     } catch (error: any) {
-      alert(error.message);
+      this.modalTitle.set('Cart Alert');
+      this.modalMessage.set(error.message);
+      this.isModalOpen.set(true);
     }
   }
 
@@ -190,7 +196,13 @@ export class CourseComponent implements OnInit {
       this.cartService.addToCart(cartItem);
       this.router.navigate(['/cart']);
     } catch (error: any) {
-      alert(error.message);
+      this.modalTitle.set('Cart Alert');
+      this.modalMessage.set(error.message);
+      this.isModalOpen.set(true);
     }
+  }
+
+  closeModal() {
+    this.isModalOpen.set(false);
   }
 }

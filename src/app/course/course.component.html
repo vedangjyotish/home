@@ -83,5 +83,11 @@
       </div>
     </div>
     <!-- course module ends -->
+    <app-modal 
+      [isOpen]="isModalOpen()"
+      [title]="modalTitle()"
+      [message]="modalMessage()"
+      (closeModal)="closeModal()">
+    </app-modal>
   </div>
 </div>

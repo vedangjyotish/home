@@ -32,7 +32,8 @@ export const cdata = [
           "what is blank house?",
           "concept of sleeping houses and sleeping planets",
           "Takkar, dhoka, drashti, buniyad, achanak chot, rin, chandra kundali"
-        ]
+        ],
+        m_price: "13,333"
       },
       {
         module: 2,
@@ -46,6 +47,7 @@ export const cdata = [
           "prediction through combination of houses",
           "which house is giving good/bad result"
         ],
+        m_price: "13,333"
       },
       {
         module: 3,
@@ -64,7 +66,8 @@ export const cdata = [
           "Job and Career in the Lal Kitab Varshfala",
           "Yoga in the Lal Kitab Varshfala",
           "Many More.."
-        ]
+        ],
+        m_price: "13,333"
       },
     ],
 
@@ -83,14 +86,17 @@ export const cdata = [
       {
         module: 1,
         list: ["How to read charts"],
+        m_price: "1,500"
       },
       {
         module: 2,
         list: ["Planetary motions"],
+        m_price: "1,500"
       },
       {
         module: 3,
-        list: ["Remedies"]
+        list: ["Remedies"],
+        m_price: "1,500"
       }
     ],
   },
@@ -108,14 +114,17 @@ export const cdata = [
       {
         module: 1,
         list: ["How to read charts"],
+        m_price: "6,667"
       },
       {
         module: 2,
         list: ["Planetary motions"],
+        m_price: "6,667"
       },
       {
         module: 3,
-        list: ["Remedies"]
+        list: ["Remedies"],
+        m_price: "6,667"
       }
     ],
   },
@@ -133,14 +142,17 @@ export const cdata = [
       {
         module: 1,
         list: ["How to read charts"],
+        m_price: "13,333"
       },
       {
         module: 2,
         list: ["Planetary motions"],
+        m_price: "13,333"
       },
       {
         module: 3,
-        list: ["Remedies"]
+        list: ["Remedies"],
+        m_price: "13,333"
       }
     ],
   },
@@ -158,14 +170,17 @@ export const cdata = [
       {
         module: 1,
         list: ["How to read charts"],
+        m_price: "13,333"
       },
       {
         module: 2,
         list: ["Planetary motions"],
+        m_price: "13,333"
       },
       {
         module: 3,
-        list: ["Remedies"]
+        list: ["Remedies"],
+        m_price: "13,333"
       }
     ],
   },
@@ -183,14 +198,17 @@ export const cdata = [
       {
         module: 1,
         list: ["How to read charts"],
+        m_price: "13,333"
       },
       {
         module: 2,
         list: ["Planetary motions"],
+        m_price: "13,333"
       },
       {
         module: 3,
-        list: ["Remedies"]
+        list: ["Remedies"],
+        m_price: "13,333"
       }
     ],
   },
@@ -208,18 +226,22 @@ export const cdata = [
       {
         module: 1,
         list: ["How to read charts"],
+        m_price: "10,000"
       },
       {
         module: 2,
         list: ["Planetary motions"],
+        m_price: "10,000"
       },
       {
         module: 3,
-        list: ["Remedies", "Diet Plan", "Medicines"]
+        list: ["Remedies", "Diet Plan", "Medicines"],
+        m_price: "10,000"
       },
       {
         module: 4,
-        list: ["1st House: Physical appearance and health", "6th House: Diseases and ailments", "8th House: Chronic illnesses and longevity" ]
+        list: ["1st House: Physical appearance and health", "6th House: Diseases and ailments", "8th House: Chronic illnesses and longevity" ],
+        m_price: "10,000"
       }
     ],
   },
@@ -237,10 +259,12 @@ export const cdata = [
       {
         module: 1,
         list: ["How to read charts"],
+        m_price: "20,000"
       },
       {
         module: 2,
         list: ["Planetary motions"],
+        m_price: "20,000"
       },
     ],
   },
@@ -258,14 +282,17 @@ export const cdata = [
       {
         module: 1,
         list: ["How to read charts"],
+        m_price: "13,333"
       },
       {
         module: 2,
         list: ["Planetary motions"],
+        m_price: "13,333"
       },
       {
         module: 3,
-        list: ["Remedies"]
+        list: ["Remedies"],
+        m_price: "13,333"
       }
     ],
   },
@@ -283,14 +310,17 @@ export const cdata = [
       {
         module: 1,
         list: ["How to read charts"],
+        m_price: "13,333"
       },
       {
         module: 2,
         list: ["Planetary motions"],
+        m_price: "13,333"
       },
       {
         module: 3,
-        list: ["Remedies"]
+        list: ["Remedies"],
+        m_price: "13,333"
       }
     ],
   }

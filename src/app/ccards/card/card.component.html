@@ -24,8 +24,17 @@
   </div>
   <div class="ccard_footer">
     <div class="c_price">&#8377; {{ price }}/-</div>
-    <div class="enroll_btn">
-     <a [routerLink]="'/course/' + cid">Enroll Now</a> 
+    <div *ngIf="isEnrolled; else notEnrolled" class="enrolled-status">
+      <i class="fas fa-check-circle"></i>
+      <span>Enrolled</span>
+      <button class="btn btn-primary" routerLink="/dashboard/my-courses">
+        Go to Course
+      </button>
     </div>
+    <ng-template #notEnrolled>
+      <div class="enroll_btn" (click)="enrollNow()">
+        Enroll Now
+      </div>
+    </ng-template>
   </div>
 </div>
