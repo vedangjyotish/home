@@ -341,6 +341,25 @@ button {
   font-weight: 500;
 }
 
+/* Cart button styles */
+.btn.in-cart {
+  background-color: #28a745;
+  color: white;
+  border-color: #28a745;
+  transition: all 0.3s ease;
+}
+
+.btn.in-cart:hover {
+  background-color: #218838;
+  border-color: #1e7e34;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.btn.in-cart i {
+  margin-right: 6px;
+}
+
 /* Media Queries */
 @media (max-width: 1440px) {
   .the_course_container {

@@ -30,8 +30,13 @@
             <button class="btn btn-primary mods active" (click)="enrollNow()">
               Enroll Now
             </button>
-            <button class="btn btn-outline-primary mods" (click)="addToCart()">
-              Add to Cart
+            <button class="btn btn-outline-primary mods" 
+                    [class.in-cart]="isInCart()"
+                    (click)="addToCart()">
+              <ng-container *ngIf="isInCart(); else addToCartText">
+                <i class="fas fa-shopping-cart"></i> Go To Cart
+              </ng-container>
+              <ng-template #addToCartText>Add To Cart</ng-template>
             </button>
           </ng-container>
         </div>

@@ -3,9 +3,9 @@ import { Router, RouterLink, RouterOutlet, NavigationEnd, ActivatedRoute } from 
 import { TokenStorageService } from '../core/services/token-storage.service';
 import { CommonModule } from '@angular/common';
 import { CourseService } from '../services/course.service';
+import { CartService } from '../services/cart.service';
 import { ICourse } from '../interfaces/course.interface';
-import { CartService } from '../services/cart.service'; 
-import { ICartItem } from '../interfaces/cart.interface'; 
+import { ICartItem } from '../interfaces/cart.interface';
 import { ModalComponent } from '../shared/modal/modal.component';
 import { filter, Subscription } from 'rxjs';
 
@@ -34,6 +34,10 @@ export class CourseComponent implements OnInit, OnDestroy {
   price = computed(() => this.courseData()?.price ?? '');
   taglines = computed(() => this.courseData()?.tagline ?? []);
   highlights = computed(() => this.courseData()?.highlights ?? []);
+  isInCart = computed(() => {
+    const course = this.courseData();
+    return course ? this.cartService.isInCart(course.cid) : false;
+  });
 
   constructor(
     private courseService: CourseService,
@@ -173,6 +177,12 @@ export class CourseComponent implements OnInit, OnDestroy {
       const course = this.courseData();
       if (!course) return;
 
+      // If course is already in cart, navigate to cart page
+      if (this.isInCart()) {
+        this.router.navigate(['/cart']);
+        return;
+      }
+
       // Convert selectedModules object to array of selected module indices
       const selectedModulesArray = Object.entries(this.selectedModules)
         .filter(([_, isSelected]) => isSelected)
@@ -189,7 +199,12 @@ export class CourseComponent implements OnInit, OnDestroy {
       };
       
       this.cartService.addToCart(cartItem);
-      this.router.navigate(['/cart']);
+      // Removed navigation to cart page when adding item
+      
+      // Optional: Show a success message
+      this.modalTitle.set('Success');
+      this.modalMessage.set('Course added to cart successfully!');
+      this.isModalOpen.set(true);
     } catch (error: any) {
       this.modalTitle.set('Cart Alert');
       this.modalMessage.set(error.message);
