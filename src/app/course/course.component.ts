@@ -18,6 +18,7 @@ export class CourseComponent implements OnInit {
   courseData = signal<ICourse | null>(null);
   activeTabIndex = signal(0);
   isEnrolled = signal(false);
+  selectedModules: { [key: number]: boolean } = {};
 
   // Computed values
   cname = computed(() => this.courseData()?.name ?? '');
@@ -34,7 +35,14 @@ export class CourseComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private tokenStorage: TokenStorageService
-  ) {}
+  ) {
+    this.route.params.subscribe(params => {
+      const cid = params['cid'];
+      if (cid) {
+        this.loadCourseData(cid);
+      }
+    });
+  }
 
   ngOnInit() {
     // Load course data when route params change
@@ -62,7 +70,13 @@ export class CourseComponent implements OnInit {
         if (course) {
           this.courseData.set(course);
           this.checkEnrollmentStatus(cid);
-          
+          this.isEnrolled.set(this.cartService.isEnrolled(cid));
+          // Initialize all modules as selected by default
+          if (course.mods) {
+            course.mods.forEach((mod: any, index: number) => {
+              this.selectedModules[index] = true;
+            });
+          }
           // Navigate to first tab if not already on a tab
           if (!this.router.url.includes('/tabs/')) {
             this.router.navigate(['tabs', 0], { relativeTo: this.route });
@@ -127,36 +141,56 @@ export class CourseComponent implements OnInit {
   }
 
   addToCart() {
-    const course = this.courseData();
-    if (course) {
+    try {
+      const course = this.courseData();
+      if (!course) return;
+
+      // Convert selectedModules object to array of selected module indices
+      const selectedModulesArray = Object.entries(this.selectedModules)
+        .filter(([_, isSelected]) => isSelected)
+        .map(([index]) => parseInt(index));
+
       const cartItem: ICartItem = {
         courseId: course.cid,
         courseName: course.name,
         courseImage: course.img,
-        selectedModules: course.mods.map((_, index) => index), // Initially select all modules
-        totalModules: course.mods.length, // Add total number of modules
-        price: parseInt(course.price.replace(/,/g, '')), // Remove commas from price
-        isFullCourse: true
+        selectedModules: selectedModulesArray,
+        totalModules: course.mods?.length || 0,
+        price: parseInt(course.price.replace(/,/g, '')),
+        isFullCourse: selectedModulesArray.length === (course.mods?.length || 0)
       };
+      
       this.cartService.addToCart(cartItem);
       this.router.navigate(['/cart']);
+    } catch (error: any) {
+      alert(error.message);
     }
   }
 
   enrollNow() {
-    const course = this.courseData();
-    if (course) {
+    try {
+      const course = this.courseData();
+      if (!course) return;
+
+      // Convert selectedModules object to array of selected module indices
+      const selectedModulesArray = Object.entries(this.selectedModules)
+        .filter(([_, isSelected]) => isSelected)
+        .map(([index]) => parseInt(index));
+
       const cartItem: ICartItem = {
         courseId: course.cid,
         courseName: course.name,
         courseImage: course.img,
-        selectedModules: course.mods.map((_, index) => index), // Initially select all modules
-        totalModules: course.mods.length, // Add total number of modules
-        price: parseInt(course.price.replace(/,/g, '')), // Remove commas from price
-        isFullCourse: true
+        selectedModules: selectedModulesArray,
+        totalModules: course.mods?.length || 0,
+        price: parseInt(course.price.replace(/,/g, '')),
+        isFullCourse: selectedModulesArray.length === (course.mods?.length || 0)
       };
+      
       this.cartService.addToCart(cartItem);
       this.router.navigate(['/cart']);
+    } catch (error: any) {
+      alert(error.message);
     }
   }
 }

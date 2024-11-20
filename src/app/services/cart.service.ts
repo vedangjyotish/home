@@ -22,8 +22,26 @@ export class CartService {
         }
     }
 
+    isEnrolled(courseId: string): boolean {
+        const user = this.tokenStorage.getUser();
+        if (user && user.enrolledCourses) {
+            return user.enrolledCourses.includes(courseId);
+        }
+        return false;
+    }
+
     addToCart(item: ICartItem) {
+        // Check if user is already enrolled
+        if (this.isEnrolled(item.courseId)) {
+            throw new Error('You are already enrolled in this course');
+        }
+
+        // Check if item is already in cart
         const currentItems = this.cartItems();
+        if (currentItems.some(cartItem => cartItem.courseId === item.courseId)) {
+            throw new Error('This course is already in your cart');
+        }
+
         const updatedItems = [...currentItems, item];
         this.cartItems.set(updatedItems);
         this.saveCartToStorage();

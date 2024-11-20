@@ -5,6 +5,7 @@ import { CartService } from '../services/cart.service';
 import { ICartItem, IPaymentDetails } from '../interfaces/cart.interface';
 import { Router, RouterLink } from '@angular/router';
 import { cdata } from '../ccards/cdata';
+import { TokenStorageService } from '../core/services/token-storage.service';
 
 @Component({
   selector: 'app-cart',
@@ -18,6 +19,7 @@ export class CartComponent {
   showPaymentForm = signal(false);
   suggestedCourse = signal<typeof cdata[0] | null>(null);
   isAnimating = signal(false);
+  studentName = signal<string>('');
 
   paymentDetails: IPaymentDetails = {
     name: '',
@@ -37,8 +39,15 @@ export class CartComponent {
 
   constructor(
     private cartService: CartService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private tokenStorage: TokenStorageService
+  ) {
+    // Get student name from token storage
+    const user = this.tokenStorage.getUser();
+    if (user && user.name) {
+      this.studentName.set(user.name);
+    }
+  }
 
   removeItem(courseId: string) {
     this.cartService.removeFromCart(courseId);

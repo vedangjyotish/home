@@ -15,13 +15,26 @@
       <div class="the_course_cart_card">
         <img [src]="image()" [alt]="cname()">
         <p class="price" *ngIf="price()"> &#8377; {{ price() }}</p>
-        <ng-container *ngIf="!isEnrolled()">
-          <button class="mods" type="button" (click)="addToCart()">Add to cart</button>
-          <button class="mods active" type="button" (click)="enrollNow()">Enroll Now</button>
-        </ng-container>
-        <ng-container *ngIf="isEnrolled()">
-          <button class="mods enrolled" disabled>Enrolled</button>
-        </ng-container>
+        <div class="course-actions">
+          <ng-container *ngIf="isEnrolled()">
+            <div class="enrolled-status">
+              <i class="fas fa-check-circle"></i>
+              <span>You're enrolled in this course</span>
+              <button class="btn btn-primary" routerLink="/dashboard/my-courses">
+                Go to Course
+              </button>
+            </div>
+          </ng-container>
+          
+          <ng-container *ngIf="!isEnrolled()">
+            <button class="btn btn-primary mods active" (click)="enrollNow()">
+              Enroll Now
+            </button>
+            <button class="btn btn-outline-primary mods" (click)="addToCart()">
+              Add to Cart
+            </button>
+          </ng-container>
+        </div>
         <div class="about_the_course">
           <div class="info_lines">
             <img src="../../assets/icons/calendar.svg" alt="">  

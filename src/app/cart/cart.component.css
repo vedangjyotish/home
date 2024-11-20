@@ -311,6 +311,20 @@
   transform: translateY(-0.2rem);
 }
 
+.cart-welcome {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, #861400 0%, #701100 100%);
+  border-radius: 8px;
+  color: white;
+}
+
+.cart-welcome h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
 @media (min-width: 768px) {
   .cart-content {
     grid-template-columns: 2fr 1fr;

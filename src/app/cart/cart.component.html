@@ -1,5 +1,8 @@
 <div class="cart-page">
   <div class="cart-container">
+    <div class="cart-welcome" *ngIf="studentName()">
+      <h3>Hello, {{ studentName() }}!</h3>
+    </div>
     <h2 class="cart-header">Your Cart</h2>
     
     <div class="cart-content" *ngIf="cartItems().length > 0">
