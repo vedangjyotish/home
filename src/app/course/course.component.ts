@@ -31,12 +31,39 @@ export class CourseComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // Subscribe to router events to handle scroll position
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        // If it's a tab route, maintain scroll position
+        if (event.url.includes('/tabs/')) {
+          const currentScroll = window.scrollY;
+          setTimeout(() => window.scrollTo(0, currentScroll), 0);
+        } else {
+          // For other routes, scroll to top
+          window.scrollTo(0, 0);
+        }
+      }
+    });
+
     // Get the course ID from the route parameters
     this.route.params.subscribe(params => {
       if (params['cid']) {
         this.currentCourseId = params['cid'];
       }
       this.updateCourseData();
+      
+      // Navigate to the first tab by default if not already on a tab
+      if (!this.router.url.includes('/tabs/')) {
+        this.router.navigate(['tabs', 0], { relativeTo: this.route });
+      }
+    });
+
+    // Handle tab changes
+    this.route.firstChild?.url.subscribe(() => {
+      const tabIndex = this.route.firstChild?.snapshot.url[1]?.path;
+      if (tabIndex) {
+        this.activeTabIndex.set(parseInt(tabIndex));
+      }
     });
   }
 
@@ -74,6 +101,8 @@ export class CourseComponent implements OnInit {
 
   showContents(event: Event, element: HTMLElement, index: number) {
     event.preventDefault();
+    event.stopPropagation();
+    
     this.activeTabIndex.set(index);
     this.updateUnderlinePosition(event, element, index);
   }
@@ -88,6 +117,21 @@ export class CourseComponent implements OnInit {
     
     this.renderer.setStyle(element, 'width', `${offsetWidth}px`);
     this.renderer.setStyle(element, 'left', `${offsetLeft}px`);
+  }
+
+  private scrollTabsToCenter() {
+    const moduleSection = document.querySelector('.the_course_module');
+    if (moduleSection instanceof HTMLElement) {
+      const viewportHeight = window.innerHeight;
+      const elementRect = moduleSection.getBoundingClientRect();
+      const elementHeight = elementRect.height;
+      const scrollOffset = elementRect.top + window.scrollY - (viewportHeight - elementHeight) / 2;
+      
+      window.scrollTo({
+        top: scrollOffset,
+        behavior: 'smooth'
+      });
+    }
   }
 
   get rating(): number {
