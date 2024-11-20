@@ -1,4 +1,18 @@
 <div class="blog-post-container" *ngIf="post">
+    <nav class="breadcrumb-nav">
+        <ul class="breadcrumb-list">
+            <li class="breadcrumb-item">
+                <a routerLink="/blogs">
+                    <i class="fas fa-home"></i>
+                    Blog Home
+                </a>
+            </li>
+            <li class="breadcrumb-item">
+                <i class="fas fa-chevron-right"></i>
+                {{post.title}}
+            </li>
+        </ul>
+    </nav>
     <div class="blog-post-header">
         <h1>{{post.title}}</h1>
         <div class="meta-info">
