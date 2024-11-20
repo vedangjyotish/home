@@ -1,0 +1,60 @@
+<div class="dashboard-container">
+  <!-- Welcome Section -->
+  <section class="welcome-section">
+    <div class="welcome-header">
+      <h1 class="welcome-title">Welcome Back, {{studentName}}</h1>
+      <button class="logout-btn" (click)="logout()">
+        <i class="fas fa-sign-out-alt"></i>
+        Logout
+      </button>
+    </div>
+    <p class="welcome-subtitle">Pick up where you left off</p>
+  </section>
+
+  <!-- Stats Section -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-title">Courses Enrolled</div>
+      <div class="stat-value">{{enrolledCourses.length}}</div>
+      <div class="stat-change">+2 this month</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-title">Hours Learned</div>
+      <div class="stat-value">{{totalHoursLearned}}</div>
+      <div class="stat-change">+5 this week</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-title">Completion Rate</div>
+      <div class="stat-value">{{averageCompletionRate}}%</div>
+      <div class="stat-change">+8% improvement</div>
+    </div>
+  </div>
+
+  <!-- Courses Section -->
+  <section class="courses-section">
+    <h2 class="section-title">Your Learning Journey</h2>
+    <div class="course-grid">
+      <div class="course-card" *ngFor="let course of enrolledCourses">
+        <div class="course-image-container">
+          <img [src]="'../../assets/ccards/img/' + course.img" [alt]="course.name" class="course-image">
+        </div>
+        <div class="course-content">
+          <h3 class="course-title">{{course.name}}</h3>
+          <div class="course-progress">
+            <div class="progress-bar">
+              <div class="progress-fill" [style.width]="course.progress + '%'"></div>
+            </div>
+            <div class="progress-text">
+              <span>Progress</span>
+              <span>{{course.progress}}%</span>
+            </div>
+          </div>
+          <div class="course-footer">
+            <span class="course-status">{{course.status}}</span>
+            <button class="continue-btn" (click)="continueCourse(course)">Continue Learning</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

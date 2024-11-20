@@ -23,7 +23,6 @@ const routes: Routes = [
 @NgModule({
   declarations: [
     StudentSignupComponent,
-    StudentDashboardComponent,
     StudentLogoutComponent
   ],
   imports: [

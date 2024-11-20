@@ -35,7 +35,7 @@ export class StudentAuthService {
     password: 'password123',
     name: 'Test Student',
     type: 'student',
-    enrolledCourses: ['c1']  // Adding enrolled courses array with c1
+    enrolledCourses: ['c1', 'c2', 'c5']  // Adding enrolled courses array with c1
   };
 
   constructor(
@@ -115,7 +115,7 @@ export class StudentAuthService {
     return new Observable<void>(observer => {
       setTimeout(() => {
         this.tokenStorage.signOut();
-        this.router.navigate(['/']);
+        this.router.navigate(['/account']);
         observer.next();
         observer.complete();
       }, 200); // Simulate network delay
