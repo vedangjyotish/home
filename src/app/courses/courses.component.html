@@ -1,15 +1,19 @@
 <div class="coursesContainer">
   <div class="courses_container">
     <div class="courses_header">
-      <div class="user_avatar">
-        <!-- <img class="clipped" src="../../assets/user/userAvatar.png" alt=""> -->
-        A
-      </div>
-      <div class="user_text">
-        <div class="user_welcome">
-          <h1>Welcome, Aaditya</h1>
+      <div class="header-left">
+        <div class="user_avatar" *ngIf="user">
+          <img *ngIf="user.profileImage" [src]="user.profileImage" [alt]="user.name" class="clipped">
+          <ng-container *ngIf="!user.profileImage">{{ userInitial }}</ng-container>
         </div>
-        <!-- <div class="user_tagline">Lorem ipsum dolor</div> -->
+        <div class="user_text">
+          <div class="user_welcome">
+            <h1>{{ welcomeMessage }}</h1>
+          </div>
+        </div>
+      </div>
+      <div class="header-right" *ngIf="user">
+        <a routerLink="/students/logout" class="logout-btn">Logout</a>
       </div>
     </div>
     <!-- courser header ends -->
