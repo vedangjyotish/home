@@ -95,10 +95,8 @@ export class CourseComponent implements OnInit, OnDestroy {
   }
 
   private loadCourseData(cid: string) {
-    console.log('Loading course data for:', cid);
     this.courseService.getCourseById(cid).subscribe({
       next: (course) => {
-        console.log('Received course data:', course);
         if (course) {
           this.courseData.set(course);
           this.checkEnrollmentStatus(cid);
@@ -114,12 +112,10 @@ export class CourseComponent implements OnInit, OnDestroy {
             this.router.navigate(['tabs', 0], { relativeTo: this.route });
           }
         } else {
-          console.error('Course not found:', cid);
           this.router.navigate(['/courses']);
         }
       },
-      error: (error) => {
-        console.error('Error loading course:', error);
+      error: () => {
         this.router.navigate(['/courses']);
       }
     });

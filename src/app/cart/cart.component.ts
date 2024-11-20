@@ -59,7 +59,11 @@ export class CartComponent {
   ) {
     const user = this.tokenStorage.getUser();
     if (user && user.name) {
-      this.studentName.set(user.name);
+      // Capitalize first letter of each word
+      const formattedName = user.name.split(' ')
+        .map((word: string) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+        .join(' ');
+      this.studentName.set(formattedName);
     }
     
     // Load course details for cart items

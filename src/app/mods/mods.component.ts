@@ -41,14 +41,10 @@ export class ModsComponent implements OnInit {
   }
 
   private loadCourseData(cid: string) {
-    console.log('ModsComponent: Loading course data for:', cid);
     this.courseService.getCourseById(cid).subscribe({
       next: (course) => {
-        console.log('ModsComponent: Received course:', course);
         if (course) {
           this.currentCourse.set(course);
-        } else {
-          console.error('Course not found:', cid);
         }
       },
       error: (error) => {

@@ -13,7 +13,8 @@ export class EnrollmentSuccessComponent {
   constructor(private router: Router) {}
 
   goToDashboard() {
-    this.router.navigate(['/student/dashboard']);
+    // Update path to match the students module route
+    this.router.navigate(['/students/dashboard']);
   }
 
   goToCourses() {

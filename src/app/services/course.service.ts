@@ -18,10 +18,7 @@ export class CourseService {
 
   // Get course by ID
   getCourseById(cid: string): Observable<ICourse | undefined> {
-    console.log('Getting course with ID:', cid); // Debug log
-    console.log('Available courses:', this.courseData); // Debug log
     const course = this.courseData.find(course => course.cid === cid);
-    console.log('Found course:', course); // Debug log
     return of(course);
   }
 
