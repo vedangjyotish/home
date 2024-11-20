@@ -16,8 +16,8 @@
         <img [src]="image()" [alt]="cname()">
         <p class="price" *ngIf="price()"> &#8377; {{ price() }}</p>
         <ng-container *ngIf="!isEnrolled()">
-          <button class="mods" type="submit">Add to cart</button>
-          <button class="mods active" type="submit">Enroll Now</button>
+          <button class="mods" type="button" (click)="addToCart()">Add to cart</button>
+          <button class="mods active" type="button" (click)="enrollNow()">Enroll Now</button>
         </ng-container>
         <ng-container *ngIf="isEnrolled()">
           <button class="mods enrolled" disabled>Enrolled</button>

@@ -1,4 +1,79 @@
-<div class="cartContainer">
-  <p>Nothing in your cart ...</p>
-</div>
+<div class="cart-page">
+  <div class="cart-container">
+    <h2 class="cart-header">Your Cart</h2>
+    
+    <div class="cart-content" *ngIf="cartItems().length > 0">
+      <div class="cart-items">
+        <div class="cart-item" *ngFor="let item of cartItems()">
+          <div class="cart-item-header">
+            <img class="cart-item-image" [src]="'../../assets/ccards/img/' + item.courseImage" [alt]="item.courseName">
+            <div class="cart-item-details">
+              <h3>{{ item.courseName }}</h3>
+              <p class="cart-item-price">₹{{ item.price }}</p>
+            </div>
+            <button class="remove-btn" (click)="removeItem(item.courseId)">×</button>
+          </div>
 
+          <div class="module-selection">
+            <h4>Select Modules:</h4>
+            <div class="module-grid">
+              <div class="module-checkbox" *ngFor="let i of getModuleArray(item.totalModules)">
+                <input type="checkbox" 
+                       [id]="'module-' + item.courseId + '-' + i"
+                       [checked]="item.selectedModules.includes(i)"
+                       (change)="updateModuleSelection(item, i, $event)">
+                <label [for]="'module-' + item.courseId + '-' + i">Module {{ i + 1 }}</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="payment-section">
+        <h3 class="payment-header">Payment Details</h3>
+        <div class="payment-instructions">
+          <p>Please follow these steps to complete your enrollment:</p>
+          <ol>
+            <li>Make the payment to our UPI ID: example&#64;upi</li>
+            <li>Take a screenshot of the payment confirmation</li>
+            <li>Fill in your details below</li>
+            <li>Submit the form to complete enrollment</li>
+          </ol>
+        </div>
+
+        <form class="payment-form" (ngSubmit)="submitPayment()">
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" [(ngModel)]="paymentDetails.name" name="name" required>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" [(ngModel)]="paymentDetails.email" name="email" required>
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" [(ngModel)]="paymentDetails.phone" name="phone" required>
+          </div>
+
+          <div class="form-group">
+            <label for="transactionId">Transaction ID</label>
+            <input type="text" id="transactionId" [(ngModel)]="paymentDetails.transactionId" name="transactionId" required>
+          </div>
+
+          <button type="submit" class="submit-button">Complete Enrollment</button>
+        </form>
+
+        <div class="whatsapp-info">
+          <p>Send payment screenshot to WhatsApp: <span class="whatsapp-number">{{ whatsappNumber }}</span></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="empty-cart" *ngIf="cartItems().length === 0">
+      <p>Your cart is empty</p>
+      <a routerLink="/courses" class="browse-btn">Browse Courses</a>
+    </div>
+  </div>
+</div>

@@ -4,6 +4,8 @@ import { TokenStorageService } from '../core/services/token-storage.service';
 import { CommonModule } from '@angular/common';
 import { CourseService } from '../services/course.service';
 import { ICourse } from '../interfaces/course.interface';
+import { CartService } from '../services/cart.service'; 
+import { ICartItem } from '../interfaces/cart.interface'; 
 
 @Component({
   selector: 'app-course',
@@ -28,6 +30,7 @@ export class CourseComponent implements OnInit {
 
   constructor(
     private courseService: CourseService,
+    private cartService: CartService, 
     private router: Router,
     private route: ActivatedRoute,
     private tokenStorage: TokenStorageService
@@ -120,6 +123,40 @@ export class CourseComponent implements OnInit {
         element.style.width = `${offsetWidth}px`;
         element.style.left = `${offsetLeft}px`;
       }
+    }
+  }
+
+  addToCart() {
+    const course = this.courseData();
+    if (course) {
+      const cartItem: ICartItem = {
+        courseId: course.cid,
+        courseName: course.name,
+        courseImage: course.img,
+        selectedModules: course.mods.map((_, index) => index), // Initially select all modules
+        totalModules: course.mods.length, // Add total number of modules
+        price: parseInt(course.price.replace(/,/g, '')), // Remove commas from price
+        isFullCourse: true
+      };
+      this.cartService.addToCart(cartItem);
+      this.router.navigate(['/cart']);
+    }
+  }
+
+  enrollNow() {
+    const course = this.courseData();
+    if (course) {
+      const cartItem: ICartItem = {
+        courseId: course.cid,
+        courseName: course.name,
+        courseImage: course.img,
+        selectedModules: course.mods.map((_, index) => index), // Initially select all modules
+        totalModules: course.mods.length, // Add total number of modules
+        price: parseInt(course.price.replace(/,/g, '')), // Remove commas from price
+        isFullCourse: true
+      };
+      this.cartService.addToCart(cartItem);
+      this.router.navigate(['/cart']);
     }
   }
 }

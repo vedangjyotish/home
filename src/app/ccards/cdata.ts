@@ -216,6 +216,10 @@ export const cdata = [
       {
         module: 3,
         list: ["Remedies", "Diet Plan", "Medicines"]
+      },
+      {
+        module: 4,
+        list: ["1st House: Physical appearance and health", "6th House: Diseases and ailments", "8th House: Chronic illnesses and longevity" ]
       }
     ],
   },
