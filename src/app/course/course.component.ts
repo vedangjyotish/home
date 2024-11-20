@@ -3,6 +3,7 @@ import { Router, RouterLink, RouterOutlet, NavigationEnd, ActivatedRoute } from 
 import { CourseService } from '../ccards/courses.service';
 import { TokenStorageService } from '../core/services/token-storage.service';
 import { CommonModule } from '@angular/common';
+import { cdata } from '../ccards/cdata';
 
 @Component({
   selector: 'app-course',
@@ -13,11 +14,13 @@ import { CommonModule } from '@angular/common';
 })
 export class CourseComponent implements OnInit {
   cname = signal('');
-  currentCourseId: string = '';
+  currentCourseId: string = 'c1'; // Set default course ID
   isEnrolled = signal(false);
   
   activeTabIndex = signal(0);
   activeModuleIndex: number = 0;
+
+  private readonly courseData = cdata;
 
   constructor( 
     private renderer: Renderer2, 
@@ -32,22 +35,31 @@ export class CourseComponent implements OnInit {
     this.route.params.subscribe(params => {
       if (params['cid']) {
         this.currentCourseId = params['cid'];
-        const course = this.coursesMap.get(this.currentCourseId);
-        this.cname.set(course ? course.name : 'Unknown Course');
-        this.checkEnrollmentStatus();
       }
+      this.updateCourseData();
     });
+  }
+
+  private updateCourseData() {
+    // Try to get course from service first
+    const course = this.coursesMap.get(this.currentCourseId);
+    if (course) {
+      this.cname.set(course.name);
+    } else {
+      // Fallback to static data if not found in service
+      const staticCourse = this.courseData.find(c => c.cid === this.currentCourseId);
+      this.cname.set(staticCourse?.name || 'Unknown Course');
+    }
+    this.checkEnrollmentStatus();
   }
 
   private coursesMap = new Map(this.coursesService.courses.map(course => [course.cid, course]));
   
   @Input()
-  set cid(uid: string) {
+  set cid(uid: string | undefined) {
     if (uid) {
       this.currentCourseId = uid;
-      const course = this.coursesMap.get(uid);
-      this.cname.set(course ? course.name : 'Unknown Course');
-      this.checkEnrollmentStatus();
+      this.updateCourseData();
     }
   }
 
@@ -76,5 +88,22 @@ export class CourseComponent implements OnInit {
     
     this.renderer.setStyle(element, 'width', `${offsetWidth}px`);
     this.renderer.setStyle(element, 'left', `${offsetLeft}px`);
+  }
+
+  get rating(): number {
+    const course = this.courseData.find(c => c.cid === this.currentCourseId);
+    return course?.rating || 5;
+  }
+
+  get stars(): string {
+    const fullStars = Math.floor(this.rating);
+    const hasHalfStar = this.rating % 1 >= 0.5;
+    let starString = '★'.repeat(fullStars);
+    if (hasHalfStar) {
+      starString += '⯨';
+    }
+    const emptyStars = 5 - Math.ceil(this.rating);
+    starString += '☆'.repeat(emptyStars);
+    return starString;
   }
 }
