@@ -30,6 +30,11 @@ export class CartService {
         return false;
     }
 
+    isInCart(courseId: string): boolean {
+        const currentItems = this.cartItems();
+        return currentItems.some(item => item.courseId === courseId);
+    }
+
     addToCart(item: ICartItem) {
         // Check if user is already enrolled
         if (this.isEnrolled(item.courseId)) {
@@ -37,12 +42,11 @@ export class CartService {
         }
 
         // Check if item is already in cart
-        const currentItems = this.cartItems();
-        if (currentItems.some(cartItem => cartItem.courseId === item.courseId)) {
+        if (this.isInCart(item.courseId)) {
             throw new Error('This course is already in your cart');
         }
 
-        const updatedItems = [...currentItems, item];
+        const updatedItems = [...this.cartItems(), item];
         this.cartItems.set(updatedItems);
         this.saveCartToStorage();
     }

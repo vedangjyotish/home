@@ -1,10 +1,11 @@
-import { Component, HostListener, inject, signal } from '@angular/core';
+import { Component, HostListener, inject, signal, OnInit } from '@angular/core';
 import { ViewportScroller } from '@angular/common';
-import { RouterOutlet } from '@angular/router';
+import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { BreakpointObserver } from '@angular/cdk/layout';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'vedang';
   mobileScreen = signal(false);
   desktopScreen = signal(false);
@@ -25,6 +26,7 @@ export class AppComponent {
 
   constructor(
     private viewportScroller: ViewportScroller,
+    private router: Router
   ) {
     this.observeScreenSize();
   }
@@ -55,5 +57,13 @@ export class AppComponent {
 
   scrollTop(): void {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  ngOnInit() {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.viewportScroller.scrollToPosition([0, 0]);
+    });
   }
 }

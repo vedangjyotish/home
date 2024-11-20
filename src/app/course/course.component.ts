@@ -1,4 +1,4 @@
-import { Component, OnInit, computed, signal } from '@angular/core';
+import { Component, OnInit, OnDestroy, computed, signal } from '@angular/core';
 import { Router, RouterLink, RouterOutlet, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { TokenStorageService } from '../core/services/token-storage.service';
 import { CommonModule } from '@angular/common';
@@ -7,6 +7,7 @@ import { ICourse } from '../interfaces/course.interface';
 import { CartService } from '../services/cart.service'; 
 import { ICartItem } from '../interfaces/cart.interface'; 
 import { ModalComponent } from '../shared/modal/modal.component';
+import { filter, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-course',
@@ -15,7 +16,7 @@ import { ModalComponent } from '../shared/modal/modal.component';
   templateUrl: './course.component.html',
   styleUrls: ['./course.component.css']
 })
-export class CourseComponent implements OnInit {
+export class CourseComponent implements OnInit, OnDestroy {
   courseData = signal<ICourse | null>(null);
   activeTabIndex = signal(0);
   isEnrolled = signal(false);
@@ -23,6 +24,7 @@ export class CourseComponent implements OnInit {
   isModalOpen = signal(false);
   modalTitle = signal('');
   modalMessage = signal('');
+  private routerSubscription: Subscription | undefined;
 
   // Computed values
   cname = computed(() => this.courseData()?.name ?? '');
@@ -64,6 +66,28 @@ export class CourseComponent implements OnInit {
         this.activeTabIndex.set(parseInt(tabIndex));
       }
     });
+
+    this.routerSubscription = this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      const tabsElement = document.querySelector('.the_course_module');
+      if (tabsElement) {
+        const headerOffset = 100;
+        const elementPosition = tabsElement.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
   }
 
   private loadCourseData(cid: string) {

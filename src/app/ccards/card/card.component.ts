@@ -25,6 +25,9 @@ export class CardComponent {
   @Input({required: true}) modules!: any[];
   @Output() select = new EventEmitter();
 
+  showModal = false;
+  modalMessage = '';
+
   constructor(
     private cartService: CartService,
     private router: Router,
@@ -40,8 +43,20 @@ export class CardComponent {
     return user?.enrolledCourses?.includes(this.cid) || false;
   }
 
+  get isInCart(): boolean {
+    return this.cartService.isInCart(this.cid);
+  }
+
   enrollNow() {
     try {
+      // If course is already in cart, show modal and return
+      if (this.isInCart) {
+        this.showModal = true;
+        this.modalMessage = 'This course is already in your cart';
+        return;
+      }
+
+      // If course is not in cart, add it and navigate directly
       const cartItem: ICartItem = {
         courseId: this.cid,
         courseName: this.name,
@@ -53,13 +68,25 @@ export class CardComponent {
       };
       
       this.cartService.addToCart(cartItem);
+      window.scrollTo(0, 0);
       this.router.navigate(['/cart']);
     } catch (error: any) {
       console.error('Error adding to cart:', error);
+      this.showModal = true;
+      this.modalMessage = error.message || 'Error adding course to cart';
+      setTimeout(() => this.showModal = false, 3000);
     }
   }
 
-  onSelectCard () {
+  onSelectCard() {
     this.select.emit(this.cid);
+  }
+
+  closeModal() {
+    this.showModal = false;
+  }
+
+  goToCart() {
+    this.router.navigate(['/cart']);
   }
 }

@@ -32,9 +32,20 @@
       </button>
     </div>
     <ng-template #notEnrolled>
-      <div class="enroll_btn" (click)="enrollNow()">
+      <div class="enroll_btn" (click)="$event.stopPropagation(); enrollNow()">
         Enroll Now
       </div>
     </ng-template>
+  </div>
+
+  <!-- Feedback Modal -->
+  <div *ngIf="showModal" class="card-modal" (click)="$event.stopPropagation()">
+    <div class="modal-content">
+      <p>{{ modalMessage }}</p>
+      <div class="modal-actions" *ngIf="isInCart">
+        <button class="modal-btn" (click)="$event.stopPropagation(); goToCart()">Go to Cart</button>
+        <button class="modal-btn secondary" (click)="$event.stopPropagation(); closeModal()">Close</button>
+      </div>
+    </div>
   </div>
 </div>

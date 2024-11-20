@@ -237,3 +237,75 @@ li::before {
 .enrolled-status button:hover {
   background-color: #388e3c;
 }
+
+.card-modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.9);
+  padding: 1.5rem;
+  border-radius: 0.8rem;
+  z-index: 1000;
+  min-width: 200px;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.modal-content {
+  text-align: center;
+  color: #ffffff;
+}
+
+.modal-content p {
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.modal-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.4rem;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: #861400;
+  color: #ffffff;
+}
+
+.modal-btn.secondary {
+  background-color: transparent;
+  border: 1px solid #ffffff;
+}
+
+.modal-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.modal-btn.secondary:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.card {
+  position: relative;
+}
