@@ -12,7 +12,6 @@
   z-index: 888;
 }
 
-
 .card_pic {
   display: flex;
   justify-content: center;
@@ -80,6 +79,32 @@ li::before {
 .c_more {
   text-decoration: underline;
   color: #000080;
+  position: relative;
+  padding-right: 18px;
+}
+
+.c_more::after {
+  content: "→";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: transform 0.3s ease;
+  font-size: 1.2em;
+}
+
+.card:hover .c_more::after {
+  animation: arrowMove 1s ease-in-out infinite;
+}
+
+@keyframes arrowMove {
+  0% { transform: translate(0, -50%); }
+  50% { transform: translate(5px, -50%); }
+  100% { transform: translate(0, -50%); }
+}
+
+.c_more:hover {
+  color: #0000b3;
 }
 
 .c_tagline {
@@ -132,11 +157,46 @@ li::before {
   color: #fbeae7;
   background-color: #861400;
   border-radius: 0.8rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.enroll_btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: all 0.5s ease;
+}
+
+.enroll_btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(134, 20, 0, 0.3);
+  background-color: #b51f00;
+}
+
+.enroll_btn:hover::before {
+  left: 100%;
+}
+
+.enroll_btn:active {
+  transform: translateY(0);
 }
 
 .enroll_btn a {
   text-decoration: none;
   color: #fbeae7;
+  display: block;
 }
 
+.arrow {
+  display: inline-block;
+}
 
+.card:hover .arrow {
+  animation: arrowMove 1s ease-in-out infinite;
+}

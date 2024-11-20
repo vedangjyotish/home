@@ -12,7 +12,7 @@
     <ul>
       <li>{{ highlights[0] }}</li>
       <li>{{ highlights[1] }}</li>
-      <li>{{ highlights[2] }} ... and many <span><a class="c_more" href="">more &#8594;</a> </span></li>
+      <li>{{ highlights[2] }} ... and many <span><a class="c_more" [routerLink]="['/course', cid, 'tabs', '0']">more</a></span></li>
     </ul>
   </div>
   <div class="c_tagline">
