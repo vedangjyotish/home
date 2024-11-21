@@ -61,13 +61,18 @@ export class PaymentUploadComponent {
     this.errorMessage = '';
 
     try {
+      const cartItems = this.cartService.getCartItems();
       const paymentData: PaymentSubmission = {
         transactionId: this.transactionId,
         screenshot: this.paymentScreenshot,
         courseIds: cartItems().map((item: ICartItem) => item.courseId),
+        selectedModules: cartItems().flatMap((item: ICartItem) => item.selectedModules.map(String)),
         studentId: currentStudent.id,
         totalAmount: totalAmount()
       };
+
+      console.log('Payment Data being sent to server:');
+      console.dir(paymentData, { depth: null });
 
       await this.paymentService.submitPayment(paymentData)
         .pipe(

@@ -1,48 +1,15 @@
 <div class="admin-layout">
-  <nav class="admin-sidebar">
-    <div class="sidebar-header">
-      <h1>Admin Panel</h1>
-    </div>
+  <nav class="admin-nav">
+    <div class="nav-brand">Admin Dashboard</div>
     <ul class="nav-links">
-      <li>
-        <a routerLink="./dashboard" routerLinkActive="active">
-          <span class="icon">📊</span>
-          Dashboard
-        </a>
-      </li>
-      <li>
-        <a routerLink="users" routerLinkActive="active">
-          <i class="fas fa-users icon"></i>
-          Users
-        </a>
-      </li>
-      <li>
-        <a routerLink="courses" routerLinkActive="active">
-          <i class="fas fa-book icon"></i>
-          Courses
-        </a>
-      </li>
-      <li>
-        <a routerLink="settings" routerLinkActive="active">
-          <i class="fas fa-cog icon"></i>
-          Settings
-        </a>
-      </li>
+      <li><a routerLink="dashboard" routerLinkActive="active">Dashboard</a></li>
+      <li><a routerLink="students" routerLinkActive="active" id="students-link">Students</a></li>
+      <li><a routerLink="courses" routerLinkActive="active">Courses</a></li>
+      <li><a routerLink="settings" routerLinkActive="active">Settings</a></li>
+      <li><button (click)="logout()" class="logout-btn">Logout</button></li>
     </ul>
   </nav>
-
-  <main class="admin-main">
-    <header class="admin-header">
-      <div class="user-info">
-        <span class="welcome-text">Welcome, Admin</span>
-      </div>
-      <div class="header-actions">
-        <button class="btn-icon" (click)="logout()">Logout</button>
-      </div>
-    </header>
-
-    <div class="admin-content">
-      <router-outlet></router-outlet>
-    </div>
+  <main class="admin-content">
+    <router-outlet></router-outlet>
   </main>
 </div>

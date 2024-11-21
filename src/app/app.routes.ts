@@ -12,7 +12,7 @@ import { AppointmentComponent } from './appointment/appointment.component';
 import { AboutusComponent } from './aboutus/aboutus.component';
 import { ContactComponent } from './contact/contact.component';
 import { AccountComponent } from './account/account.component';
-import { ADMIN_ROUTES } from './admin/admin.routes';
+import { ADMIN_ROUTES } from './admin/admin-routing';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { PaymentUploadComponent } from './payment-upload/payment-upload.component';
 import { EnrollmentSuccessComponent } from './enrollment-success/enrollment-success.component';
