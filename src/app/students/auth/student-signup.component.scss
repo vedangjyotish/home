@@ -1,0 +1,135 @@
+:host {
+  display: block;
+  font-family: var(--body-font);
+}
+
+.accountContainer {
+  background-color: #f1d9d9;
+  min-height: calc(100vh - 12rem);
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 2rem;
+  margin: 2rem auto;
+  max-width: 140rem;
+}
+
+.login-card {
+  background: #fff;
+  border-radius: 2rem;
+  box-shadow: 0 0.8rem 2rem rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 48rem;
+  padding: 3.5rem;
+  position: relative;
+}
+
+h2 {
+  font-family: var(--head-font);
+  font-size: 2.4rem;
+  color: #861400;
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.form-group {
+  margin-bottom: 2rem;
+}
+
+label {
+  display: block;
+  font-size: 1.6rem;
+  color: #34495e;
+  margin-bottom: 0.8rem;
+}
+
+input {
+  width: 100%;
+  padding: 1.2rem;
+  border: 1px solid #ddd;
+  border-radius: 0.8rem;
+  font-size: 1.6rem;
+  color: #2c3e50;
+  font-family: "Roboto Mono", sans-serif;
+  box-shadow: 1px 5px 9px rgba(211, 211, 211, .7);
+  transition: border-color 0.3s ease;
+
+  &::placeholder {
+    color: #95a5a6;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: #861400;
+  }
+
+  &.error {
+    border-color: #e74c3c;
+  }
+}
+
+.error-message {
+  color: #e74c3c;
+  font-size: 1.4rem;
+  margin-top: 0.5rem;
+}
+
+.error-banner {
+  background-color: #fee2e2;
+  border: 1px solid #ef4444;
+  color: #b91c1c;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.4rem;
+  text-align: center;
+}
+
+.login_btn {
+  font-size: 1.8rem;
+  color: #fbeae7;
+  background-color: #861400;
+  border-radius: 1.5rem;
+  border: none;
+  width: 100%;
+  padding: 1.4rem;
+  margin-top: 2rem;
+  box-shadow: 1px 5px 9px rgba(211, 211, 211, .9);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover:not(:disabled) {
+    background-color: #6d1000;
+  }
+
+  &:disabled {
+    background-color: #d5d5d5;
+    cursor: not-allowed;
+  }
+}
+
+.form-footer {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 1.6rem;
+  color: #861400;
+}
+
+.signup-link {
+  color: #861400;
+  text-decoration: none;
+  font-weight: 600;
+  margin-left: 0.5rem;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: #6d1000;
+  }
+}

@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { StudentAuthService } from './student-auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-student-logout',
   standalone: true,
-  template: '<div>Logging out...</div>'
+  imports: [CommonModule],
+  template: '<div class="text-center p-4">Logging out...</div>'
 })
 export class StudentLogoutComponent implements OnInit {
   constructor(
@@ -14,7 +16,8 @@ export class StudentLogoutComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    // The actual navigation will be handled by the auth service
     this.authService.logout();
-    this.router.navigate(['/']);
+    this.router.navigate(['/account']);
   }
 }

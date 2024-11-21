@@ -5,6 +5,7 @@ import { TokenStorageService } from '../../core/services/token-storage.service';
 import { CourseService } from '../../services/course.service';
 import { ICourse } from '../../interfaces/course.interface';
 import { StudentAuthService } from '../auth/student-auth.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 interface IUser {
   name?: string;
@@ -21,7 +22,7 @@ interface IEnrichedCourse extends ICourse {
   standalone: true,
   imports: [CommonModule],
   templateUrl: './student-dashboard.component.html',
-  styleUrls: ['./student-dashboard.component.css']
+  styleUrls: ['./student-dashboard.component.scss']
 })
 export class StudentDashboardComponent implements OnInit {
   studentName: string = '';
@@ -36,75 +37,75 @@ export class StudentDashboardComponent implements OnInit {
     private studentAuthService: StudentAuthService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadStudentData();
     this.loadEnrolledCourses();
   }
 
-  private loadStudentData() {
-    const user = this.tokenStorage.getUser() as IUser | null;
+  loadStudentData(): void {
+    const user = this.tokenStorage.getUser();
     if (user) {
-      // Capitalize first letter of each word
-      this.studentName = user.name ? 
-        user.name.split(' ')
-          .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-          .join(' ') 
-        : 'Student';
+      this.studentName = user.name || 'Student';
     } else {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/account']);
     }
   }
 
-  private loadEnrolledCourses() {
-    const user = this.tokenStorage.getUser() as IUser | null;
-    if (user && user.enrolledCourses) {
-      // Load each enrolled course
+  loadEnrolledCourses(): void {
+    const user = this.tokenStorage.getUser();
+    if (user?.enrolledCourses) {
       user.enrolledCourses.forEach((courseId: string) => {
         this.courseService.getCourseById(courseId).subscribe({
-          next: (course) => {
+          next: (course: ICourse | undefined) => {
             if (course) {
-              // Add progress and status properties
               const enrichedCourse: IEnrichedCourse = {
                 ...course,
-                progress: Math.floor(Math.random() * 100), // Replace with actual progress
-                status: this.getStatus(Math.floor(Math.random() * 100)) // Replace with actual status
+                progress: Math.random() * 100, // This should come from actual progress data
+                status: this.getStatus(Math.random() * 100)
               };
               this.enrolledCourses.push(enrichedCourse);
               this.updateStatistics();
+            } else {
+              console.warn(`Course with ID ${courseId} not found`);
             }
+          },
+          error: (error: HttpErrorResponse) => {
+            console.error('Error loading course:', error);
           }
         });
       });
     }
   }
 
-  private updateStatistics() {
-    // Calculate total hours (assuming 10 hours per course for demo)
-    this.totalHoursLearned = this.enrolledCourses.length * 10;
+  updateStatistics(): void {
+    if (this.enrolledCourses.length === 0) return;
+
+    // Calculate total hours learned based on course duration and progress
+    this.totalHoursLearned = this.enrolledCourses.reduce((total, course) => {
+      // Default to 10 hours if duration is not specified
+      const courseDuration = course.duration || 10;
+      return total + (courseDuration * (course.progress / 100));
+    }, 0);
 
     // Calculate average completion rate
-    const totalProgress = this.enrolledCourses.reduce((sum, course) => sum + course.progress, 0);
-    this.averageCompletionRate = Math.floor(totalProgress / (this.enrolledCourses.length || 1));
+    this.averageCompletionRate = this.enrolledCourses.reduce((total, course) => {
+      return total + course.progress;
+    }, 0) / this.enrolledCourses.length;
   }
 
-  private getStatus(progress: number): string {
+  getStatus(progress: number): string {
     if (progress === 100) return 'Completed';
     if (progress > 0) return 'In Progress';
     return 'Not Started';
   }
 
-  continueCourse(course: ICourse) {
-    this.router.navigate(['/course', course.cid, 'tabs', 0]);
+  continueCourse(course: ICourse): void {
+    // Navigate to course content page
+    this.router.navigate(['/course', course.cid]);
   }
 
-  logout() {
-    this.studentAuthService.logout().subscribe({
-      next: () => {
-        this.router.navigate(['/account']);
-      },
-      error: (error) => {
-        console.error('Logout failed:', error);
-      }
-    });
+  logout(): void {
+    this.studentAuthService.logout();
+    this.router.navigate(['/account']);
   }
 }

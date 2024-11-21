@@ -15,7 +15,6 @@ import { AccountComponent } from './account/account.component';
 import { CartComponent } from './cart/cart.component';
 import { ADMIN_ROUTES } from './admin/admin.routes';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
-import { StudentLogoutComponent } from './students/auth/student-logout.component';
 import { PaymentUploadComponent } from './payment-upload/payment-upload.component';
 import { EnrollmentSuccessComponent } from './enrollment-success/enrollment-success.component';
 import { AuthGuard } from './core/guards/auth.guard';
@@ -102,10 +101,6 @@ export const routes: Routes = [
     path: 'account', loadChildren: () => import('./account/account.module').then(m => m.AccountModule)
   },
   {
-    path: 'student/logout',
-    component: StudentLogoutComponent
-  },
-  {
     path: 'payment-upload',
     component: PaymentUploadComponent,
     canActivate: [AuthGuard]
@@ -122,5 +117,5 @@ export const routes: Routes = [
   {
     path: '**',
     redirectTo: '404'
-  },
+  }
 ];

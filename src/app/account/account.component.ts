@@ -8,7 +8,7 @@ import { TokenStorageService } from '../core/services/token-storage.service';
 @Component({
   selector: 'app-account',
   templateUrl: './account.component.html',
-  styleUrls: ['./account.component.css']
+  styleUrls: ['./account.component.scss']
 })
 export class AccountComponent implements OnInit {
   showStudentForm = false;
@@ -27,15 +27,17 @@ export class AccountComponent implements OnInit {
     private tokenStorage: TokenStorageService
   ) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     // Check if user is already logged in
-    const user = this.tokenStorage.getUser();
-    if (user) {
-      this.redirectBasedOnUserType(user.type);
+    if (this.tokenStorage.getToken()) {
+      const user = this.tokenStorage.getUser();
+      if (user) {
+        this.redirectBasedOnUserType(user.type);
+      }
     }
   }
 
-  private redirectBasedOnUserType(userType: string) {
+  private redirectBasedOnUserType(userType: string): void {
     switch (userType) {
       case 'student':
         this.router.navigate(['/students/dashboard']);
@@ -45,56 +47,44 @@ export class AccountComponent implements OnInit {
         break;
       default:
         // Handle unknown user type
-        this.tokenStorage.signOut();
-        this.errorMessage = 'Invalid user type';
+        console.error('Unknown user type:', userType);
     }
   }
 
-  showStudentLogin() {
+  showStudentLogin(): void {
     this.showStudentForm = true;
     this.showMemberForm = false;
     this.clearMessages();
   }
 
-  showMemberLogin() {
+  showMemberLogin(): void {
     this.showMemberForm = true;
     this.showStudentForm = false;
     this.clearMessages();
   }
 
-  clearMessages() {
+  private clearMessages(): void {
     this.errorMessage = '';
     this.successMessage = '';
   }
 
-  onStudentIdInput(event: Event) {
+  onStudentIdInput(event: Event): void {
     const input = event.target as HTMLInputElement;
-    // Allow both email and phone number input
     this.studentId = input.value;
   }
 
-  onMemberIdInput(event: Event) {
+  onMemberIdInput(event: Event): void {
     const input = event.target as HTMLInputElement;
-    const value = input.value;
-    
-    // If the input is numeric, limit to 10 digits
-    if (/^\d+$/.test(value)) {
-      input.value = value.slice(0, 10);
-      this.memberId = input.value;
-    } else {
-      // If non-numeric, remove non-numeric characters
-      input.value = value.replace(/\D/g, '');
-      this.memberId = input.value;
-    }
+    this.memberId = input.value;
   }
 
-  onStudentSubmit() {
+  onStudentSubmit(): void {
     if (!this.studentId || !this.studentPassword) {
       this.errorMessage = 'Please fill in all fields';
       return;
     }
 
-    this.studentAuth.login({ id: this.studentId, password: this.studentPassword }).subscribe({
+    this.studentAuth.login(this.studentId, this.studentPassword).subscribe({
       next: (response) => {
         this.successMessage = 'Login successful!';
         this.errorMessage = '';
@@ -104,13 +94,13 @@ export class AccountComponent implements OnInit {
         }, 1000); // 1 second delay
       },
       error: (error) => {
-        this.errorMessage = error.message || 'Login failed';
+        this.errorMessage = error;
         this.successMessage = '';
       }
     });
   }
 
-  onMemberSubmit() {
+  onMemberSubmit(): void {
     if (!this.memberId || !this.memberPassword) {
       this.errorMessage = 'Please fill in all fields';
       return;
@@ -126,13 +116,13 @@ export class AccountComponent implements OnInit {
         }, 1000); // 1 second delay
       },
       error: (error) => {
-        this.errorMessage = error.message || 'Login failed';
+        this.errorMessage = error;
         this.successMessage = '';
       }
     });
   }
 
-  goBack(event?: Event) {
+  goBack(event?: Event): void {
     if (event) {
       event.preventDefault();
     }

@@ -15,4 +15,5 @@ export interface ICourse {
   price: string;
   featured?: boolean;
   mods: IModule[];
+  duration?: number; // Duration in hours
 }

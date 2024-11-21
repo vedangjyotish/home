@@ -9,6 +9,6 @@ export class StudentLogoutComponent implements OnInit {
   constructor(private authService: StudentAuthService) {}
 
   ngOnInit() {
-    this.authService.logout().subscribe();
+    this.authService.logout();
   }
 }

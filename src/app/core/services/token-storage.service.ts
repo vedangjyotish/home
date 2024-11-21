@@ -6,6 +6,7 @@ import { isPlatformBrowser } from '@angular/common';
 })
 export class TokenStorageService {
   private readonly TOKEN_KEY = 'auth-token';
+  private readonly REFRESH_TOKEN_KEY = 'auth-refresh-token';
   private readonly USER_KEY = 'auth-user';
 
   constructor(@Inject(PLATFORM_ID) private platformId: Object) { }
@@ -30,6 +31,20 @@ export class TokenStorageService {
   public getToken(): string | null {
     if (this.isBrowser) {
       return window.sessionStorage.getItem(this.TOKEN_KEY);
+    }
+    return null;
+  }
+
+  public saveRefreshToken(token: string): void {
+    if (this.isBrowser) {
+      window.sessionStorage.removeItem(this.REFRESH_TOKEN_KEY);
+      window.sessionStorage.setItem(this.REFRESH_TOKEN_KEY, token);
+    }
+  }
+
+  public getRefreshToken(): string | null {
+    if (this.isBrowser) {
+      return window.sessionStorage.getItem(this.REFRESH_TOKEN_KEY);
     }
     return null;
   }
