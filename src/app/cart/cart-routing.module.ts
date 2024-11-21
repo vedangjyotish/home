@@ -18,8 +18,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class CartRoutingModule {
-  constructor() {
-    console.log('CartRoutingModule loaded with routes:', routes);
-  }
-}
+export class CartRoutingModule { }

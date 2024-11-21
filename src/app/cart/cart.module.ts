@@ -16,8 +16,4 @@ import { CartRoutingModule } from './cart-routing.module';
     CheckoutAuthComponent
   ]
 })
-export class CartModule {
-  constructor() {
-    console.log('CartModule loaded');
-  }
-}
+export class CartModule { }
