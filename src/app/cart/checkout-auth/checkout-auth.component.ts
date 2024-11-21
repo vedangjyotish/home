@@ -62,11 +62,8 @@ export class CheckoutAuthComponent implements OnInit {
 
     this.authService.login(this.loginForm.identifier, this.loginForm.password).subscribe({
       next: (response) => {
-        console.log('Login response:', response);
         if (response.access_token) {
-          console.log('Login successful');
           this.loading.set(false);
-          
           // After successful login, always go to payment upload
           this.router.navigate(['/payment-upload']);
         }
@@ -99,11 +96,8 @@ export class CheckoutAuthComponent implements OnInit {
 
     this.authService.signup(signupData).subscribe({
       next: (response) => {
-        console.log('Signup response:', response);
         if (response.access_token) {
-          console.log('Signup successful');
           this.loading.set(false);
-          
           // After successful signup, go to payment upload
           this.router.navigate(['/payment-upload']);
         }

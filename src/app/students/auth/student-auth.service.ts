@@ -158,11 +158,12 @@ export class StudentAuthService {
     // Only make the logout request if we have both tokens
     if (accessToken && refreshToken) {
       // Create headers with the access token
-      const headers = new HttpHeaders()
-        .set('Authorization', `Bearer ${accessToken.trim()}`)
-        .set('Content-Type', 'application/json');
+      const headers = new HttpHeaders({
+        'Authorization': `Bearer ${accessToken.trim()}`,
+        'Content-Type': 'application/json'
+      });
 
-      // Include refresh token in the request body with key 'refresh'
+      // Include refresh token in the request body
       const body = {
         refresh: refreshToken.trim()
       };
@@ -171,23 +172,12 @@ export class StudentAuthService {
       this.http.post<LogoutResponse>(logoutUrl, body, { headers }).pipe(
         tap(response => {
           if (response.status === 'success') {
-            console.log('Logout successful:', response.message);
+            // Success case handled silently
           }
         }),
         catchError((error: HttpErrorResponse) => {
           console.error('Logout error:', error);
-          
-          let errorMessage = 'An error occurred during logout';
-          if (error.error?.message) {
-            errorMessage = error.error.message;
-          } else if (error.status === 401) {
-            errorMessage = 'Invalid or expired token';
-          } else if (error.status === 400) {
-            errorMessage = 'Invalid refresh token';
-          }
-
-          // Return an observable with error info
-          return of({ status: 'error', message: errorMessage });
+          return of({ status: 'error', message: 'Logout failed on server but proceeding with local logout' });
         }),
         // Always execute cleanup regardless of success/failure
         finalize(() => {
@@ -196,10 +186,7 @@ export class StudentAuthService {
         })
       ).subscribe();
     } else {
-      // If tokens are missing, log which ones and perform local logout
-      if (!accessToken) console.log('Access token missing');
-      if (!refreshToken) console.log('Refresh token missing');
-      console.log('Performing local logout only');
+      // If tokens are missing, just do local logout
       this.tokenStorage.signOut();
       this.router.navigate(['/account']);
     }
