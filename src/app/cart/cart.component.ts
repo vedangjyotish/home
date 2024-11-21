@@ -1,19 +1,20 @@
 import { Component, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { CartService } from '../services/cart.service';
 import { CourseService } from '../services/course.service';
 import { ICartItem, IPaymentDetails } from '../interfaces/cart.interface';
 import { ICourse } from '../interfaces/course.interface';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { cdata } from '../ccards/cdata';
 import { TokenStorageService } from '../core/services/token-storage.service';
-import { AuthService } from '../core/services/auth.service';
+import { StudentAuthService } from '../students/auth/student-auth.service';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink],
+  imports: [CommonModule, FormsModule, RouterModule, RouterLink],
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css']
 })
@@ -54,8 +55,9 @@ export class CartComponent {
     private cartService: CartService,
     private courseService: CourseService,
     private router: Router,
+    private route: ActivatedRoute,
     private tokenStorage: TokenStorageService,
-    private authService: AuthService
+    private authService: StudentAuthService
   ) {
     const user = this.tokenStorage.getUser();
     if (user && user.name) {
@@ -175,13 +177,25 @@ export class CartComponent {
   }
 
   completeEnrollment() {
-    if (!this.authService.isLoggedIn()) {
-      // Store current cart state or course ID in session storage for redirect after login
+    console.log('CompleteEnrollment called');
+    
+    // Check auth status without forcing logout
+    const isLoggedIn = this.authService.isLoggedIn();
+    console.log('Auth status:', isLoggedIn);
+    
+    if (!isLoggedIn) {
+      console.log('User not logged in, attempting to redirect to checkout auth');
+      // Store current cart state in session storage for redirect after login
       sessionStorage.setItem('enrollmentRedirect', 'true');
-      this.router.navigate(['/auth/login']);
+      // Navigate to the checkout auth page
+      this.router.navigate(['/cart/checkout-auth']).then(
+        (success) => console.log('Navigation result:', success),
+        (error) => console.error('Navigation error:', error)
+      );
       return;
     }
 
+    console.log('User is logged in, proceeding to payment upload');
     // If logged in, navigate to payment upload page
     this.router.navigate(['/payment-upload']);
   }

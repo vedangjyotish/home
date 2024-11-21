@@ -13,7 +13,12 @@ export class AuthGuard {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     if (!this.tokenStorage.isLoggedIn()) {
-      this.router.navigate(['/account']);
+      // If coming from cart, redirect to checkout auth
+      if (state.url.includes('payment-upload')) {
+        this.router.navigate(['/cart/checkout-auth']);
+      } else {
+        this.router.navigate(['/account']);
+      }
       return false;
     }
 
@@ -22,7 +27,12 @@ export class AuthGuard {
     if (requiredUserType) {
       const userType = this.tokenStorage.getUserType();
       if (userType !== requiredUserType) {
-        this.router.navigate(['/account']);
+        // If coming from cart, redirect to checkout auth
+        if (state.url.includes('payment-upload')) {
+          this.router.navigate(['/cart/checkout-auth']);
+        } else {
+          this.router.navigate(['/account']);
+        }
         return false;
       }
     }

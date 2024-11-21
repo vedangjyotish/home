@@ -12,7 +12,6 @@ import { AppointmentComponent } from './appointment/appointment.component';
 import { AboutusComponent } from './aboutus/aboutus.component';
 import { ContactComponent } from './contact/contact.component';
 import { AccountComponent } from './account/account.component';
-import { CartComponent } from './cart/cart.component';
 import { ADMIN_ROUTES } from './admin/admin.routes';
 import { NotFoundComponent } from './shared/not-found/not-found.component';
 import { PaymentUploadComponent } from './payment-upload/payment-upload.component';
@@ -62,7 +61,7 @@ export const routes: Routes = [
   },
   {
     path: 'cart',
-    component: CartComponent,
+    loadChildren: () => import('./cart/cart.module').then(m => m.CartModule)
   },
   {
     path: 'course/:cid',
