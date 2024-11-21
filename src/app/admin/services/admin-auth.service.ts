@@ -73,7 +73,12 @@ export class AdminAuthService {
   private handleLogoutSuccess(): void {
     this.clearTokens();
     this.isAuthenticatedSubject.next(false);
-    this.router.navigate(['/admin/login']);
+    // Ensure we navigate to the full admin login path
+    this.router.navigate(['/admin', 'login']).then(() => {
+      console.log('Successfully navigated to login page');
+    }).catch(err => {
+      console.error('Navigation error:', err);
+    });
   }
 
   refreshToken(): Observable<{ access: string }> {

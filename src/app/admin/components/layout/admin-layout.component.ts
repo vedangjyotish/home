@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, ElementRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { AdminAuthService } from '../../services/admin-auth.service';
 
 @Component({
@@ -13,7 +13,8 @@ import { AdminAuthService } from '../../services/admin-auth.service';
 export class AdminLayoutComponent implements AfterViewInit {
   constructor(
     private authService: AdminAuthService,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private router: Router
   ) {}
 
   ngAfterViewInit() {
@@ -29,13 +30,17 @@ export class AdminLayoutComponent implements AfterViewInit {
   }
 
   logout(): void {
-    this.authService.logout().subscribe({
-      next: () => {
-        console.log('Logged out successfully');
-      },
-      error: (error) => {
-        console.error('Logout error:', error);
-      }
+    // Navigate first
+    this.router.navigate(['/admin/login']).then(() => {
+      // Then perform logout
+      this.authService.logout().subscribe({
+        next: () => {
+          console.log('Logged out successfully');
+        },
+        error: (error) => {
+          console.error('Logout error:', error);
+        }
+      });
     });
   }
 }

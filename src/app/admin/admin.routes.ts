@@ -24,7 +24,8 @@ export const ADMIN_ROUTES: Routes = [
         loadComponent: () => import('./components/dashboard/dashboard.component')
           .then(m => m.AdminDashboardComponent)
       },
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
+      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+      { path: '**', redirectTo: 'dashboard' }
     ]
   }
 ];
