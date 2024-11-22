@@ -697,7 +697,7 @@ export class AddStudentModalComponent implements OnInit {
   passwordMatchValidator(g: FormGroup): ValidationErrors | null {
     return g.get('password')?.value === g.get('confirm_password')?.value
       ? null
-      : { mismatch: true };
+      : { passwordMismatch: true };
   }
 
   getErrorMessage(fieldName: string): string {
