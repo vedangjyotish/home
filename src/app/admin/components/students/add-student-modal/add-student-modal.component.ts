@@ -5,6 +5,28 @@ import { StudentService } from '../student.service';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ImageCropperComponent, ImageCroppedEvent, ImageTransform } from 'ngx-image-cropper';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { 
+  MatNativeDateModule, 
+  DateAdapter, 
+  MAT_DATE_FORMATS, 
+  MAT_DATE_LOCALE,
+  NativeDateAdapter 
+} from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+
+const MY_DATE_FORMATS = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
 
 interface StatusMessage {
   type: 'success' | 'error';
@@ -18,7 +40,17 @@ interface StatusMessage {
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    ImageCropperComponent
+    ImageCropperComponent,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule
+  ],
+  providers: [
+    MatDatepickerModule,
+    { provide: DateAdapter, useClass: NativeDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
+    { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }
   ],
   template: `
     <div class="modal-overlay" (click)="$event.stopPropagation()">
@@ -126,9 +158,12 @@ interface StatusMessage {
 
               <div class="form-group">
                 <div class="input-wrapper date-wrapper">
-                  <input type="date" id="dateOfBirth" formControlName="date_of_birth" [max]="maxDate" placeholder=" ">
-                  <label for="dateOfBirth">Date of Birth</label>
-                  <div class="input-highlight"></div>
+                  <mat-form-field class="custom-form-field" appearance="outline">
+                    <mat-label>Date of Birth</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="date_of_birth" [max]="maxDate" placeholder=" ">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
                 </div>
                 <div class="error-message" *ngIf="studentForm.get('date_of_birth')?.touched && studentForm.get('date_of_birth')?.invalid">
                   {{ getErrorMessage('date_of_birth') }}
@@ -504,6 +539,63 @@ interface StatusMessage {
       padding: 0;
     }
 
+    .custom-form-field {
+      width: 100%;
+    }
+
+    ::ng-deep .custom-form-field .mat-mdc-form-field-subscript-wrapper {
+      display: none;
+    }
+
+    ::ng-deep .custom-form-field .mat-mdc-text-field-wrapper {
+      padding: 0;
+      height: 40px;
+      background-color: white !important;
+    }
+
+    ::ng-deep .custom-form-field .mat-mdc-form-field-flex {
+      height: 40px;
+      padding: 0 12px !important;
+      background-color: white !important;
+    }
+
+    ::ng-deep .custom-form-field .mdc-notched-outline {
+      border-radius: 4px;
+    }
+
+    ::ng-deep .custom-form-field .mdc-notched-outline__leading,
+    ::ng-deep .custom-form-field .mdc-notched-outline__notch,
+    ::ng-deep .custom-form-field .mdc-notched-outline__trailing {
+      border-color: #ddd !important;
+    }
+
+    ::ng-deep .custom-form-field .mat-mdc-form-field-infix {
+      padding: 8px 0 !important;
+      min-height: unset;
+    }
+
+    ::ng-deep .custom-form-field .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix {
+      padding-top: 8px !important;
+      padding-bottom: 8px !important;
+    }
+
+    ::ng-deep .mat-datepicker-content {
+      background-color: white;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+    }
+
+    ::ng-deep .mat-calendar-body-selected {
+      background-color: #28a745 !important;
+    }
+
+    ::ng-deep .mat-calendar-body-today:not(.mat-calendar-body-selected) {
+      border-color: #28a745;
+    }
+
+    ::ng-deep .mat-datepicker-toggle {
+      color: #666;
+    }
+
     .form-actions {
       display: flex;
       justify-content: flex-end;
@@ -585,6 +677,37 @@ interface StatusMessage {
       .cropper {
         border: 2px solid #6366f1 !important;
       }
+    }
+
+    .mat-form-field {
+      width: 100%;
+    }
+
+    ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+      background-color: white;
+    }
+
+    ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-thick {
+      color: #ddd;
+    }
+
+    ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-start,
+    ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline-end {
+      border-radius: 4px;
+    }
+
+    ::ng-deep .mat-datepicker-toggle {
+      color: #666;
+    }
+
+    ::ng-deep .mat-calendar {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    ::ng-deep .mat-calendar-body-selected {
+      background-color: #28a745;
     }
 
     .status-message {
