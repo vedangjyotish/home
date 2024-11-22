@@ -831,11 +831,8 @@ export class AddStudentModalComponent implements OnInit {
             message: 'Student created successfully!'
           };
           
-          // Emit event and close modal after a delay
-          setTimeout(() => {
-            this.studentAdded.emit();
-            this.dialogRef.close();
-          }, 500);
+          // Close dialog with true result to indicate success
+          this.dialogRef.close(true);
         },
         error: (error) => {
           this.isSubmitting = false;
