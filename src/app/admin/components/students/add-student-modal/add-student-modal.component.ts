@@ -932,14 +932,18 @@ export class AddStudentModalComponent implements OnInit {
       this.statusMessage = null; // Clear previous messages
 
       // Create the request data
+      const formData = this.studentForm.value;
+      const dateOfBirth = formData.date_of_birth;
+      
       const studentData: any = {
-        email: this.studentForm.get('email')?.value,
-        password: this.studentForm.get('password')?.value,
-        first_name: this.studentForm.get('first_name')?.value,
-        last_name: this.studentForm.get('last_name')?.value,
-        phone_number: this.studentForm.get('phone_number')?.value,
-        qualification: this.studentForm.get('qualification')?.value,
-        date_of_birth: this.studentForm.get('date_of_birth')?.value,
+        email: formData.email,
+        password: formData.password,
+        first_name: formData.first_name,
+        last_name: formData.last_name,
+        phone_number: formData.phone_number,
+        qualification: formData.qualification,
+        // Format date to YYYY-MM-DD
+        date_of_birth: dateOfBirth ? this.formatDate(dateOfBirth) : null,
       };
 
       // Add profile photo if available
@@ -983,6 +987,18 @@ export class AddStudentModalComponent implements OnInit {
         control?.markAsTouched();
       });
     }
+  }
+
+  private formatDate(date: Date): string {
+    const d = new Date(date);
+    let month = '' + (d.getMonth() + 1);
+    let day = '' + d.getDate();
+    const year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [year, month, day].join('-');
   }
 
   onCancel() {
