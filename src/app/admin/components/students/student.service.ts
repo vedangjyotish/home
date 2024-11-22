@@ -1,83 +1,108 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
+import { AdminAuthService } from '../../services/admin-auth.service';
+
+export interface StudentUser {
+  id: number;
+  email: string;
+  phone_number: string;
+  first_name: string;
+  last_name: string;
+  status: 'active' | 'inactive';
+  date_joined: string;
+}
 
 export interface Student {
   id: number;
-  name: string;
-  email: string;
-  phone: string;
-  enrollmentDate: Date;
-  status: 'active' | 'inactive';
-  courses: {
-    courseId: number;
-    courseName: string;
-    modules: {
-      moduleId: number;
-      moduleName: string;
-      status: 'active' | 'completed' | 'not-started';
-    }[];
-  }[];
+  student_id: string;
+  user: StudentUser;
+  qualification: string;
+  contact: string;
+  date_of_birth: string;
+  blood_group: string;
+  medical_conditions: string | null;
+  profile_photo: string;
+  enrolled_courses_count: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface StudentResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: Student[];
 }
 
 export interface StudentFilters {
-  search?: string;
-  status?: string;
-  courseId?: number;
   page?: number;
-  limit?: number;
+  page_size?: number;
+  status?: 'active' | 'inactive';
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class StudentService {
-  private apiUrl = `${environment.apiUrl}/students`;
+  private readonly apiUrl = `${environment.apiUrl}/admin/students/`;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private authService: AdminAuthService
+  ) {}
 
-  getStudents(filters: StudentFilters = {}): Observable<{ data: Student[]; total: number }> {
+  private getHeaders(): HttpHeaders {
+    return this.authService.getAuthorizationHeaders();
+  }
+
+  getStudents(filters: StudentFilters = {}): Observable<StudentResponse> {
     let params = new HttpParams();
-    Object.entries(filters).forEach(([key, value]) => {
-      if (value !== undefined && value !== null) {
-        params = params.append(key, value.toString());
-      }
+    
+    if (filters.page) {
+      params = params.append('page', filters.page.toString());
+    }
+    if (filters.page_size) {
+      params = params.append('page_size', filters.page_size.toString());
+    }
+    if (filters.status) {
+      params = params.append('status', filters.status);
+    }
+
+    return this.http.get<StudentResponse>(this.apiUrl, { 
+      params,
+      headers: this.getHeaders()
     });
-    return this.http.get<{ data: Student[]; total: number }>(this.apiUrl, { params });
   }
 
   getStudent(id: number): Observable<Student> {
-    return this.http.get<Student>(`${this.apiUrl}/${id}`);
+    return this.http.get<Student>(`${this.apiUrl}${id}/`, {
+      headers: this.getHeaders()
+    });
   }
 
   createStudent(student: Partial<Student>): Observable<Student> {
-    return this.http.post<Student>(this.apiUrl, student);
+    return this.http.post<Student>(this.apiUrl, student, {
+      headers: this.getHeaders()
+    });
   }
 
   updateStudent(id: number, student: Partial<Student>): Observable<Student> {
-    return this.http.put<Student>(`${this.apiUrl}/${id}`, student);
+    return this.http.put<Student>(`${this.apiUrl}${id}/`, student, {
+      headers: this.getHeaders()
+    });
   }
 
   deleteStudent(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}${id}/`, {
+      headers: this.getHeaders()
+    });
   }
 
-  // Course allocation
-  allocateCourse(studentId: number, courseId: number): Observable<void> {
-    return this.http.post<void>(`${this.apiUrl}/${studentId}/courses/${courseId}`, {});
-  }
-
-  // Module allocation
-  allocateModules(studentId: number, courseId: number, moduleIds: number[]): Observable<void> {
-    return this.http.post<void>(
-      `${this.apiUrl}/${studentId}/courses/${courseId}/modules`,
-      { moduleIds }
-    );
-  }
-
-  // Update student status
   updateStatus(studentId: number, status: 'active' | 'inactive'): Observable<void> {
-    return this.http.patch<void>(`${this.apiUrl}/${studentId}/status`, { status });
+    return this.http.patch<void>(`${this.apiUrl}${studentId}/status/`, { status }, {
+      headers: this.getHeaders()
+    });
   }
 }
