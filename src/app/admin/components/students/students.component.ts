@@ -75,6 +75,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
                 <button class="btn-icon" (click)="toggleStatus(student)">
                   {{student.user.status === 'active' ? 'Deactivate' : 'Activate'}}
                 </button>
+                <button class="btn-icon delete-btn" (click)="deleteStudent(student)">Delete</button>
               </td>
             </tr>
           </tbody>
@@ -172,6 +173,14 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 
     .btn-icon:hover {
       background: #0056b3;
+    }
+
+    .delete-btn {
+      background: #dc3545;
+    }
+
+    .delete-btn:hover {
+      background: #c82333;
     }
 
     .btn-primary {
@@ -306,5 +315,19 @@ export class StudentsComponent implements OnInit {
         console.error('Error updating status:', error);
       }
     });
+  }
+
+  deleteStudent(student: any) {
+    if (confirm('Are you sure you want to delete this student?')) {
+      this.studentService.deleteStudent(student.id).subscribe(
+        () => {
+          // Remove student from the list
+          this.students = this.students.filter(s => s.id !== student.id);
+        },
+        error => {
+          console.error('Error deleting student:', error);
+        }
+      );
+    }
   }
 }
