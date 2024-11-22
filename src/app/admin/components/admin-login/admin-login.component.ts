@@ -155,12 +155,12 @@ export class AdminLoginComponent {
     this.adminAuthService.login(this.email, this.password).subscribe({
       next: () => {
         this.isLoading = false;
-        // Redirect to admin dashboard after successful login
+        this.errorMessage = '';
         this.router.navigate(['/admin/dashboard']);
       },
       error: (error) => {
         this.isLoading = false;
-        this.errorMessage = error.message || 'Login failed. Please try again.';
+        this.errorMessage = error.message;
       }
     });
   }

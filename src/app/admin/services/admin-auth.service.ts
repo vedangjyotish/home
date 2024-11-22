@@ -40,7 +40,11 @@ export class AdminAuthService {
       }),
       catchError(error => {
         console.error('Login error:', error);
-        return throwError(() => error);
+        let errorMessage = 'Invalid credentials. Please check your email and password.';
+        if (error.status === 0) {
+          errorMessage = 'Unable to connect to the server. Please try again later.';
+        }
+        return throwError(() => ({ message: errorMessage }));
       })
     );
   }
@@ -57,7 +61,7 @@ export class AdminAuthService {
 
     return this.http.post<LogoutResponse>(
       `${this.API_URL}/token/logout/`,
-      { refresh_token: refreshToken },
+      { refresh: refreshToken },
       { headers }
     ).pipe(
       tap(() => this.handleLogoutSuccess()),
