@@ -158,12 +158,11 @@ interface StatusMessage {
 
               <div class="form-group">
                 <div class="input-wrapper date-wrapper">
-                  <mat-form-field class="custom-form-field" appearance="outline">
-                    <mat-label>Date of Birth</mat-label>
-                    <input matInput [matDatepicker]="picker" formControlName="date_of_birth" [max]="maxDate" placeholder=" ">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                  </mat-form-field>
+                  <input matInput [matDatepicker]="picker" formControlName="date_of_birth" [max]="maxDate" placeholder=" ">
+                  <label>Date of Birth</label>
+                  <div class="input-highlight"></div>
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
                 </div>
                 <div class="error-message" *ngIf="studentForm.get('date_of_birth')?.touched && studentForm.get('date_of_birth')?.invalid">
                   {{ getErrorMessage('date_of_birth') }}
@@ -358,6 +357,10 @@ interface StatusMessage {
     .input-wrapper {
       position: relative;
       margin-top: 0.5rem;
+
+      .date-input {
+        padding-right: 4rem !important;
+      }
     }
 
     .input-wrapper input {
@@ -513,169 +516,104 @@ interface StatusMessage {
       color: #9ca3af;
     }
 
-    .date-wrapper input[type="date"] {
-      appearance: none;
-      -webkit-appearance: none;
-      color: #111827;
-      font-family: inherit;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
+    .date-wrapper {
+      position: relative;
 
-    .date-wrapper input[type="date"]::-webkit-calendar-picker-indicator {
-      background: transparent;
-      bottom: 0;
-      color: transparent;
-      cursor: pointer;
-      height: auto;
-      left: 0;
-      position: absolute;
-      right: 0;
-      top: 0;
-      width: auto;
-    }
-
-    .date-wrapper input[type="date"]::-webkit-datetime-edit-fields-wrapper {
-      padding: 0;
-    }
-
-    .custom-form-field {
-      width: 100%;
-    }
-
-    ::ng-deep .custom-form-field .mat-mdc-form-field-subscript-wrapper {
-      display: none;
-    }
-
-    ::ng-deep .custom-form-field .mat-mdc-text-field-wrapper {
-      padding: 0;
-      height: 40px;
-      background-color: white !important;
-    }
-
-    ::ng-deep .custom-form-field .mat-mdc-form-field-flex {
-      height: 40px;
-      padding: 0 12px !important;
-      background-color: white !important;
-    }
-
-    ::ng-deep .custom-form-field .mdc-notched-outline {
-      border-radius: 4px;
-    }
-
-    ::ng-deep .custom-form-field .mdc-notched-outline__leading,
-    ::ng-deep .custom-form-field .mdc-notched-outline__notch,
-    ::ng-deep .custom-form-field .mdc-notched-outline__trailing {
-      border-color: #ddd !important;
-    }
-
-    ::ng-deep .custom-form-field .mat-mdc-form-field-infix {
-      padding: 8px 0 !important;
-      min-height: unset;
-    }
-
-    ::ng-deep .custom-form-field .mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix {
-      padding-top: 8px !important;
-      padding-bottom: 8px !important;
-    }
-
-    ::ng-deep .mat-datepicker-content {
-      background-color: white;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
-    }
-
-    ::ng-deep .mat-calendar-body-selected {
-      background-color: #28a745 !important;
-    }
-
-    ::ng-deep .mat-calendar-body-today:not(.mat-calendar-body-selected) {
-      border-color: #28a745;
-    }
-
-    ::ng-deep .mat-datepicker-toggle {
-      color: #666;
-    }
-
-    .form-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 0.75rem;
-      margin-top: 2rem;
-      padding-top: 1.25rem;
-      border-top: 1px solid #f3f4f6;
-    }
-
-    .btn {
-      padding: 1.2rem 2rem;
-      font-size: 1.4rem;
-      font-weight: 500;
-      border-radius: 1rem;
-      transition: all 0.2s;
-      cursor: pointer;
-    }
-
-    .btn:active {
-      transform: scale(0.98);
-    }
-
-    .btn-primary {
-      background: #6366f1;
-      color: white;
-      border: none;
-    }
-
-    .btn-primary:hover {
-      background: #4f46e5;
-    }
-
-    .btn-primary:disabled {
-      background: #c7d2fe;
-      cursor: not-allowed;
-    }
-
-    .btn-secondary {
-      background: #f3f4f6;
-      color: #4b5563;
-      border: 1px solid #e5e7eb;
-    }
-
-    .btn-secondary:hover {
-      background: #e5e7eb;
-      color: #374151;
-    }
-
-    .cropper-container {
-      background: #f3f4f6;
-      border-radius: 1.2rem;
-      overflow: hidden;
-      max-height: 400px;
-      margin-top: 1.6rem;
-    }
-
-    .cropper-actions {
-      display: flex;
-      justify-content: flex-end;
-      gap: 1rem;
-      padding: 1.2rem;
-      background: white;
-      border-top: 1px solid #e5e7eb;
-    }
-
-    :host ::ng-deep {
-      .cropper {
-        background: #f3f4f6 !important;
-      }
-      
-      .source-image {
-        max-height: 300px !important;
+      input {
+        padding-right: 4.8rem !important;
+        width: 100%;
+        padding: 1.2rem 1.6rem;
+        font-size: 1.4rem;
+        border: 1px solid #e5e7eb;
+        border-radius: 1.2rem;
+        background: #f9fafb;
+        transition: all 0.2s;
+        outline: none;
+        color: #111827;
       }
 
-      .overlay {
-        outline: rgba(99, 102, 241, 0.3) solid 100vw !important;
+      label {
+        position: absolute;
+        left: 1.6rem;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.4rem;
+        color: #6b7280;
+        pointer-events: none;
+        transition: all 0.2s;
+        background: transparent;
+        z-index: 1;
       }
 
-      .cropper {
-        border: 2px solid #6366f1 !important;
+      input:focus ~ label,
+      input:not(:placeholder-shown) ~ label {
+        top: -0.5rem;
+        left: 1rem;
+        font-size: 1.2rem;
+        color: #6366f1;
+        background: white;
+        padding: 0 0.4rem;
+      }
+
+      ::ng-deep .mat-datepicker-toggle {
+        position: absolute;
+        right: 0.8rem;
+        top: 50%;
+        transform: translateY(-50%);
+        
+        .mat-datepicker-toggle-default-icon {
+          width: 2.4rem;
+          height: 2.4rem;
+          color: #6b7280;
+        }
+
+        button {
+          margin: 0;
+          padding: 0;
+        }
+      }
+    }
+
+    ::ng-deep {
+      .mat-datepicker-toggle {
+        position: absolute;
+        right: 1.2rem;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 2;
+        
+        .mat-datepicker-toggle-default-icon {
+          width: 2.4rem;
+          height: 2.4rem;
+          color: #6b7280;
+        }
+
+        button {
+          margin: 0;
+          padding: 0;
+        }
+      }
+
+      .mdc-text-field {
+        display: none !important;
+      }
+
+      .mat-mdc-form-field-subscript-wrapper {
+        display: none !important;
+      }
+
+      .mat-calendar {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .mat-calendar-body-selected {
+        background-color: #6366f1 !important;
+      }
+
+      .mat-calendar-body-today:not(.mat-calendar-body-selected) {
+        border-color: #6366f1;
       }
     }
 
@@ -707,7 +645,7 @@ interface StatusMessage {
     }
 
     ::ng-deep .mat-calendar-body-selected {
-      background-color: #28a745;
+      background-color: #6366f1 !important;
     }
 
     .status-message {
@@ -769,6 +707,126 @@ interface StatusMessage {
 
     .status-details li:last-child {
       margin-bottom: 0;
+    }
+
+    ::ng-deep {
+      .mat-datepicker-toggle {
+        position: absolute;
+        right: 1.2rem;
+        top: 50%;
+        transform: translateY(-50%);
+        
+        .mat-datepicker-toggle-default-icon {
+          width: 2rem;
+          height: 2rem;
+          color: #6b7280;
+        }
+      }
+
+      .mdc-text-field {
+        display: none !important;
+      }
+
+      .mat-mdc-form-field-subscript-wrapper {
+        display: none !important;
+      }
+
+      .mat-calendar {
+        background-color: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .mat-calendar-body-selected {
+        background-color: #6366f1 !important;
+      }
+
+      .mat-calendar-body-today:not(.mat-calendar-body-selected) {
+        border-color: #6366f1;
+      }
+    }
+
+    .cropper-container {
+      background: #f3f4f6;
+      border-radius: 1.2rem;
+      overflow: hidden;
+      max-height: 400px;
+      margin-top: 1.6rem;
+    }
+
+    .cropper-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+      padding: 1.2rem;
+      background: white;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    :host ::ng-deep {
+      .cropper {
+        background: #f3f4f6 !important;
+      }
+      
+      .source-image {
+        max-height: 300px !important;
+      }
+
+      .overlay {
+        outline: rgba(99, 102, 241, 0.3) solid 100vw !important;
+      }
+
+      .cropper {
+        border: 2px solid #6366f1 !important;
+      }
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.75rem;
+      margin-top: 2rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid #f3f4f6;
+    }
+
+    .btn {
+      padding: 1.2rem 2rem;
+      font-size: 1.4rem;
+      font-weight: 500;
+      border-radius: 1rem;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+
+    .btn:active {
+      transform: scale(0.98);
+    }
+
+    .btn-primary {
+      background: #6366f1;
+      color: white;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background: #4f46e5;
+    }
+
+    .btn-primary:disabled {
+      background: #c7d2fe;
+      cursor: not-allowed;
+    }
+
+    .btn-secondary {
+      background: #f3f4f6;
+      color: #4b5563;
+      border: 1px solid #e5e7eb;
+    }
+
+    .btn-secondary:hover {
+      background: #e5e7eb;
+      color: #374151;
     }
   `]
 })
