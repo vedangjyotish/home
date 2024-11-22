@@ -84,7 +84,11 @@ export class StudentAuthService {
       } else if (error.status === 0) {
         errorMessage = 'Unable to connect to the server. Please check your internet connection.';
       } else if (error.status === 400) {
-        errorMessage = 'Invalid credentials or missing fields';
+        if (error.error.detail) {
+          errorMessage = error.error.detail;
+        } else {
+          errorMessage = 'Invalid request data. Please check all fields.';
+        }
       } else if (error.status === 401) {
         errorMessage = 'Invalid credentials';
       } else if (error.status === 404) {
@@ -92,7 +96,6 @@ export class StudentAuthService {
       }
     }
     
-    console.error('API error:', error);
     return throwError(() => errorMessage);
   }
 
@@ -176,7 +179,6 @@ export class StudentAuthService {
           }
         }),
         catchError((error: HttpErrorResponse) => {
-          console.error('Logout error:', error);
           return of({ status: 'error', message: 'Logout failed on server but proceeding with local logout' });
         }),
         // Always execute cleanup regardless of success/failure
