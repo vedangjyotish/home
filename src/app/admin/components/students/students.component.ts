@@ -4,14 +4,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { StudentService, Student, StudentFilters, StudentResponse } from './student.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
-import { AddStudentModalComponent } from './add-student-modal/add-student-modal.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { AddStudentModalComponent } from './add-student-modal/add-student-modal.component';
 
 @Component({
   selector: 'app-students',
@@ -89,6 +88,29 @@ import { MatPaginatorModule } from '@angular/material/paginator';
           (click)="changePage(page)">
           {{page}}
         </button>
+      </div>
+
+      <!-- Custom Delete Confirmation Dialog -->
+      <div class="modal-overlay" *ngIf="showDeleteDialog" (click)="cancelDelete()">
+        <div class="modal-container" (click)="$event.stopPropagation()">
+          <div class="modal-header">
+            <div class="warning-icon">!</div>
+            <h2>Delete Student</h2>
+          </div>
+          
+          <div class="modal-content">
+            <p class="message">Are you sure you want to delete this student?</p>
+            <p class="student-name" *ngIf="studentToDelete">
+              {{studentToDelete.user.first_name}} {{studentToDelete.user.last_name}}
+            </p>
+            <p class="warning-text">This action cannot be undone.</p>
+          </div>
+          
+          <div class="modal-actions">
+            <button class="btn cancel" (click)="cancelDelete()">Cancel</button>
+            <button class="btn delete" (click)="confirmDelete()">Delete</button>
+          </div>
+        </div>
       </div>
     </div>
   `,
@@ -216,6 +238,123 @@ import { MatPaginatorModule } from '@angular/material/paginator';
       color: white;
       border-color: #007bff;
     }
+
+    /* Custom Dialog Styles */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal-container {
+      background: white;
+      border-radius: 0.8rem;
+      width: 40rem;
+      box-shadow: 0 0.2rem 1rem rgba(0, 0, 0, 0.1);
+      animation: slideIn 0.3s ease-out;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateY(-2rem);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .modal-header {
+      padding: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.6rem;
+      border-bottom: 0.1rem solid #eee;
+    }
+
+    .warning-icon {
+      width: 3.2rem;
+      height: 3.2rem;
+      background: #ff4444;
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.4rem;
+      font-weight: bold;
+    }
+
+    .modal-content {
+      padding: 2rem;
+    }
+
+    .message {
+      font-size: 1.6rem;
+      color: #666;
+      margin: 0 0 1.6rem 0;
+    }
+
+    .student-name {
+      font-size: 1.8rem;
+      font-weight: 500;
+      color: #333;
+      padding: 1.2rem 1.6rem;
+      background: #f8f9fa;
+      border-radius: 0.4rem;
+      margin: 1.2rem 0;
+    }
+
+    .warning-text {
+      font-size: 1.4rem;
+      color: #ff4444;
+      margin: 1.2rem 0 0 0;
+    }
+
+    .modal-actions {
+      padding: 1.6rem 2rem;
+      display: flex;
+      justify-content: flex-end;
+      gap: 1.2rem;
+      border-top: 0.1rem solid #eee;
+    }
+
+    .btn {
+      padding: 1rem 2rem;
+      border-radius: 0.4rem;
+      font-size: 1.4rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+    }
+
+    .cancel {
+      background: #f8f9fa;
+      color: #666;
+      border: 0.1rem solid #ddd;
+    }
+
+    .cancel:hover {
+      background: #e9ecef;
+    }
+
+    .delete {
+      background: #ff4444;
+      color: white;
+    }
+
+    .delete:hover {
+      background: #cc0000;
+    }
   `]
 })
 export class StudentsComponent implements OnInit {
@@ -224,10 +363,11 @@ export class StudentsComponent implements OnInit {
   pageSize = 10;
   totalPages = 1;
   filterForm: FormGroup;
+  showDeleteDialog = false;
+  studentToDelete: Student | null = null;
 
   constructor(
     private studentService: StudentService,
-    private dialog: MatDialog,
     private fb: FormBuilder
   ) {
     this.filterForm = this.fb.group({
@@ -282,17 +422,7 @@ export class StudentsComponent implements OnInit {
   }
 
   openAddStudentModal() {
-    const dialogRef = this.dialog.open(AddStudentModalComponent, {
-      width: '600px',
-      disableClose: true,
-      panelClass: 'custom-dialog-container'
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.loadStudents();
-      }
-    });
+    // Implement custom modal for adding students
   }
 
   editStudent(student: Student) {
@@ -317,17 +447,30 @@ export class StudentsComponent implements OnInit {
     });
   }
 
-  deleteStudent(student: any) {
-    if (confirm('Are you sure you want to delete this student?')) {
-      this.studentService.deleteStudent(student.id).subscribe(
-        () => {
-          // Remove student from the list
-          this.students = this.students.filter(s => s.id !== student.id);
+  deleteStudent(student: Student) {
+    this.studentToDelete = student;
+    this.showDeleteDialog = true;
+  }
+
+  cancelDelete() {
+    this.showDeleteDialog = false;
+    this.studentToDelete = null;
+  }
+
+  confirmDelete() {
+    if (this.studentToDelete) {
+      this.studentService.deleteStudent(this.studentToDelete.id).subscribe({
+        next: () => {
+          this.students = this.students.filter(s => s.id !== this.studentToDelete!.id);
+          this.showDeleteDialog = false;
+          this.studentToDelete = null;
         },
-        error => {
+        error: (error) => {
           console.error('Error deleting student:', error);
+          this.showDeleteDialog = false;
+          this.studentToDelete = null;
         }
-      );
+      });
     }
   }
 }
