@@ -2,13 +2,32 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { StudentService, Student, StudentFilters } from './student.service';
+import { StudentService, Student, StudentFilters, StudentResponse } from './student.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { AddStudentModalComponent } from './add-student-modal/add-student-modal.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-students',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule],
+  imports: [
+    CommonModule, 
+    FormsModule, 
+    ReactiveFormsModule, 
+    RouterModule,
+    MatButtonModule,
+    MatIconModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
+    MatPaginatorModule
+  ],
   template: `
     <div class="students-container">
       <header class="students-header">
@@ -199,6 +218,7 @@ export class StudentsComponent implements OnInit {
 
   constructor(
     private studentService: StudentService,
+    private dialog: MatDialog,
     private fb: FormBuilder
   ) {
     this.filterForm = this.fb.group({
@@ -220,8 +240,15 @@ export class StudentsComponent implements OnInit {
 
     this.studentService.getStudents(filters).subscribe({
       next: (response) => {
-        this.students = response.results;
-        this.totalPages = Math.ceil(response.count / this.pageSize);
+        if ('results' in response) {
+          // It's a StudentResponse
+          this.students = response.results;
+          this.totalPages = Math.ceil(response.count / this.pageSize);
+        } else {
+          // It's a Student[]
+          this.students = response;
+          this.totalPages = 1; // Since there's no pagination info in this case
+        }
       },
       error: (error) => {
         console.error('Error loading students:', error);
@@ -246,8 +273,17 @@ export class StudentsComponent implements OnInit {
   }
 
   openAddStudentModal() {
-    // Implement add student modal
-    console.log('Open add student modal');
+    const dialogRef = this.dialog.open(AddStudentModalComponent, {
+      width: '600px',
+      disableClose: true,
+      panelClass: 'custom-dialog-container'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadStudents();
+      }
+    });
   }
 
   editStudent(student: Student) {
