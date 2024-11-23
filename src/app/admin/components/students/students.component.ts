@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatDialog } from '@angular/material/dialog';
 import { AddStudentModalComponent } from './add-student-modal/add-student-modal.component';
 
 @Component({
@@ -25,7 +26,8 @@ import { AddStudentModalComponent } from './add-student-modal/add-student-modal.
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    AddStudentModalComponent
   ],
   template: `
     <div class="students-container">
@@ -368,7 +370,8 @@ export class StudentsComponent implements OnInit {
 
   constructor(
     private studentService: StudentService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private dialog: MatDialog
   ) {
     this.filterForm = this.fb.group({
       status: ['']
@@ -422,7 +425,16 @@ export class StudentsComponent implements OnInit {
   }
 
   openAddStudentModal() {
-    // Implement custom modal for adding students
+    const dialogRef = this.dialog.open(AddStudentModalComponent, {
+      width: '600px',
+      disableClose: true
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadStudents(); // Refresh the student list after adding
+      }
+    });
   }
 
   editStudent(student: Student) {
