@@ -13,160 +13,200 @@
         <span>Back to Course List</span>
       </button>
     </div>
-    
-    <div class="form-group">
-      <label class="required">Course Name</label>
-      <input type="text" [(ngModel)]="newCourse.name" placeholder="Enter course name" required>
-    </div>
 
-    <div class="form-group">
-      <label class="required">Description</label>
-      <textarea [(ngModel)]="newCourse.description" placeholder="Enter course description" rows="4" required></textarea>
-    </div>
+    <form [formGroup]="courseForm" (ngSubmit)="isEditing() ? updateCourse() : createCourse()">
+      <div class="form-grid">
+        <!-- Left Column -->
+        <div class="form-column">
+          <div class="form-group">
+            <label class="required">Course Name</label>
+            <input type="text" formControlName="name" placeholder="Enter course name" required>
+          </div>
 
-    <div class="form-group">
-      <label>Course Image</label>
-      <div class="image-upload">
-        <input type="file" 
-               accept="image/*" 
-               (change)="handleImageUpload($event)"
-               #fileInput>
-        <div class="image-preview" *ngIf="newCourse.image_url">
-          <img [src]="newCourse.image_url" [alt]="newCourse.image_alt || newCourse.name">
+          <div class="form-group">
+            <label class="required">Description</label>
+            <textarea formControlName="description" placeholder="Enter course description" rows="4" required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Course Image</label>
+            <div class="image-upload">
+              <input type="file" 
+                     accept="image/*" 
+                     (change)="handleImageUpload($event)"
+                     #fileInput>
+              <div class="image-preview" *ngIf="image_url">
+                <img [src]="image_url" [alt]="image_alt">
+              </div>
+              <div class="error-message" *ngIf="imageError()">
+                {{ imageError() }}
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Image Alt Text</label>
+            <input type="text" formControlName="image_alt" placeholder="Enter image alt text">
+          </div>
+
+          <div class="form-group">
+            <label class="required">Course Price</label>
+            <input type="text" 
+                   formControlName="price" 
+                   placeholder="Enter price (e.g., ₹4999)" 
+                   (input)="formatPrice($event)"
+                   required>
+          </div>
+
+          <div class="form-group">
+            <label class="required">Duration</label>
+            <input type="text" formControlName="duration" placeholder="Enter duration (e.g., 3 months)" required>
+          </div>
+
+          <div class="form-group">
+            <label>Weekly Commitment</label>
+            <input type="text" formControlName="weekly_commitment" placeholder="e.g., 6-8 hours">
+          </div>
+
+          <div class="form-group">
+            <label>Language</label>
+            <input type="text" formControlName="language" placeholder="Course language (defaults to English)">
+          </div>
+
+          <div class="form-group">
+            <label>Teacher Name</label>
+            <input type="text" formControlName="teacher_name" placeholder="Enter teacher name">
+          </div>
         </div>
-        <div class="error-message" *ngIf="imageError()">
-          {{ imageError() }}
+
+        <!-- Right Column -->
+        <div class="form-column">
+          <div class="form-group">
+            <label class="required">Highlights</label>
+            <div class="array-inputs">
+              <div class="input-with-action" *ngFor="let control of highlights.controls; let i = index">
+                <input type="text" 
+                       [formControl]="getControl(control)"
+                       placeholder="Enter highlight"
+                       required>
+                <button type="button" class="btn-icon" (click)="removeHighlight(i)" *ngIf="highlights.length > 1">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+              <button type="button" class="btn-secondary" (click)="addHighlight()">
+                <mat-icon>add</mat-icon>
+                Add Highlight
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="required">Taglines</label>
+            <div class="array-inputs">
+              <div class="input-with-action" *ngFor="let control of taglines.controls; let i = index">
+                <input type="text" 
+                       [formControl]="getControl(control)"
+                       placeholder="Enter tagline"
+                       required>
+                <button type="button" class="btn-icon" (click)="removeTagline(i)" *ngIf="taglines.length > 1">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+              <button type="button" class="btn-secondary" (click)="addTagline()">
+                <mat-icon>add</mat-icon>
+                Add Tagline
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>YouTube Videos</label>
+            <div class="array-inputs">
+              <div class="input-with-action" *ngFor="let control of videos.controls; let i = index">
+                <input type="text" 
+                       [formControl]="getControl(control)"
+                       placeholder="Enter YouTube URL">
+                <button type="button" class="btn-icon" (click)="removeVideo(i)">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+              <button type="button" class="btn-secondary" (click)="addVideo()">
+                <mat-icon>add</mat-icon>
+                Add Video
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Prerequisites</label>
+            <div class="array-inputs">
+              <div class="input-with-action" *ngFor="let control of prerequisites.controls; let i = index">
+                <input type="text" 
+                       [formControl]="getControl(control)"
+                       placeholder="Enter prerequisite">
+                <button type="button" class="btn-icon" (click)="removePrerequisite(i)">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+              <button type="button" class="btn-secondary" (click)="addPrerequisite()">
+                <mat-icon>add</mat-icon>
+                Add Prerequisite
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Learning Outcomes</label>
+            <div class="array-inputs">
+              <div class="input-with-action" *ngFor="let control of learningOutcomes.controls; let i = index">
+                <input type="text" 
+                       [formControl]="getControl(control)"
+                       placeholder="Enter learning outcome">
+                <button type="button" class="btn-icon" (click)="removeLearningOutcome(i)">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
+              <button type="button" class="btn-secondary" (click)="addLearningOutcome()">
+                <mat-icon>add</mat-icon>
+                Add Learning Outcome
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Options</label>
+            <div class="checkbox-group">
+              <label>
+                <input type="checkbox" formControlName="featured">
+                Featured Course
+              </label>
+              <label>
+                <input type="checkbox" formControlName="certificate_offered">
+                Certificate Offered
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Course Status</label>
+            <select formControlName="status">
+              <option value="draft">Draft</option>
+              <option value="published">Published</option>
+              <option value="archived">Archived</option>
+            </select>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="form-group">
-      <label>Image Alt Text</label>
-      <input type="text" [(ngModel)]="newCourse.image_alt" placeholder="Enter image alt text">
-    </div>
-
-    <div class="form-group">
-      <label class="required">Course Price</label>
-      <input type="text" [(ngModel)]="newCourse.price" placeholder="Enter price (e.g., ₹999)" required>
-    </div>
-
-    <div class="form-group">
-      <label class="required">Duration</label>
-      <input type="text" [(ngModel)]="newCourse.duration" placeholder="Enter duration (e.g., 6 months)" required>
-    </div>
-
-    <div class="form-group">
-      <label>Weekly Commitment</label>
-      <input type="text" [(ngModel)]="newCourse.weekly_commitment" placeholder="Enter weekly commitment">
-    </div>
-
-    <div class="form-group">
-      <label class="required">Highlights</label>
-      <div class="highlights-container">
-        <div class="input-with-action" *ngFor="let highlight of newCourse.highlights; let i = index">
-          <input type="text" 
-                 [(ngModel)]="newCourse.highlights[i]" 
-                 placeholder="Enter highlight"
-                 required>
-          <button class="btn-icon" (click)="removeHighlight(i)" *ngIf="newCourse.highlights.length > 1">
-            <i class="fas fa-times"></i>
-          </button>
-        </div>
-        <button class="btn-secondary" (click)="addHighlight()">+ Add Highlight</button>
+      <div class="form-actions">
+        <button type="submit" class="btn-primary" [disabled]="!courseForm.valid">
+          {{ isEditing() ? 'Update Course' : 'Create Course' }}
+        </button>
       </div>
-    </div>
-
-    <div class="form-group">
-      <label class="required">Taglines</label>
-      <div class="taglines-container">
-        <div class="input-with-action" *ngFor="let tagline of newCourse.taglines; let i = index">
-          <input type="text" 
-                 [(ngModel)]="newCourse.taglines[i]" 
-                 placeholder="Enter tagline"
-                 required>
-          <button class="btn-icon" (click)="removeTagline(i)" *ngIf="newCourse.taglines.length > 1">
-            <i class="fas fa-times"></i>
-          </button>
-        </div>
-        <button class="btn-secondary" (click)="addTagline()">+ Add Tagline</button>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label>YouTube Videos</label>
-      <div class="videos-container">
-        <div class="input-with-action" *ngFor="let video of newCourse.videos || []; let i = index">
-          <input type="text" 
-                 [(ngModel)]="newCourse.videos![i]" 
-                 placeholder="Enter YouTube URL">
-          <button class="btn-icon" (click)="removeVideo(i)">
-            <i class="fas fa-times"></i>
-          </button>
-        </div>
-        <button class="btn-secondary" (click)="addVideo()">+ Add Video</button>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label>Prerequisites</label>
-      <div class="prerequisites-container">
-        <div class="input-with-action" *ngFor="let prerequisite of newCourse.prerequisites || []; let i = index">
-          <input type="text" 
-                 [(ngModel)]="newCourse.prerequisites![i]" 
-                 placeholder="Enter prerequisite">
-          <button class="btn-icon" (click)="removePrerequisite(i)">
-            <i class="fas fa-times"></i>
-          </button>
-        </div>
-        <button class="btn-secondary" (click)="addPrerequisite()">+ Add Prerequisite</button>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label>Learning Outcomes</label>
-      <div class="outcomes-container">
-        <div class="input-with-action" *ngFor="let outcome of newCourse.learning_outcomes || []; let i = index">
-          <input type="text" 
-                 [(ngModel)]="newCourse.learning_outcomes![i]" 
-                 placeholder="Enter learning outcome">
-          <button class="btn-icon" (click)="removeLearningOutcome(i)">
-            <i class="fas fa-times"></i>
-          </button>
-        </div>
-        <button class="btn-secondary" (click)="addLearningOutcome()">+ Add Learning Outcome</button>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label>Language</label>
-      <input type="text" [(ngModel)]="newCourse.language" placeholder="Course language (defaults to English)">
-    </div>
-
-    <div class="form-group">
-      <label>Options</label>
-      <div class="checkbox-group">
-        <label>
-          <input type="checkbox" [(ngModel)]="newCourse.featured">
-          Featured Course
-        </label>
-        <label>
-          <input type="checkbox" [(ngModel)]="newCourse.certificate_offered">
-          Certificate Offered
-        </label>
-      </div>
-    </div>
+    </form>
 
     <div class="error-message" *ngIf="error()">{{ error() }}</div>
     <div class="success-message" *ngIf="message()">{{ message() }}</div>
-
-    <div class="form-actions">
-      <button class="btn-secondary" (click)="resetForm()">Cancel</button>
-      <button class="btn-primary" 
-              [disabled]="!validateCourse()" 
-              (click)="isEditing() ? updateCourse() : createCourse()">
-        {{ isEditing() ? 'Update Course' : 'Create Course' }}
-      </button>
-    </div>
   </div>
 
   <!-- Courses List -->
@@ -175,7 +215,7 @@
       <div class="spinner"></div>
     </div>
 
-    <div class="course-card" *ngFor="let course of courses()">
+    <div class="course-card" (click)="startEdit(course)" [class.clickable]="true" *ngFor="let course of courses()">
       <div class="course-image">
         <img [src]="course.image_url" [alt]="course.image_alt || course.name" *ngIf="course.image_url">
         <div class="no-image" *ngIf="!course.image_url">
@@ -198,18 +238,18 @@
           </div>
           <div class="detail-item">
             <span class="material-icons">currency_rupee</span>
-            {{ course.price }}
+            {{ displayPrice(course.price) }}
           </div>
         </div>
 
         <div class="course-actions">
-          <button class="btn-icon" (click)="startEdit(course)">
+          <button class="btn-icon" (click)="startEdit(course, $event)">
             <span class="material-icons">edit</span>
-            Edit
+            <span>Edit</span>
           </button>
-          <button class="btn-icon delete" (click)="deleteCourse(course)">
+          <button class="btn-icon" (click)="deleteCourse(course, $event)">
             <span class="material-icons">delete</span>
-            Delete
+            <span>Delete</span>
           </button>
         </div>
       </div>

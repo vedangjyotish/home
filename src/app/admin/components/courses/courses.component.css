@@ -22,6 +22,7 @@
 .courses-header h2 {
   margin: 0;
   font-size: 2.4rem;
+  margin-bottom: 2rem;
   color: #333;
 }
 
@@ -64,6 +65,16 @@
   box-shadow: 0 0.2rem 1rem rgba(0, 0, 0, 0.1);
   overflow: hidden;
   transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.course-card.clickable {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.course-card.clickable:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .course-card:hover {
@@ -118,13 +129,15 @@
 .course-content h3 {
   margin: 0 0 1rem 0;
   font-size: 1.8rem;
+  margin-bottom: 0.8rem;
   color: #333;
 }
 
 .course-description {
   font-size: 1.4rem;
+  line-height: 1.6;
   color: #666;
-  margin: 0 0 1.6rem 0;
+  margin: 1rem 0;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -135,6 +148,7 @@
   display: flex;
   gap: 1.6rem;
   margin-bottom: 2rem;
+  font-size: 1.4rem;
 }
 
 .detail-item {
@@ -150,10 +164,67 @@
 }
 
 .course-actions {
+  position: relative;
+  z-index: 2;
   display: flex;
   gap: 1rem;
-  border-top: 0.1rem solid #eee;
-  padding-top: 1.6rem;
+  margin-top: 1rem;
+  justify-content: flex-end;
+  padding: 1rem;
+  border-top: 1px solid #eee;
+}
+
+.course-actions button {
+  position: relative;
+  z-index: 3;
+}
+
+.course-actions button:active,
+.course-actions button:focus {
+  pointer-events: auto;
+}
+
+.course-actions .btn-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.4rem;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  min-width: 90px;
+  font-size: 1.4rem;
+}
+
+.course-actions .btn-icon:hover {
+  background-color: #f0f0f0;
+}
+
+.course-actions .btn-icon:first-child {
+  color: #0d6efd;
+}
+
+.course-actions .btn-icon:first-child:hover {
+  background-color: #e6f0ff;
+}
+
+.course-actions .btn-icon:last-child {
+  color: #dc3545;
+}
+
+.course-actions .btn-icon:last-child:hover {
+  background-color: #ffebee;
+}
+
+.course-actions .btn-icon .material-icons {
+  font-size: 1.6rem;
+}
+
+.course-actions .btn-icon span:not(.material-icons) {
+  font-size: 1.4rem;
 }
 
 .btn-primary {
@@ -201,7 +272,7 @@
 }
 
 .material-icons {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
 }
 
 /* Form Styles */
@@ -227,6 +298,7 @@
   margin-bottom: 0.8rem;
   font-weight: 500;
   color: #333;
+  font-size: 1.4rem;
 }
 
 .form-group label.required::after {
@@ -261,13 +333,13 @@ textarea.ng-invalid.ng-touched {
 
 .error-message {
   color: #dc3545;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   margin-top: 0.5rem;
 }
 
 .success-message {
   color: #28a745;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   margin-top: 0.5rem;
 }
 
@@ -398,6 +470,120 @@ textarea.ng-invalid.ng-touched {
   height: 2rem;
   width: 2rem;
   line-height: 2rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  margin-top: 2rem;
+}
+
+.form-column {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.array-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.input-with-action {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.input-with-action input {
+  flex: 1;
+}
+
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.2rem;
+  height: 3.2rem;
+  border: none;
+  border-radius: 0.4rem;
+  background: transparent;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-icon:hover {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.btn-icon mat-icon {
+  font-size: 2rem;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.8rem 1.6rem;
+  background: transparent;
+  border: 1px dashed #ccc;
+  border-radius: 0.4rem;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 1.4rem;
+}
+
+.btn-secondary:hover {
+  background: #f5f5f5;
+  border-color: #999;
+  color: #333;
+}
+
+.image-upload {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.image-preview {
+  max-width: 20rem;
+  border-radius: 0.8rem;
+  overflow: hidden;
+  border: 1px solid #e0e0e0;
+}
+
+.image-preview img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.checkbox-group label {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+}
+
+select {
+  width: 100%;
+  padding: 0.8rem 1.2rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 0.4rem;
+  font-size: 1.4rem;
+  color: #333;
+  background: white;
 }
 
 /* Responsive Styles */
