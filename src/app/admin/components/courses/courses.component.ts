@@ -6,30 +6,25 @@ import { environment } from '../../../../environments/environment';
 import { AdminAuthService } from '../../services/admin-auth.service';
 
 interface Course {
-  id: string;  // UUID of the course
-  cid: string; // Course code (e.g., PYTHON101)
-  name: string;
-  price: string;
-  image?: File;
-  image_url?: string;
-  image_alt?: string;
-  highlights: string[];
-  taglines: string[];
-  duration: string;
-  videos: string[];
-  rating?: number;
-  featured?: boolean;
-  description?: string;
-  weekly_commitment?: string;
-  prerequisites?: string[];
-  learning_outcomes?: string[];
-  language?: string;
-  certificate_offered?: boolean;
-  modules_data?: {
-    module: number;
-    list: string[];
-    m_price?: string;
-  }[];
+  id?: string;
+  name: string;           // required
+  description: string;    // required
+  price: string;         // required, must start with ₹
+  highlights: string[];  // required
+  taglines: string[];    // required
+  duration: string;      // required
+  teacher_id?: string;   // optional
+  image?: File;          // optional but either image or image_url must be present
+  image_url?: string;    // optional but either image or image_url must be present
+  image_alt?: string;    // optional, defaults to empty string
+  videos?: string[];     // optional, defaults to empty list
+  featured?: boolean;    // optional, defaults to false
+  weekly_commitment?: string;  // optional, defaults to empty string
+  prerequisites?: string[];    // optional, defaults to empty list
+  learning_outcomes?: string[]; // optional, defaults to empty list
+  language?: string;           // optional, defaults to 'English'
+  certificate_offered?: boolean; // optional, defaults to true
+  status?: string;             // optional, defaults to 'draft'
 }
 
 @Component({
@@ -43,9 +38,11 @@ export class AdminCoursesComponent implements OnInit {
   private readonly API_URL = environment.apiUrl;
   courses = signal<Course[]>([]);
   isCreating = signal(false);
-  isEditing = signal<string | null>(null);
+  isEditing = signal<string | undefined>(undefined);
   imageError = signal<string | null>(null);
   isLoading = signal(false);
+  error = signal<string | null>(null);
+  message = signal<string | null>(null);
 
   constructor(
     private http: HttpClient,
@@ -53,53 +50,25 @@ export class AdminCoursesComponent implements OnInit {
   ) {}
 
   newCourse: Course = {
-    id: '',
-    cid: '',
     name: '',
-    price: '₹0',
+    description: '',
+    price: '₹',
     highlights: [''],
     taglines: [''],
     duration: '',
+    image_alt: '',
     videos: [],
-    rating: 0,
     featured: false,
-    prerequisites: [], // Initialize empty array
-    learning_outcomes: [], // Initialize empty array
+    weekly_commitment: '',
+    prerequisites: [],
+    learning_outcomes: [],
     language: 'English',
     certificate_offered: true,
-    modules_data: [] // Initialize empty array
+    status: 'draft'
   };
 
   ngOnInit() {
     this.fetchCourses();
-  }
-
-  addModule() {
-    this.newCourse.modules_data = this.newCourse.modules_data || [];
-    this.newCourse.modules_data.push({
-      module: this.newCourse.modules_data.length + 1,
-      list: [''],
-      m_price: '₹0'
-    });
-  }
-
-  removeModule(index: number) {
-    if (!this.newCourse.modules_data) return;
-    this.newCourse.modules_data.splice(index, 1);
-    // Update module numbers
-    this.newCourse.modules_data.forEach((module, idx) => {
-      module.module = idx + 1;
-    });
-  }
-
-  addModuleItem(moduleIndex: number) {
-    if (!this.newCourse.modules_data?.[moduleIndex]) return;
-    this.newCourse.modules_data[moduleIndex].list.push('');
-  }
-
-  removeModuleItem(moduleIndex: number, itemIndex: number) {
-    if (!this.newCourse.modules_data?.[moduleIndex]) return;
-    this.newCourse.modules_data[moduleIndex].list.splice(itemIndex, 1);
   }
 
   addHighlight() {
@@ -123,11 +92,14 @@ export class AdminCoursesComponent implements OnInit {
   }
 
   addVideo() {
+    this.newCourse.videos = this.newCourse.videos || [];
     this.newCourse.videos.push('');
   }
 
   removeVideo(index: number) {
-    this.newCourse.videos.splice(index, 1);
+    if (this.newCourse.videos) {
+      this.newCourse.videos.splice(index, 1);
+    }
   }
 
   addPrerequisite() {
@@ -169,10 +141,31 @@ export class AdminCoursesComponent implements OnInit {
   }
 
   validateCourse(): boolean {
-    if (!this.newCourse.id || !this.newCourse.cid || !this.newCourse.name || !this.newCourse.price || !this.newCourse.duration) {
+    // Required fields validation
+    if (!this.newCourse.name?.trim()) {
       return false;
     }
-    
+    if (!this.newCourse.description?.trim()) {
+      return false;
+    }
+    if (!this.newCourse.price?.startsWith('₹')) {
+      return false;
+    }
+    if (!this.newCourse.duration?.trim()) {
+      return false;
+    }
+
+    // Validate highlights (required, non-empty)
+    if (!this.newCourse.highlights?.length || this.newCourse.highlights.some(h => !h.trim())) {
+      return false;
+    }
+
+    // Validate taglines (required, non-empty)
+    if (!this.newCourse.taglines?.length || this.newCourse.taglines.some(t => !t.trim())) {
+      return false;
+    }
+
+    // Image validation (either image or image_url must be present)
     if (!this.newCourse.image && !this.newCourse.image_url) {
       return false;
     }
@@ -181,31 +174,11 @@ export class AdminCoursesComponent implements OnInit {
       return false;
     }
 
-    if (!this.newCourse.highlights.length || this.newCourse.highlights.some(h => !h)) {
-      return false;
-    }
-
-    if (!this.newCourse.taglines.length || this.newCourse.taglines.some(t => !t)) {
-      return false;
-    }
-
-    if (this.newCourse.modules_data?.some(module => !module.list.length || module.list.some(item => !item))) {
-      return false;
-    }
-
-    // Validate price format
-    if (!this.newCourse.price.startsWith('₹')) {
-      return false;
-    }
-
-    // Validate module prices
-    if (this.newCourse.modules_data?.some(module => module.m_price && !module.m_price.startsWith('₹'))) {
-      return false;
-    }
-
-    // Validate YouTube URLs
-    if (this.newCourse.videos.some(url => !this.isValidYouTubeUrl(url))) {
-      return false;
+    // Optional YouTube URLs validation (if present)
+    if (this.newCourse.videos?.length) {
+      if (this.newCourse.videos.some(url => url && !this.isValidYouTubeUrl(url))) {
+        return false;
+      }
     }
 
     return true;
@@ -231,57 +204,99 @@ export class AdminCoursesComponent implements OnInit {
 
   async createCourse() {
     if (!this.validateCourse()) {
+      this.error.set('Please fill in all required fields correctly');
+      console.log('Validation failed. Current course data:', this.newCourse);
       return;
     }
 
     try {
       const formData = new FormData();
+      console.log('Creating course with data:', this.newCourse);
+      console.dir(this.newCourse, { depth: null });
+
       Object.entries(this.newCourse).forEach(([key, value]) => {
         if (key === 'image' && value instanceof File) {
-          formData.append('image', value);
+          console.log('Appending image file:', value.name);
+          formData.append(key, value);
         } else if (Array.isArray(value)) {
-          formData.append(key, JSON.stringify(value));
+          if (value.length > 0) {
+            console.log(`Appending array ${key}:`, value);
+            formData.append(key, JSON.stringify(value));
+          }
         } else if (typeof value === 'object' && value !== null) {
+          console.log(`Appending object ${key}:`, value);
           formData.append(key, JSON.stringify(value));
-        } else if (value !== undefined && value !== null) {
+        } else if (value !== undefined && value !== null && value !== '') {
+          console.log(`Appending field ${key}:`, value);
           formData.append(key, value.toString());
         }
       });
 
+      // Log the FormData contents
+      console.log('FormData entries:');
+      const formDataObj: Record<string, string | File> = {};
+      formData.forEach((value, key) => {
+        if (value instanceof File) {
+          console.log(key, `File: ${value.name}`);
+          formDataObj[key] = value;
+        } else {
+          console.log(key, value);
+          formDataObj[key] = value;
+        }
+      });
+      console.log('FormData as object:', formDataObj);
+
       const headers = this.authService.getAuthorizationHeaders();
-      await this.http.post(`${this.API_URL}/admin/courses/`, formData, { headers }).toPromise();
+      console.log('Request headers:', headers);
+      
+      const response = await this.http.post(`${this.API_URL}/admin/courses/`, formData, { 
+        headers,
+        observe: 'response'
+      }).toPromise();
+      
+      console.log('Server response:', response);
+      
+      this.message.set('Course created successfully!');
+      this.error.set(null);
       await this.fetchCourses();
       this.resetForm();
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error creating course:', error);
+      console.error('Error response:', error.error);
+      console.error('Status:', error.status);
+      console.error('Status text:', error.statusText);
+      this.error.set(error.error?.message || error.message || 'Failed to create course');
+      this.message.set(null);
     }
   }
 
   resetForm() {
     this.newCourse = {
-      id: '',
-      cid: '',
       name: '',
-      price: '₹0',
+      description: '',
+      price: '₹',
       highlights: [''],
       taglines: [''],
       duration: '',
+      image_alt: '',
       videos: [],
-      rating: 0,
       featured: false,
+      weekly_commitment: '',
       prerequisites: [],
       learning_outcomes: [],
       language: 'English',
       certificate_offered: true,
-      modules_data: []
+      status: 'draft'
     };
     this.isCreating.set(false);
-    this.isEditing.set(null);
+    this.isEditing.set(undefined);
     this.imageError.set(null);
+    this.error.set(null);
+    this.message.set(null);
   }
 
   async startEdit(course: Course) {
-    this.isEditing.set(course.cid);
+    this.isEditing.set(course.id || undefined);
     this.newCourse = { ...course };
   }
 
@@ -296,10 +311,13 @@ export class AdminCoursesComponent implements OnInit {
         if (key === 'image' && value instanceof File) {
           formData.append('image', value);
         } else if (Array.isArray(value)) {
-          formData.append(key, JSON.stringify(value));
+          // Only append non-empty arrays
+          if (value.length > 0) {
+            formData.append(key, JSON.stringify(value));
+          }
         } else if (typeof value === 'object' && value !== null) {
           formData.append(key, JSON.stringify(value));
-        } else if (value !== undefined && value !== null) {
+        } else if (value !== undefined && value !== null && value !== '') {
           formData.append(key, value.toString());
         }
       });

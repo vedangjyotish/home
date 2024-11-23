@@ -9,13 +9,13 @@
     <h3>{{ isEditing() ? 'Edit Course' : 'Create New Course' }}</h3>
     
     <div class="form-group">
-      <label>Course ID</label>
-      <input type="text" [(ngModel)]="newCourse.cid" placeholder="Enter course ID">
+      <label class="required">Course Name</label>
+      <input type="text" [(ngModel)]="newCourse.name" placeholder="Enter course name" required>
     </div>
 
     <div class="form-group">
-      <label>Course Name</label>
-      <input type="text" [(ngModel)]="newCourse.name" placeholder="Enter course name">
+      <label class="required">Description</label>
+      <textarea [(ngModel)]="newCourse.description" placeholder="Enter course description" rows="4" required></textarea>
     </div>
 
     <div class="form-group">
@@ -35,37 +35,33 @@
     </div>
 
     <div class="form-group">
-      <label>Image Alt Text (Optional)</label>
+      <label>Image Alt Text</label>
       <input type="text" [(ngModel)]="newCourse.image_alt" placeholder="Enter image alt text">
     </div>
 
     <div class="form-group">
-      <label>Course Price</label>
-      <input type="text" [(ngModel)]="newCourse.price" placeholder="Enter price (e.g., ₹999)">
+      <label class="required">Course Price</label>
+      <input type="text" [(ngModel)]="newCourse.price" placeholder="Enter price (e.g., ₹999)" required>
     </div>
 
     <div class="form-group">
-      <label>Duration</label>
-      <input type="text" [(ngModel)]="newCourse.duration" placeholder="Enter duration (e.g., 6 months)">
+      <label class="required">Duration</label>
+      <input type="text" [(ngModel)]="newCourse.duration" placeholder="Enter duration (e.g., 6 months)" required>
     </div>
 
     <div class="form-group">
-      <label>Weekly Commitment (Optional)</label>
+      <label>Weekly Commitment</label>
       <input type="text" [(ngModel)]="newCourse.weekly_commitment" placeholder="Enter weekly commitment">
     </div>
 
     <div class="form-group">
-      <label>Description (Optional)</label>
-      <textarea [(ngModel)]="newCourse.description" placeholder="Enter course description" rows="4"></textarea>
-    </div>
-
-    <div class="form-group">
-      <label>Highlights</label>
+      <label class="required">Highlights</label>
       <div class="highlights-container">
         <div class="input-with-action" *ngFor="let highlight of newCourse.highlights; let i = index">
           <input type="text" 
                  [(ngModel)]="newCourse.highlights[i]" 
-                 placeholder="Enter highlight">
+                 placeholder="Enter highlight"
+                 required>
           <button class="btn-icon" (click)="removeHighlight(i)" *ngIf="newCourse.highlights.length > 1">
             <i class="fas fa-times"></i>
           </button>
@@ -75,12 +71,13 @@
     </div>
 
     <div class="form-group">
-      <label>Taglines</label>
+      <label class="required">Taglines</label>
       <div class="taglines-container">
         <div class="input-with-action" *ngFor="let tagline of newCourse.taglines; let i = index">
           <input type="text" 
                  [(ngModel)]="newCourse.taglines[i]" 
-                 placeholder="Enter tagline">
+                 placeholder="Enter tagline"
+                 required>
           <button class="btn-icon" (click)="removeTagline(i)" *ngIf="newCourse.taglines.length > 1">
             <i class="fas fa-times"></i>
           </button>
@@ -92,9 +89,9 @@
     <div class="form-group">
       <label>YouTube Videos</label>
       <div class="videos-container">
-        <div class="input-with-action" *ngFor="let video of newCourse.videos; let i = index">
+        <div class="input-with-action" *ngFor="let video of newCourse.videos || []; let i = index">
           <input type="text" 
-                 [(ngModel)]="newCourse.videos[i]" 
+                 [(ngModel)]="newCourse.videos![i]" 
                  placeholder="Enter YouTube URL">
           <button class="btn-icon" (click)="removeVideo(i)">
             <i class="fas fa-times"></i>
@@ -105,9 +102,9 @@
     </div>
 
     <div class="form-group">
-      <label>Prerequisites (Optional)</label>
+      <label>Prerequisites</label>
       <div class="prerequisites-container">
-        <div class="input-with-action" *ngFor="let prereq of newCourse.prerequisites || []; let i = index">
+        <div class="input-with-action" *ngFor="let prerequisite of newCourse.prerequisites || []; let i = index">
           <input type="text" 
                  [(ngModel)]="newCourse.prerequisites![i]" 
                  placeholder="Enter prerequisite">
@@ -120,7 +117,7 @@
     </div>
 
     <div class="form-group">
-      <label>Learning Outcomes (Optional)</label>
+      <label>Learning Outcomes</label>
       <div class="outcomes-container">
         <div class="input-with-action" *ngFor="let outcome of newCourse.learning_outcomes || []; let i = index">
           <input type="text" 
@@ -136,128 +133,107 @@
 
     <div class="form-group">
       <label>Language</label>
-      <input type="text" [(ngModel)]="newCourse.language" placeholder="Enter language">
+      <input type="text" [(ngModel)]="newCourse.language" placeholder="Course language (defaults to English)">
     </div>
 
-    <div class="form-group checkbox-group">
-      <label>
-        <input type="checkbox" [(ngModel)]="newCourse.featured">
-        Featured Course
-      </label>
-      <label>
-        <input type="checkbox" [(ngModel)]="newCourse.certificate_offered">
-        Certificate Offered
-      </label>
-    </div>
-
-    <div class="form-group modules-section">
-      <label>Modules</label>
-      <button class="btn-secondary add-module" (click)="addModule()">+ Add Module</button>
-      
-      <div class="module-container" *ngFor="let module of newCourse.modules_data || []; let moduleIndex = index">
-        <div class="module-header">
-          <h4>Module {{ module.module }}</h4>
-          <button class="btn-icon delete" (click)="removeModule(moduleIndex)" *ngIf="(newCourse.modules_data || []).length > 1">
-            <i class="fas fa-trash"></i>
-          </button>
-        </div>
-
-        <div class="form-group">
-          <label>Module Price (Optional)</label>
-          <input type="text" [(ngModel)]="module.m_price" placeholder="Enter module price (e.g., ₹999)">
-        </div>
-
-        <div class="module-items">
-          <div class="module-item" *ngFor="let item of module.list; let itemIndex = index">
-            <input type="text" 
-                   [(ngModel)]="module.list[itemIndex]" 
-                   placeholder="Enter module item">
-            <button class="btn-icon delete" (click)="removeModuleItem(moduleIndex, itemIndex)">
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
-          <button class="btn-secondary add-item" (click)="addModuleItem(moduleIndex)">+ Add Item</button>
-        </div>
+    <div class="form-group">
+      <label>Options</label>
+      <div class="checkbox-group">
+        <label>
+          <input type="checkbox" [(ngModel)]="newCourse.featured">
+          Featured Course
+        </label>
+        <label>
+          <input type="checkbox" [(ngModel)]="newCourse.certificate_offered">
+          Certificate Offered
+        </label>
       </div>
     </div>
+
+    <div class="error-message" *ngIf="error()">{{ error() }}</div>
+    <div class="success-message" *ngIf="message()">{{ message() }}</div>
 
     <div class="form-actions">
       <button class="btn-secondary" (click)="resetForm()">Cancel</button>
       <button class="btn-primary" 
-              (click)="isEditing() ? updateCourse() : createCourse()"
-              [disabled]="!validateCourse()">
-        {{ isEditing() ? 'Update' : 'Create' }} Course
+              [disabled]="!validateCourse()" 
+              (click)="isEditing() ? updateCourse() : createCourse()">
+        {{ isEditing() ? 'Update Course' : 'Create Course' }}
       </button>
     </div>
   </div>
 
   <!-- Courses List -->
   <div class="courses-list" *ngIf="!isCreating() && !isEditing()">
-    <div class="loading" *ngIf="isLoading()">
-      <div class="loading-spinner"></div>
-      <p>Loading courses...</p>
+    <div class="loading" *ngIf="isLoading()">Loading courses...</div>
+    <div class="no-courses" *ngIf="!isLoading() && !courses().length">
+      No courses found. Create your first course!
     </div>
-
-    <div class="no-courses" *ngIf="!isLoading() && courses().length === 0">
-      <p>No courses found. Click "Create New Course" to add one.</p>
-    </div>
-
+    
     <div class="course-card" *ngFor="let course of courses()">
       <div class="course-header">
-        <img [src]="course.image_url" [alt]="course.image_alt || course.name">
         <h3>{{ course.name }}</h3>
-      </div>
-      
-      <div class="course-details">
-        <div class="course-meta">
-          <p class="price">{{ course.price }}</p>
-          <p class="duration">{{ course.duration }}</p>
-          <p class="rating" *ngIf="course.rating">Rating: {{ course.rating }}/5</p>
-        </div>
-        
-        <div class="highlights">
-          <h4>Highlights:</h4>
-          <ul>
-            <li *ngFor="let highlight of course.highlights">{{ highlight }}</li>
-          </ul>
-        </div>
-
-        <div class="taglines">
-          <h4>Taglines:</h4>
-          <ul>
-            <li *ngFor="let tagline of course.taglines">{{ tagline }}</li>
-          </ul>
-        </div>
-
-        <div class="description" *ngIf="course.description">
-          <h4>Description:</h4>
-          <p>{{ course.description }}</p>
-        </div>
-
-        <div class="modules" *ngIf="course.modules_data?.length">
-          <h4>Modules:</h4>
-          <div class="module" *ngFor="let module of course.modules_data">
-            <div class="module-header">
-              <h5>Module {{ module.module }}</h5>
-              <span class="module-price" *ngIf="module.m_price">{{ module.m_price }}</span>
-            </div>
-            <ul>
-              <li *ngFor="let item of module.list">{{ item }}</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="videos" *ngIf="course.videos?.length">
-          <h4>Videos:</h4>
-          <ul>
-            <li *ngFor="let video of course.videos">{{ video }}</li>
-          </ul>
+        <div class="course-actions">
+          <button class="btn-secondary" (click)="startEdit(course)">Edit</button>
+          <button class="btn-danger" (click)="deleteCourse(course)">Delete</button>
         </div>
       </div>
 
-      <div class="course-actions">
-        <button class="btn-secondary" (click)="startEdit(course)">Edit</button>
-        <button class="btn-danger" (click)="deleteCourse(course)">Delete</button>
+      <div class="card-section">
+        <img *ngIf="course.image_url" [src]="course.image_url" [alt]="course.image_alt || course.name">
+      </div>
+
+      <div class="card-section">
+        <p class="price">{{ course.price }}</p>
+        <p class="duration">{{ course.duration }}</p>
+        <p *ngIf="course.weekly_commitment" class="commitment">{{ course.weekly_commitment }}</p>
+      </div>
+
+      <div class="card-section description" *ngIf="course.description">
+        <h4>Description</h4>
+        <p>{{ course.description }}</p>
+      </div>
+
+      <div class="card-section highlights" *ngIf="course.highlights?.length">
+        <h4>Highlights</h4>
+        <ul>
+          <li *ngFor="let highlight of course.highlights">{{ highlight }}</li>
+        </ul>
+      </div>
+
+      <div class="card-section taglines" *ngIf="course.taglines?.length">
+        <h4>Taglines</h4>
+        <ul>
+          <li *ngFor="let tagline of course.taglines">{{ tagline }}</li>
+        </ul>
+      </div>
+
+      <div class="card-section videos" *ngIf="course.videos?.length">
+        <h4>Videos</h4>
+        <ul>
+          <li *ngFor="let video of course.videos">{{ video }}</li>
+        </ul>
+      </div>
+
+      <div class="card-section prerequisites" *ngIf="course.prerequisites?.length">
+        <h4>Prerequisites</h4>
+        <ul>
+          <li *ngFor="let prerequisite of course.prerequisites">{{ prerequisite }}</li>
+        </ul>
+      </div>
+
+      <div class="card-section outcomes" *ngIf="course.learning_outcomes?.length">
+        <h4>Learning Outcomes</h4>
+        <ul>
+          <li *ngFor="let outcome of course.learning_outcomes">{{ outcome }}</li>
+        </ul>
+      </div>
+
+      <div class="card-section meta">
+        <p *ngIf="course.language">Language: {{ course.language }}</p>
+        <p *ngIf="course.certificate_offered">Certificate Offered</p>
+        <p *ngIf="course.featured">Featured Course</p>
+        <p>Status: {{ course.status || 'draft' }}</p>
       </div>
     </div>
   </div>
