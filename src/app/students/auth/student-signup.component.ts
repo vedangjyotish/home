@@ -71,20 +71,32 @@ export class StudentSignupComponent implements OnInit {
 
       this.authService.signup(this.studentData).subscribe({
         next: (response) => {
-          // Success message can be shown if needed
-          // this.errorMessage = response.message;
           this.router.navigate(['/students/dashboard']);
         },
         error: (error: string) => {
           this.isLoading = false;
           
           // Handle specific error messages
-          if (error.includes('already exists')) {
-            this.fieldErrors['email'] = 'Email address is already registered';
-          } else if (error.includes('required')) {
-            const field = error.split(' ')[0];
-            this.fieldErrors[field] = `${field} is required`;
+          if (error.toLowerCase().includes('phone number already exists')) {
+            this.fieldErrors['contact'] = 'This phone number is already registered';
+          } else if (error.toLowerCase().includes('email already exists')) {
+            this.fieldErrors['email'] = 'This email address is already registered';
+          } else if (error.toLowerCase().includes('required')) {
+            // Map the error to the correct field name
+            const errorMessage = error.toLowerCase();
+            if (errorMessage.includes('first_name')) {
+              this.fieldErrors['first_name'] = 'First name is required';
+            } else if (errorMessage.includes('last_name')) {
+              this.fieldErrors['last_name'] = 'Last name is required';
+            } else if (errorMessage.includes('email')) {
+              this.fieldErrors['email'] = 'Email is required';
+            } else if (errorMessage.includes('contact') || errorMessage.includes('phone')) {
+              this.fieldErrors['contact'] = 'Phone number is required';
+            } else if (errorMessage.includes('password')) {
+              this.fieldErrors['password'] = 'Password is required';
+            }
           } else {
+            // For any other error, show it as a general error message
             this.errorMessage = error;
           }
         },
