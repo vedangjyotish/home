@@ -5,6 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { AdminAuthService } from '../../services/admin-auth.service';
 import { MatIconModule } from '@angular/material/icon';
+import { RouterModule } from '@angular/router';
 
 interface Module {
   id?: string;
@@ -50,7 +51,13 @@ interface Course {
 @Component({
   selector: 'app-admin-courses',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, MatIconModule],
+  imports: [
+    CommonModule, 
+    FormsModule, 
+    ReactiveFormsModule, 
+    MatIconModule,
+    RouterModule
+  ],
   templateUrl: './courses.component.html',
   styleUrls: ['./courses.component.css']
 })
@@ -280,10 +287,18 @@ export class AdminCoursesComponent implements OnInit {
 
   async fetchCourses() {
     this.isLoading.set(true);
+    const startTime = Date.now();
+    
     try {
       const headers = this.authService.getAuthorizationHeaders();
       const data = await this.http.get<Course[]>(`${this.API_URL}/admin/courses/`, { headers }).toPromise();
       this.courses.set(data || []);
+      
+      // Ensure loading stays visible for at least 1 second
+      const elapsedTime = Date.now() - startTime;
+      if (elapsedTime < 1000) {
+        await new Promise(resolve => setTimeout(resolve, 1000 - elapsedTime));
+      }
     } catch (error) {
       console.error('Error fetching courses:', error);
     } finally {
