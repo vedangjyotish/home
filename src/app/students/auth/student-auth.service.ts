@@ -37,6 +37,8 @@ interface SignupData {
 interface BackendSignupData {
   email: string;
   password: string;
+  confirm_password: string;
+  username: string;
   first_name: string;
   last_name: string;
   contact: string;
@@ -105,6 +107,8 @@ export class StudentAuthService {
     const backendData: BackendSignupData = {
       email: studentData.email,
       password: studentData.password,
+      confirm_password: studentData.password,  // Using the same password since we validate it in the component
+      username: studentData.email,  // Using email as username
       first_name: studentData.firstName,
       last_name: studentData.lastName,
       contact: studentData.phone
