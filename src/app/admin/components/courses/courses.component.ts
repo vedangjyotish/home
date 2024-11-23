@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { AdminAuthService } from '../../services/admin-auth.service';
+import { MatIconModule } from '@angular/material/icon';
 
 interface Course {
   id?: string;
@@ -28,11 +29,11 @@ interface Course {
 }
 
 @Component({
-  selector: 'app-courses',
-  templateUrl: './courses.component.html',
-  styleUrls: ['./courses.component.css'],
+  selector: 'app-admin-courses',
   standalone: true,
-  imports: [CommonModule, FormsModule]
+  imports: [CommonModule, FormsModule, MatIconModule],
+  templateUrl: './courses.component.html',
+  styleUrls: ['./courses.component.css']
 })
 export class AdminCoursesComponent implements OnInit {
   private readonly API_URL = environment.apiUrl;

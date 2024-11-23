@@ -6,7 +6,13 @@
 
   <!-- Course Form -->
   <div class="course-form" *ngIf="isCreating() || isEditing()">
-    <h3>{{ isEditing() ? 'Edit Course' : 'Create New Course' }}</h3>
+    <div class="form-header">
+      <h3>{{ isEditing() ? 'Edit Course' : 'Create New Course' }}</h3>
+      <button class="btn-back" (click)="resetForm()">
+        <mat-icon>arrow_back</mat-icon>
+        <span>Back to Course List</span>
+      </button>
+    </div>
     
     <div class="form-group">
       <label class="required">Course Name</label>
@@ -164,76 +170,48 @@
   </div>
 
   <!-- Courses List -->
-  <div class="courses-list" *ngIf="!isCreating() && !isEditing()">
-    <div class="loading" *ngIf="isLoading()">Loading courses...</div>
-    <div class="no-courses" *ngIf="!isLoading() && !courses().length">
-      No courses found. Create your first course!
+  <div class="courses-grid" *ngIf="!isCreating() && !isEditing()">
+    <div class="loading-overlay" *ngIf="isLoading()">
+      <div class="spinner"></div>
     </div>
-    
+
     <div class="course-card" *ngFor="let course of courses()">
-      <div class="course-header">
-        <h3>{{ course.name }}</h3>
-        <div class="course-actions">
-          <button class="btn-secondary" (click)="startEdit(course)">Edit</button>
-          <button class="btn-danger" (click)="deleteCourse(course)">Delete</button>
+      <div class="course-image">
+        <img [src]="course.image_url" [alt]="course.image_alt || course.name" *ngIf="course.image_url">
+        <div class="no-image" *ngIf="!course.image_url">
+          <span class="material-icons">image</span>
         </div>
       </div>
+      
+      <div class="course-content">
+        <div class="course-status" [class.featured]="course.featured">
+          {{ course.featured ? 'Featured' : 'Standard' }}
+        </div>
+        
+        <h3>{{ course.name }}</h3>
+        <p class="course-description">{{ course.description }}</p>
+        
+        <div class="course-details">
+          <div class="detail-item">
+            <span class="material-icons">schedule</span>
+            {{ course.duration }}
+          </div>
+          <div class="detail-item">
+            <span class="material-icons">currency_rupee</span>
+            {{ course.price }}
+          </div>
+        </div>
 
-      <div class="card-section">
-        <img *ngIf="course.image_url" [src]="course.image_url" [alt]="course.image_alt || course.name">
-      </div>
-
-      <div class="card-section">
-        <p class="price">{{ course.price }}</p>
-        <p class="duration">{{ course.duration }}</p>
-        <p *ngIf="course.weekly_commitment" class="commitment">{{ course.weekly_commitment }}</p>
-      </div>
-
-      <div class="card-section description" *ngIf="course.description">
-        <h4>Description</h4>
-        <p>{{ course.description }}</p>
-      </div>
-
-      <div class="card-section highlights" *ngIf="course.highlights?.length">
-        <h4>Highlights</h4>
-        <ul>
-          <li *ngFor="let highlight of course.highlights">{{ highlight }}</li>
-        </ul>
-      </div>
-
-      <div class="card-section taglines" *ngIf="course.taglines?.length">
-        <h4>Taglines</h4>
-        <ul>
-          <li *ngFor="let tagline of course.taglines">{{ tagline }}</li>
-        </ul>
-      </div>
-
-      <div class="card-section videos" *ngIf="course.videos?.length">
-        <h4>Videos</h4>
-        <ul>
-          <li *ngFor="let video of course.videos">{{ video }}</li>
-        </ul>
-      </div>
-
-      <div class="card-section prerequisites" *ngIf="course.prerequisites?.length">
-        <h4>Prerequisites</h4>
-        <ul>
-          <li *ngFor="let prerequisite of course.prerequisites">{{ prerequisite }}</li>
-        </ul>
-      </div>
-
-      <div class="card-section outcomes" *ngIf="course.learning_outcomes?.length">
-        <h4>Learning Outcomes</h4>
-        <ul>
-          <li *ngFor="let outcome of course.learning_outcomes">{{ outcome }}</li>
-        </ul>
-      </div>
-
-      <div class="card-section meta">
-        <p *ngIf="course.language">Language: {{ course.language }}</p>
-        <p *ngIf="course.certificate_offered">Certificate Offered</p>
-        <p *ngIf="course.featured">Featured Course</p>
-        <p>Status: {{ course.status || 'draft' }}</p>
+        <div class="course-actions">
+          <button class="btn-icon" (click)="startEdit(course)">
+            <span class="material-icons">edit</span>
+            Edit
+          </button>
+          <button class="btn-icon delete" (click)="deleteCourse(course)">
+            <span class="material-icons">delete</span>
+            Delete
+          </button>
+        </div>
       </div>
     </div>
   </div>
