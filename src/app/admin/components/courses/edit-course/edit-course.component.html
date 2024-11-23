@@ -1,0 +1,166 @@
+<div class="edit-course-container">
+  <div class="page-header">
+    <button type="button" class="btn-back" (click)="navigateBack()">
+      <mat-icon>arrow_back</mat-icon>
+      <span>Back to Course Dashboard</span>
+    </button>
+  </div>
+
+  <div class="edit-header">
+    <h2>{{ courseId ? 'Edit Course' : 'Create New Course' }}</h2>
+  </div>
+
+  <div class="loading-overlay" *ngIf="isLoading()">
+    <div class="spinner"></div>
+  </div>
+
+  <div class="edit-form" *ngIf="!isLoading()">
+    <div class="form-grid">
+      <!-- Left Column -->
+      <div class="form-column">
+        <div class="form-group">
+          <label class="required">Course Name</label>
+          <input type="text" [(ngModel)]="course.name" placeholder="Enter course name" required>
+        </div>
+
+        <div class="form-group">
+          <label class="required">Description</label>
+          <textarea [(ngModel)]="course.description" placeholder="Enter course description" rows="4" required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="required">Course Price</label>
+          <input type="text" [(ngModel)]="course.price" placeholder="Enter price (e.g., ₹999)" required>
+        </div>
+
+        <div class="form-group">
+          <label class="required">Duration</label>
+          <input type="text" [(ngModel)]="course.duration" placeholder="Enter duration (e.g., 6 months)" required>
+        </div>
+
+        <div class="form-group">
+          <label>Weekly Commitment</label>
+          <input type="text" [(ngModel)]="course.weekly_commitment" placeholder="e.g., 3-4 hours per week">
+        </div>
+
+        <div class="form-group">
+          <label>Language</label>
+          <input type="text" [(ngModel)]="course.language" placeholder="e.g., English">
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div class="form-column">
+        <div class="form-group image-upload-group">
+          <label>Course Image</label>
+          <div class="image-upload-area" (click)="fileInput.click()">
+            <input type="file" 
+                   #fileInput
+                   accept="image/*" 
+                   (change)="handleImageUpload($event)"
+                   style="display: none">
+            
+            <div class="image-preview" *ngIf="course.image_url">
+              <img [src]="course.image_url" [alt]="course.image_alt || course.name">
+            </div>
+            <div class="upload-placeholder" *ngIf="!course.image_url">
+              <span class="material-icons">cloud_upload</span>
+              <p>Click to upload course image</p>
+              <small>Max size: 5MB</small>
+            </div>
+          </div>
+          <div class="error-message" *ngIf="imageError()">
+            {{ imageError() }}
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Image Alt Text</label>
+          <input type="text" [(ngModel)]="course.image_alt" placeholder="Describe the image for accessibility">
+        </div>
+
+        <div class="form-group">
+          <label>Featured Course</label>
+          <div class="toggle-switch">
+            <input type="checkbox" [(ngModel)]="course.featured" id="featured">
+            <label for="featured"></label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Certificate Offered</label>
+          <div class="toggle-switch">
+            <input type="checkbox" [(ngModel)]="course.certificate_offered" id="certificate">
+            <label for="certificate"></label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Full Width Sections -->
+    <div class="form-section">
+      <label>Course Highlights</label>
+      <div class="tags-input">
+        <div class="tag" *ngFor="let highlight of course.highlights; let i = index">
+          {{ highlight }}
+          <span class="remove-tag" (click)="removeItem(course.highlights, i)">&times;</span>
+        </div>
+        <input type="text" 
+               #highlightInput
+               placeholder="Add highlight and press Enter" 
+               (keyup.enter)="addItem(course.highlights, highlightInput.value.trim()); highlightInput.value = ''">
+      </div>
+    </div>
+
+    <div class="form-section">
+      <label>Taglines</label>
+      <div class="tags-input">
+        <div class="tag" *ngFor="let tagline of course.taglines; let i = index">
+          {{ tagline }}
+          <span class="remove-tag" (click)="removeItem(course.taglines, i)">&times;</span>
+        </div>
+        <input type="text" 
+               #taglineInput
+               placeholder="Add tagline and press Enter" 
+               (keyup.enter)="addItem(course.taglines, taglineInput.value.trim()); taglineInput.value = ''">
+      </div>
+    </div>
+
+    <div class="form-section">
+      <label>Prerequisites</label>
+      <div class="tags-input">
+        <div class="tag" *ngFor="let prereq of course.prerequisites; let i = index">
+          {{ prereq }}
+          <span class="remove-tag" (click)="removeItem(course.prerequisites, i)">&times;</span>
+        </div>
+        <input type="text" 
+               #prereqInput
+               placeholder="Add prerequisite and press Enter" 
+               (keyup.enter)="addItem(course.prerequisites, prereqInput.value.trim()); prereqInput.value = ''">
+      </div>
+    </div>
+
+    <div class="form-section">
+      <label>Learning Outcomes</label>
+      <div class="tags-input">
+        <div class="tag" *ngFor="let outcome of course.learning_outcomes; let i = index">
+          {{ outcome }}
+          <span class="remove-tag" (click)="removeItem(course.learning_outcomes, i)">&times;</span>
+        </div>
+        <input type="text" 
+               #outcomeInput
+               placeholder="Add learning outcome and press Enter" 
+               (keyup.enter)="addItem(course.learning_outcomes, outcomeInput.value.trim()); outcomeInput.value = ''">
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn-secondary" (click)="navigateBack()">
+        <span>Cancel</span>
+      </button>
+      <button type="button" class="btn-primary" (click)="saveCourse()">
+        <span>Save Course</span>
+      </button>
+    </div>
+  </div>
+</div>
